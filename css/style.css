@@ -47,11 +47,14 @@
     color: #E60023;
   }
   
-  /* Optional: Hover text color */
-  .social-group:hover .social-text, .footer-text:hover {
+
+  .social-group:hover .social-text {
     color: #000 !important;
   }
 
+  .footer-text:hover {
+    color: #000 !important;
+  }
   
  /***** End footer *****/
 
