@@ -1,0 +1,24 @@
+{
+  "product": [
+      {
+        "productId": 1,
+        "name": "Smartphone",
+        "category": "Electronics",
+        "price": 499.99,
+        "description": "Latest model smartphone",
+        "imageUrl": "smartphone.jpg",
+        "stock": 100,
+        "sellerId": 2
+      },
+      {
+        "productId": 2,
+        "name": "Headphones",
+        "category": "Electronics",
+        "price": 99.99,
+        "description": "Noise-cancelling headphones",
+        "imageUrl": "headphones.jpg",
+        "stock": 200,
+        "sellerId": 2
+      }
+    ]
+}
