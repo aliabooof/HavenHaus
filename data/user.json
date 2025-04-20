@@ -1,0 +1,47 @@
+{
+    "user": [
+      {
+        "userId": 1,
+        "username": "john_doe",
+        "email": "john.doe@example.com",
+        "password": "haspasswordhed_password",
+        "role": "customer",
+        "orderHistory": [
+          {
+            "orderId": 101,
+            "products": [
+              {
+                "productId": 1,
+                "name": "Smartphone",
+                "quantity": 1,
+                "price": 499.99
+              }
+            ],
+            "totalPrice": 499.99
+          }
+        ]
+      },
+      {
+        "userId": 2,
+        "username": "jane_smith",
+        "email": "jane.smith@example.com",
+        "password": "hashed_password",
+        "role": "seller",
+        "products": [
+          {
+            "productId": 101,
+            "name": "Laptop",
+            "price": 1200.00,
+            "quantityInStock": 50
+          }
+        ]
+      },
+      {
+        "userId": 3,
+        "username": "admin_user",
+        "email": "admin@example.com",
+        "password": "hashed_password",
+        "role": "admin"
+      }
+    ]
+}

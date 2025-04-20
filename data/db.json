@@ -1,0 +1,97 @@
+{
+  "users": [
+    {
+      "userId": 1,
+      "username": "john_doe",
+      "email": "john.doe@example.com",
+      "": "haspasswordhed_password",
+      "role": "customer",
+      "orderHistory": [
+        {
+          "orderId": 101,
+          "products": [
+            {
+              "productId": 1,
+              "name": "Smartphone",
+              "quantity": 1,
+              "price": 499.99
+            }
+          ],
+          "totalPrice": 499.99
+        }
+      ]
+    },
+    {
+      "userId": 2,
+      "username": "jane_smith",
+      "email": "jane.smith@example.com",
+      "password": "hashed_password",
+      "role": "seller",
+      "products": [
+        {
+          "productId": 101,
+          "name": "Laptop",
+          "price": 1200.00,
+          "quantityInStock": 50
+        }
+      ]
+    },
+    {
+      "userId": 3,
+      "username": "admin_user",
+      "email": "admin@example.com",
+      "password": "hashed_password",
+      "role": "admin"
+    }
+  ],
+  "products": [
+    {
+      "productId": 1,
+      "name": "Smartphone",
+      "category": "Electronics",
+      "price": 499.99,
+      "description": "Latest model smartphone",
+      "imageUrl": "smartphone.jpg",
+      "stock": 100,
+      "sellerId": 2
+    },
+    {
+      "productId": 2,
+      "name": "Headphones",
+      "category": "Electronics",
+      "price": 99.99,
+      "description": "Noise-cancelling headphones",
+      "imageUrl": "headphones.jpg",
+      "stock": 200,
+      "sellerId": 2
+    }
+  ],
+  "orders": [
+    {
+      "orderId": 101,
+      "userId": 1,
+      "products": [
+        {
+          "productId": 1,
+          "quantity": 1,
+          "price": 499.99
+        }
+      ],
+      "totalPrice": 499.99,
+      "status": "completed"
+    }
+  ],
+  "shoppingCarts": [
+    {
+      "userId": 1,
+      "cartItems": [
+        {
+          "productId": 1,
+          "quantity": 1,
+          "price": 499.99
+        }
+      ],
+      "totalPrice": 499.99
+    }
+  ]
+}

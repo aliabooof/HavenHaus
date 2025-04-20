@@ -1,0 +1,17 @@
+{
+    "order": [
+    {
+      "orderId": 101,
+      "userId": 1,
+      "products": [
+        {
+          "productId": 1,
+          "quantity": 1,
+          "price": 499.99
+        }
+      ],
+      "totalPrice": 499.99,
+      "status": "completed"
+    }
+  ]
+}
