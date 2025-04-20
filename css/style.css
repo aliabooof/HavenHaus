@@ -8,6 +8,51 @@
 }
 
 
+/***** home-page banner *****/ 
+
+.hero-section {
+  position: relative; 
+  width: 100%;
+  color: white; 
+  overflow: hidden; 
+}
+
+.hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../assets/images/banner.jpeg'); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+  z-index: 1; 
+}
+
+.hero-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); 
+  z-index: 2; 
+}
+
+.hero-section .container {
+  position: relative;
+  z-index: 3; 
+}
+
+.hero-content {
+ 
+  max-width: 1000px; 
+}
+
+
+/***** End home-page main-section *****/
 
 
 /***** footer*****/ 
@@ -36,7 +81,7 @@
   .social-group:hover .fa-facebook {
     color: #0866ff;
 
-    
+
   }
   
   .social-group:hover .fa-instagram {
