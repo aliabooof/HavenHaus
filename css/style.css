@@ -8,6 +8,32 @@
 }
 
 
+/***** NavBar *****/ 
+ 
+.nav-link,.nav-link-item {
+  transition: transform 0.2s ease-in, color 0.2s ease-in;
+}
+
+.nav-link:hover,.nav-link-item:hover{
+  color: #0866ff;
+  transform: scale(1.2);
+}
+.nav-link-item:hover {
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}
+
+
+
+@media all and (max-width: 700px) {
+  .nav-link:hover {
+ 
+    transform: none;
+  }
+}
+/***** End NavBar *****/
+
+
 /***** home-page banner *****/ 
 
 .hero-section {
@@ -53,6 +79,47 @@
 
 
 /***** End home-page main-section *****/
+
+
+
+/***** home page services section *****/ 
+
+.services{
+  background-color: var(--bg-color-2);
+}
+
+.service-icon{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color:#2563eb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  transition: all 2s ease;
+  margin-bottom: 20px;
+}
+.service-icon:hover{
+  transform: scale(1.2)rotate(360deg);
+}
+/***** End home page featured section *****/
+
+
+
+/***** home page category section *****/ 
+
+.category .card{
+  transition: all 0.5s ease-in-out;
+}
+.category .card:hover{
+  transform: scale(1.1);
+}
+
+/***** End home page category section *****/
+
+
+
 
 
 /***** footer*****/ 
