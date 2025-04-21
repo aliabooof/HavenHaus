@@ -18,10 +18,14 @@ export class User{
         let id;
         const existingIds = User.getAllExistingUserIds();
         do{
-            console.log("heyyy");
+            
             id = this.#generateId(firstName , lastName);
         }while(existingIds.includes(id));
         return id;
+    }
+
+    static getAllUsers(){
+        return GetTable("user")||[];
     }
 
     static getAllExistingUserIds() {
@@ -29,5 +33,15 @@ export class User{
         return users.map(user => user.id);
     }
 
-   
+    static getAllExistingEmail(){
+        const users = GetTable("user")||[];
+        return users.map(user => user.email.toLowerCase());
+    }
+
+    static getUserByEmail(email) {
+        const users = GetTable("user") || [];
+        return users.find(user => user.email.toLowerCase() === email.toLowerCase());
+    }
+    
+ 
 } 
