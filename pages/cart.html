@@ -58,6 +58,7 @@
             let product = GetProductByID(cartItem.productID)[0];
             totalPrice[product.id] =  cartItem.quantity * product.price;
             let cartString = `<div class="card mb-3" data-prod-id="${product.id}" data-prod-price="${product.price}">
+
                                     <div class="row g-0 align-items-center">
                                         <div class="col-4">
                                             <img src="../assets/images/banner.jpeg" class="img-fluid rounded-start" alt="Product">
@@ -89,7 +90,9 @@
             cartDiv = cartDiv.body.firstElementChild;
             cartDiv.querySelector(".increaseQuantityBtn").addEventListener("click",IncreaseQuantity)
             cartDiv.querySelector(".decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)
+
             cartDiv.querySelector(".delete-card-btn").addEventListener("click",DeleteCard)
+
             return cartDiv;
         }
         // console.log(cart)
@@ -103,9 +106,11 @@
         window.addEventListener("load",function(event){
                 itemsContainer = document.getElementById("items-container");
                 DispalyCartItems();
+
                 let price = Object.values(totalPrice).reduce((acc, val) => acc + val, 0).toFixed(2);
                 document.getElementById("subtotal").innerText = price
                 document.getElementById("total-price").innerText = price
+
             })
     </script>
 </head>
