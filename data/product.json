@@ -1,24 +1,19 @@
 {
   "product": [
-      {
-        "productId": 1,
-        "name": "Smartphone",
-        "category": "Electronics",
-        "price": 499.99,
-        "description": "Latest model smartphone",
-        "imageUrl": "smartphone.jpg",
-        "stock": 100,
-        "sellerId": 2
-      },
-      {
-        "productId": 2,
-        "name": "Headphones",
-        "category": "Electronics",
-        "price": 99.99,
-        "description": "Noise-cancelling headphones",
-        "imageUrl": "headphones.jpg",
-        "stock": 200,
-        "sellerId": 2
-      }
-    ]
+    { "id": 1, "sellerID": 2, "name": "Widget", "category": 2, "price": 199.99, "desc": "Durable and sleek", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 42 },
+    { "id": 2, "sellerID": 2, "name": "Gadget", "category": 1, "price": 89.99, "desc": "Compact with many features", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 12 },
+    { "id": 3, "sellerID": 2, "name": "Headphones", "category": 3, "price": 49.50, "desc": "High-quality sound", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 25 },
+    { "id": 4, "sellerID": 3, "name": "Camera", "category": 4, "price": 250.00, "desc": "Perfect for vlogging", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 5 },
+    { "id": 5, "sellerID": 3, "name": "Monitor", "category": 2, "price": 159.99, "desc": "Full HD display", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 10 },
+    { "id": 6, "sellerID": 3, "name": "Mouse", "category": 2, "price": 29.99, "desc": "Ergonomic design", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 50 },
+    { "id": 7, "sellerID": 4, "name": "Keyboard", "category": 2, "price": 39.99, "desc": "Mechanical keys", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 30 },
+    { "id": 8, "sellerID": 4, "name": "Laptop", "category": 1, "price": 799.99, "desc": "Lightweight and powerful", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 8 },
+    { "id": 9, "sellerID": 4, "name": "Tablet", "category": 1, "price": 399.00, "desc": "Long battery life", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 15 },
+    { "id": 10, "sellerID": 2, "name": "Speaker", "category": 3, "price": 59.00, "desc": "Portable Bluetooth", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 33 },
+    { "id": 11, "sellerID": 3, "name": "Smartwatch", "category": 1, "price": 129.99, "desc": "Health tracking features", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 20 },
+    { "id": 12, "sellerID": 2, "name": "Drone", "category": 5, "price": 299.99, "desc": "4K video supported", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 7 },
+    { "id": 13, "sellerID": 4, "name": "Webcam", "category": 4, "price": 69.99, "desc": "HD clarity", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 18 },
+    { "id": 14, "sellerID": 3, "name": "Microphone", "category": 4, "price": 89.99, "desc": "Noise cancelling", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 22 },
+    { "id": 15, "sellerID": 2, "name": "Charger", "category": 2, "price": 19.99, "desc": "Fast charging", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 45 }
+  ]
 }
