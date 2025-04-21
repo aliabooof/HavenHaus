@@ -25,6 +25,8 @@ export function redirect(pageName){
 }
 
 export function createAlert(message, color, subMessage = "") {
+    const s =0;
+
     const alert = document.createElement("div");
     alert.classList.add("alert", `alert-${color}`, "alert-dismissible", "fade", "show");
     alert.setAttribute("role", "alert");
