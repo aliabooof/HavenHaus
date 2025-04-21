@@ -4,19 +4,47 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Product #</title>
-        <link
-            rel="stylesheet"
-            integrity="sha512-M5+xLl4R3ehz2nTRVsn8mXqD2KvzvS5OaH4Kx5dUwPSk2vM+9SmevQYUKbJpU3kA0+G6z2jvZ/XYJzjzXU1yAA=="
-            crossorigin="anonymous"
-            referrerpolicy="no-referrer"
-            />
+        <link rel="stylesheet" integrity="sha512-M5+xLl4R3ehz2nTRVsn8mXqD2KvzvS5OaH4Kx5dUwPSk2vM+9SmevQYUKbJpU3kA0+G6z2jvZ/XYJzjzXU1yAA==" crossorigin="anonymous" referrerpolicy="no-referrer"/>
         <link href="../../bootstrap-5.3.5-dist/css/bootstrap.min.css" rel="stylesheet">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
         <link rel="stylesheet" href="../../font-awesome-4.7.0/css/font-awesome.min.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  
-        <script src="../js/load_db.js"></script>
         
+        <script src="../js/load_db.js"></script>
+        <script type="module">
+            import {GetProductByID} from "../js/db.js"
+            import {IncreaseQuantity as IQ, DecreaseQuantity} from "../js/util.js"
+            
+            function IncreaseQuantity(event){
+                IQ(event,product.stock)
+            }
+            
+            
+
+            function RedirectNotFound(){
+                window.location.assign("./not-found.html")
+            }
+
+            let searchText = window.location.search
+            if(searchText.includes("id=")){
+                let prodID = searchText.split("id=")[1].split("&")[0]
+                var product = GetProductByID(prodID)[0]
+            }else{
+                RedirectNotFound();
+            }
+            if(product != undefined){
+                console.log(product)
+                document.querySelector("#product-name").innerText = product.name
+                document.querySelector("#product-price").innerText = product.price
+                document.querySelector("#product-description").innerText = product.desc
+            }else{
+                RedirectNotFound()
+            }
+            window.addEventListener("load",function(event){
+                document.getElementById("increaseQuantityBtn").addEventListener("click",IncreaseQuantity)
+                document.getElementById("decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)
+            })
+        </script>
         <style>
 
             .min-h-screen{
@@ -71,16 +99,16 @@
                             </div><!-- Ratings End  -->
 
                             <div class="fs-3 text-primary"> <!-- Product Name & Price-->
-                                <P id="product-name" class="h2 text-black mb-0">Product Name</P>
+                                <p id="product-name" class="h2 text-black mb-0">Product Name</p>
                                 $<p id="product-price" class="text-primary d-inline">999.99</p>
                             </div>
 
                             <div class="d-flex flex-column justify-content gap-1"><!--Quantity  -->
                                     <div >Quantity</div>
                                     <div class="d-inline-flex align-items-center">
-                                        <button class="btn btn-md btn-outline-secondary px-2 p-1 rounded-0 rounded-start-2" onclick="decreaseQuantity(this)">−</button>
-                                        <span class="px-3 py-1  quantity-value d-inline-block border border-1">1</span>
-                                        <button class="btn btn-md btn-outline-secondary px-2 py-1 rounded-0 rounded-end-2" onclick="increaseQuantity(this)">+</button>
+                                        <button id="decreaseQuantityBtn" class="btn btn-md btn-outline-secondary px-2 p-1 rounded-0 rounded-start-2" >−</button>
+                                        <span id="quantity" class="px-3 py-1  quantity-value d-inline-block border border-1">1</span>
+                                        <button id="increaseQuantityBtn" class="btn btn-md btn-outline-secondary px-2 py-1 rounded-0 rounded-end-2">+</button>
                                     </div>
                             </div><!-- Quantity End  -->
 
@@ -153,19 +181,19 @@
                                 <div class="tab-content p-3 border border-top-0" id="productTabContent">
                                     <div class="tab-pane fade show active" id="desc" role="tabpanel">
                                         <h5>Description</h5>
-                                        <p>This is the product description section.</p>
+                                        <p id="product-description">This is the product description section.</p>
                                     </div>
-                                    <div class="tab-pane fade" id="highlights" role="tabpanel">
+                                    <div id="highlights" class="tab-pane fade"  role="tabpanel">
                                         <h5>Highlights</h5>
-                                        <p>This is the product Highlights section.</p>
+                                        <p id="product-highlights">This is the product Highlights section.</p>
                                     </div>
-                                    <div class="tab-pane fade" id="inst" role="tabpanel">
+                                    <div  class="tab-pane fade" id="inst" role="tabpanel">
                                         <h5>Instructions</h5>
-                                        <p>This is the product instructions section.</p>
+                                        <p id="product-instructions">This is the product instructions section.</p>
                                     </div>
-                                    <div class="tab-pane fade" id="reviews" role="tabpanel">
+                                    <div id="reviews" class="tab-pane fade"  role="tabpanel">
                                         <h5>Reviews</h5>
-                                        <p>This is the product reviews section.</p>
+                                        <p id="product-reviews">This is the product reviews section.</p>
                                     </div>
                                 </div>
                             </div><!--Other Sections-->
