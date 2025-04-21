@@ -1,8 +1,9 @@
 import {User} from "./userModule.js"
-import { redirect , createAlert } from "./util.js";
+import { redirect , createAlert, getFormFields } from "./util.js";
+import {GetTable , SetTable } from "./db.js"
 
-let userArray = (JSON.parse(localStorage.getItem('users'))||[]).map((userObj)=> new User(userObj));
-console.log(userArray);
+let userArray = (GetTable("user")||[]).map((userObj)=> new User(userObj));
+
 
 document.addEventListener('DOMContentLoaded',()=>{
   
@@ -34,12 +35,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 
-function getFormFields(id){
-    let form = document.getElementById(id);
-    return  new FormData(form);
-    
-}
-
 
 function register(){ 
   const registerForm = getFormFields("registerform");
@@ -50,7 +45,7 @@ function register(){
 
   if (!exists) {
     userArray.push(user);
-    localStorage.setItem('users', JSON.stringify(userArray));
+    SetTable("user",userArray);
     return true;
   } else {
     return false;
