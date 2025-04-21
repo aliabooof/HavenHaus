@@ -17,3 +17,6 @@ export function DecreaseQuantity(event){
         return;
     ChangeQuantity(qElement,-1)
 }
+export function GetUrlField(fieldName){
+    return window.location.search.split(fieldName+"=")[1].split("&")[0]
+}
