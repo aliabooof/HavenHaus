@@ -25,7 +25,7 @@ export function redirect(pageName){
 }
 
 export function createAlert(message, color, subMessage = "") {
-    const s =0;
+  
 
     const alert = document.createElement("div");
     alert.classList.add("alert", `alert-${color}`, "alert-dismissible", "fade", "show");
@@ -53,3 +53,9 @@ export function GetUrlField(fieldName){
     return window.location.search.split(fieldName+"=")[1].split("&")[0]
 }
 
+export function getFormFields(id){
+    //gets the form data by id
+    let form = document.getElementById(id);
+    return  new FormData(form);
+    
+}

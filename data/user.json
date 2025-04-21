@@ -1,19 +1,22 @@
 {
   "user": [
-    { "id": 1, "username": "admin_bear", "email": "admin@example.com", "password": "pass123", "role": "0" },
-    { "id": 2, "username": "seller_fox", "email": "seller1@example.com", "password": "pass123", "role": "1" },
-    { "id": 3, "username": "seller_owl", "email": "seller2@example.com", "password": "pass123", "role": "1" },
-    { "id": 4, "username": "seller_lion", "email": "seller3@example.com", "password": "pass123", "role": "1" },
-    { "id": 5, "username": "user_apple", "email": "user1@example.com", "password": "pass123", "role": "2" },
-    { "id": 6, "username": "user_banana", "email": "user2@example.com", "password": "pass123", "role": "2" },
-    { "id": 7, "username": "user_cherry", "email": "user3@example.com", "password": "pass123", "role": "2" },
-    { "id": 8, "username": "user_date", "email": "user4@example.com", "password": "pass123", "role": "2" },
-    { "id": 9, "username": "user_elderberry", "email": "user5@example.com", "password": "pass123", "role": "2" },
-    { "id": 10, "username": "user_fig", "email": "user6@example.com", "password": "pass123", "role": "2" },
-    { "id": 11, "username": "user_grape", "email": "user7@example.com", "password": "pass123", "role": "2" },
-    { "id": 12, "username": "user_honeydew", "email": "user8@example.com", "password": "pass123", "role": "2" },
-    { "id": 13, "username": "user_kiwi", "email": "user9@example.com", "password": "pass123", "role": "2" },
-    { "id": 14, "username": "user_lemon", "email": "user10@example.com", "password": "pass123", "role": "2" },
-    { "id": 15, "username": "user_mango", "email": "user11@example.com", "password": "pass123", "role": "2" }
+    { "id": "aliouf_3532", "firstName": "ali", "lastName":"ouf", "email": "admin@example.com", "password": "pass123", "role": "0","phone":"201207751489"},
+    { "id": "aliouf_3532", "firstName": "Ali", "lastName": "Ouf", "email": "ali@example.com", "password": "pass123", "role": "1", "phone": "201207751489" },
+    { "id": "john_doe_001", "firstName": "John", "lastName": "Doe", "email": "john@example.com", "password": "password01", "role": "2", "phone": "201234567890" },
+    { "id": "mary_smith_002", "firstName": "Mary", "lastName": "Smith", "email": "mary@example.com", "password": "password02", "role": "1", "phone": "201234567891" },
+    { "id": "jane_doe_003", "firstName": "Jane", "lastName": "Doe", "email": "jane@example.com", "password": "password03", "role": "2", "phone": "201234567892" },
+    { "id": "mark_taylor_004", "firstName": "Mark", "lastName": "Taylor", "email": "mark@example.com", "password": "password04", "role": "1", "phone": "201234567893" },
+    { "id": "susan_james_005", "firstName": "Susan", "lastName": "James", "email": "susan@example.com", "password": "password05", "role": "2", "phone": "201234567894" },
+    { "id": "michael_clark_006", "firstName": "Michael", "lastName": "Clark", "email": "michael@example.com", "password": "password06", "role": "1", "phone": "201234567895" },
+    { "id": "lucy_brown_007", "firstName": "Lucy", "lastName": "Brown", "email": "lucy@example.com", "password": "password07", "role": "2", "phone": "201234567896" },
+    { "id": "david_martin_008", "firstName": "David", "lastName": "Martin", "email": "david@example.com", "password": "password08", "role": "1", "phone": "201234567897" },
+    { "id": "emma_wilson_009", "firstName": "Emma", "lastName": "Wilson", "email": "emma@example.com", "password": "password09", "role": "2", "phone": "201234567898" },
+    { "id": "ryan_johnson_010", "firstName": "Ryan", "lastName": "Johnson", "email": "ryan@example.com", "password": "password10", "role": "1", "phone": "201234567899" },
+    { "id": "olivia_lee_011", "firstName": "Olivia", "lastName": "Lee", "email": "olivia@example.com", "password": "password11", "role": "2", "phone": "201234567900" },
+    { "id": "james_smith_012", "firstName": "James", "lastName": "Smith", "email": "james@example.com", "password": "password12", "role": "1", "phone": "201234567901" },
+    { "id": "sophia_davis_013", "firstName": "Sophia", "lastName": "Davis", "email": "sophia@example.com", "password": "password13", "role": "2", "phone": "201234567902" },
+    { "id": "william_garcia_014", "firstName": "William", "lastName": "Garcia", "email": "william@example.com", "password": "password14", "role": "1", "phone": "201234567903" },
+    { "id": "charlotte_moore_015", "firstName": "Charlotte", "lastName": "Moore", "email": "charlotte@example.com", "password": "password15", "role": "2", "phone": "201234567904" }
   ]
+
 }
