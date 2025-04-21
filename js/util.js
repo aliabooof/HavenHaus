@@ -75,6 +75,7 @@ export function GetUrlField(fieldName){
 export function getFormFields(id){
     //gets the form data by id
     let form = document.getElementById(id);
-    return  new FormData(form);
+    let formData= new FormData(form);
+    return Object.fromEntries(formData.entries());
     
 }

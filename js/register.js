@@ -37,9 +37,9 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 function register(){ 
-  const registerForm = getFormFields("registerform");
-  const data = Object.fromEntries(registerForm.entries());
-  const user = new User(data);
+  const registerFormData = getFormFields("registerform");
+  
+  const user = new User(registerFormData);
 
   const exists = userArray.some(u => u.email === user.email);
 
