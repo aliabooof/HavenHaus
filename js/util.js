@@ -19,6 +19,7 @@ export function DecreaseQuantity(event){
 }
 
 
+
 export function redirect(pageName){
     window.location.href = pageName;
 }
@@ -45,3 +46,8 @@ export function createAlert(message, color, subMessage = "") {
     document.body.appendChild(alert);
     return alert;
 }
+
+export function GetUrlField(fieldName){
+    return window.location.search.split(fieldName+"=")[1].split("&")[0]
+}
+
