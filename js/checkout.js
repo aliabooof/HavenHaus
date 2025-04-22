@@ -1,7 +1,17 @@
 import {GetCartByID, GetProductByID} from "./db.js";
 import {GetUrlField, redirect} from "./util.js";
 
-
+async function fetchComponent(url){
+    let response  = await fetch(url)
+    let htmlString  = await response.text();
+    return htmlString;
+}
+function convertToHtmlElement(htmlString){
+    let tempDiv = document.createElement("div")
+    tempDiv.innerHTML = htmlString;
+    let htmlElement= tempDiv.firstChild; 
+    return htmlElement;
+}
 function createSummaryItem(cartItem){
     let product = GetProductByID(cartItem.productID)[0];
     let summaryItemHtml = convertToHtmlElement(summaryItemHtmlString)
