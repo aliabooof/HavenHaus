@@ -16,11 +16,21 @@ document.addEventListener('DOMContentLoaded',()=>{
       if (register()) {
           const createdAlert =  
             createAlert("You have been registered successfully!" , "success" , "You will be redirected to the login page in 5 seconds.");
-
+          
+          const elements = Array.from(form.elements);
+  
+          console.log(form.elements);
+          console.log(elements);
+        
+          
+          elements.forEach(element => {
+            element.disabled = true;
+          });
           window.scrollTo({ top: 0, behavior: 'smooth' });
 
           window.setTimeout(() => {
-            createdAlert.remove();
+            
+            
               redirect(form.getAttribute('action'));
           }, 5000);
       }else{
