@@ -1,36 +1,29 @@
-import {User} from "./userModule.js"
-import { redirect , createAlert, getFormFields } from "./util.js";
-import {GetTable , SetTable } from "./db.js"
 
-let userArray = (GetTable("user")||[]).map((userObj)=> new User(userObj));
+import { redirect , createAlert, getFormFields } from "./util.js";
+import {Auth} from "./modules/authModule.js";
+
+console.log("hey");
 
 
 document.addEventListener('DOMContentLoaded',()=>{
   
    
-    const form =document.getElementById('registerform');
+    const form = document.getElementById('registerform');
   
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      
-      if (register()) {
+      const data = getFormFields("registerform");
+      if (Auth.register(data)) {
           const createdAlert =  
             createAlert("You have been registered successfully!" , "success" , "You will be redirected to the login page in 5 seconds.");
           
           const elements = Array.from(form.elements);
-  
-          console.log(form.elements);
-          console.log(elements);
-        
-          
           elements.forEach(element => {
             element.disabled = true;
           });
           window.scrollTo({ top: 0, behavior: 'smooth' });
 
-          window.setTimeout(() => {
-            
-            
+          window.setTimeout(() => {            
               redirect(form.getAttribute('action'));
           }, 5000);
       }else{
@@ -45,22 +38,6 @@ document.addEventListener('DOMContentLoaded',()=>{
 
 
 
-
-function register(){ 
-  const registerFormData = getFormFields("registerform");
-  
-  const user = new User(registerFormData);
-
-  const exists = userArray.some(u => u.email === user.email);
-
-  if (!exists) {
-    userArray.push(user);
-    SetTable("user",userArray);
-    return true;
-  } else {
-    return false;
-  }
-}
 
 
 
