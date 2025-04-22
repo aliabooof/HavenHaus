@@ -1,18 +1,24 @@
-export function GetTable(tableName){
+export function getTable(tableName){
     return JSON.parse(window.localStorage.getItem(tableName));
 }
-export function SetTable(tableName, table){
+export function setTable(tableName, table){
     localStorage.setItem(tableName,JSON.stringify(table));
 }
-export function GetUserByID(id){
-    // return All user with the same ID !! NOT ONLY ONE
-    let users = GetTable("user")
-    return users.filter(user=> user.id == id); 
+export function add(tableName,item){
+    const data = getTable(tableName);
+    data.push(item);
+    setTable(tableName,data);
+
 }
+// export function GetUserByID(id){
+//     // return All user with the same ID !! NOT ONLY ONE
+//     let users = getTable("user")
+//     return users.filter(user=> user.id == id); 
+// }
 export function GetProductByID(productID){
     // return All Products with the same ID !! NOT ONLY ONE
     // returns array [empty] or [products with product.id = productID]
-    let products = GetTable("product")
+    let products = getTable("product")
     return products.filter(prod=> prod.id == productID); 
 }
 
@@ -20,7 +26,7 @@ export function GetProductByID(productID){
 export function GetCartByID(userID){
     // return All CartItems with the same userID
     // returns array [empty] or [cartItems,...]
-    let carts = GetTable("cartItem");
+    let carts = getTable("cartItem");
     return carts.filter(item=>  item.userID == userID);
 }
 
@@ -36,7 +42,7 @@ export function AddCartItem(userID, productID, quantity=1){
     let q = 0;
     if(cartItem.length > 0)
         return
-    let carts = GetTable("cartItem");
+    let carts = getTable("cartItem");
     carts.push(
         {
             userID: userID,
@@ -44,7 +50,7 @@ export function AddCartItem(userID, productID, quantity=1){
             quantity:quantity
         }
     )
-    SetTable("cartItem", carts)
+    setTable("cartItem", carts)
 }
 
 export function ChangeCartItemQuantity(userID, productID, newQuantity){
@@ -56,24 +62,24 @@ export function ChangeCartItemQuantity(userID, productID, newQuantity){
         AddCartItem(userID, productID, newQuantity);
         return;
     }
-    let carts = GetTable("cartItem");
+    let carts = getTable("cartItem");
     carts.forEach((item,index) => {
         if(item.userID == userID && item.productID == productID){
             carts[index].quantity = newQuantity
         }
     });
-    SetTable("cartItem", carts)
+    setTable("cartItem", carts)
 }
 
 export function RemoveCartItem(userID, productID){
     // Totally removes the item from the cart
-    let carts = GetTable("cartItem");
+    let carts = getTable("cartItem");
     carts.some((item,index) => {
         if(item.userID == userID && item.productID == productID){
             carts.splice(index,1);
             return true;
         }
     });
-    SetTable("cartItem", carts)
+    setTable("cartItem", carts)
 }
 

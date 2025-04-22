@@ -1,4 +1,4 @@
-import {GetTable } from "./db.js"
+import {getTable,add } from "../db.js"
 export class User{
     constructor({ firstName, lastName, email, role, phone, password }) {
         this.firstName = firstName;
@@ -25,26 +25,48 @@ export class User{
     }
 
     static getAllUsers(){
-        return GetTable("user")||[];
+        return getTable("user")||[];
     }
 
     static getAllExistingUserIds() {
-        const users = GetTable("user") || [];
+        const users = getTable("user") || [];
         return users.map(user => user.id);
     }
 
     static getAllExistingEmail(){
-        const users = GetTable("user")||[];
+        const users = getTable("user")||[];
         return users.map(user => user.email.toLowerCase());
     }
 
     static getUserByEmail(email) {
-        const users = GetTable("user") || [];
+        const users = getTable("user") || [];
         return users.find(user => user.email.toLowerCase() === email.toLowerCase());
     }
     
     static getCurrentUser(){
-        return GetTable('currentUser');
+        return getTable('currentUser');
     }
+    
+    static getUserById(id){
+        const users =getTable("user")|[];
+        return users.find(user => user.id === id);
+    }
+
+    static checkUserExistance(email){
+        const user = this.getUserByEmail(email);
+        console.log(user);
+        if(user)
+            return true;
+        return false;
+    }
+
+    static addUser(user){
+        add("user",user);
+    }
+
+    static removeUser(id) {
+            const users = this.getAllProducts().filter(user => user.id !== id);
+            setTable("product", products);
+        }
  
 } 
