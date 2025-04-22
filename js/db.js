@@ -4,6 +4,9 @@ export function getTable(tableName){
 export function setTable(tableName, table){
     localStorage.setItem(tableName,JSON.stringify(table));
 }
+export function deleteTable(tableName){
+    localStorage.removeItem(tableName);
+}
 export function add(tableName,item){
     const data = getTable(tableName);
     data.push(item);
