@@ -12,18 +12,15 @@
         
         <script src="../js/load_db.js"></script>
         <script type="module">
-            import {GetProductByID, ChangeCartItemQuantity} from "../js/db.js"
-            import {IncreaseQuantity as IQ, DecreaseQuantity, GetUrlField} from "../js/util.js"
-            
+            import {GetProductByID, ChangeCartItemQuantity, GetCartItem} from "../js/db.js"
+            import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect} from "../js/util.js"
+            var userID =5;           
             function AddToCart(event){
-                let quantityElement = document.getElementById("quantity");
-                ChangeCartItemQuantity(5, product.id, Number(quantityElement.innerText.trim()))
-                window.location.assign(`./cart.html?id=${5}`)
+                let quantityElement = document.querySelector(".quantity");
+                ChangeCartItemQuantity(userID, product.id, Number(quantityElement.innerText.trim()))
+                window.location.assign(`./cart.html?id=${userID}`)
             }
-
-            function IncreaseQuantity(event){
-                IQ(event,product.stock)
-            }
+            
             function RedirectNotFound(){
                 window.location.assign("./not-found.html")
             }
@@ -33,7 +30,8 @@
                 var product = GetProductByID(prodID)[0]
             }
             else{
-                RedirectNotFound();
+                redirect("./not-found.html")
+                // RedirectNotFound();
             }
             if(product != undefined){
                 // console.log(product)
@@ -42,18 +40,23 @@
                 document.querySelector("#product-description").innerText = product.desc
                 
                 document.querySelector("#stock-count").innerText = product.stock
+                document.querySelector(".stock").innerText = product.stock
                 if(product.stock < 1){
                     document.querySelector("#stock-label").classList.remove("text-success")
                     document.querySelector("#stock-label").classList.add("text-danger")
                 }
             }
             else{
-                RedirectNotFound()
+                redirect("./not-found.html")
             }
             window.addEventListener("load",function(event){
+                let cartItem =  GetCartItem(userID,product.id)
+                if (cartItem.length > 0 )
+                    document.querySelector(".quantity").innerText = cartItem[0].quantity
                 document.getElementById("increaseQuantityBtn").addEventListener("click",IncreaseQuantity)
                 document.getElementById("decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)
                 document.getElementById("addToCartBtn").addEventListener("click",AddToCart)
+
             })
         </script>
         <style>
@@ -118,8 +121,9 @@
                                     <div >Quantity</div>
                                     <div class="d-inline-flex align-items-center">
                                         <button id="decreaseQuantityBtn" class="btn btn-md btn-outline-secondary px-2 p-1 rounded-0 rounded-start-2" >−</button>
-                                        <span id="quantity" class="px-3 py-1  quantity-value d-inline-block border border-1">1</span>
+                                        <span class="quantity px-3 py-1  quantity-value d-inline-block border border-1">1</span>
                                         <button id="increaseQuantityBtn" class="btn btn-md btn-outline-secondary px-2 py-1 rounded-0 rounded-end-2">+</button>
+                                        <span class="d-none stock"></span>
                                     </div>
                                     <div class="">
                                         <span id="stock-label"class="text-success">stock: </span>

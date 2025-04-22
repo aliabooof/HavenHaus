@@ -1,7 +1,7 @@
-function GetTable(tableName){
+export function GetTable(tableName){
     return JSON.parse(window.localStorage.getItem(tableName));
 }
-function SetTable(tableName, table){
+export function SetTable(tableName, table){
     localStorage.setItem(tableName,JSON.stringify(table));
 }
 export function GetUserByID(id){

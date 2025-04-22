@@ -1,21 +1,38 @@
-function ChangeQuantity(qElement,value){
-    qElement.innerText = Number(qElement.innerText)+value;
+function ChangeQuantity(quantityEle,value){
+    quantityEle.innerText = Number(quantityEle.innerText)+value;
     
 }
 function GetQuantityElement(event){
-    return  event.target.parentElement.querySelector("#quantity");
+    return  event.target.parentElement.querySelector(".quantity");
 }
-export function IncreaseQuantity(event,stock){
-    let qElement = GetQuantityElement(event)
-    if(Number(qElement.innerText.trim()) == stock)
+function GetStockElement(event){
+    return  event.target.parentElement.querySelector(".stock");
+    
+}
+function QuantityBtnDisable(quantityEle ,minusBtn,plusBtn){
+    let decBtn = quantityEle.previousElementSibling;
+    decBtn.disabled = minusBtn;
+    let incBtn = quantityEle.nextElementSibling;
+    incBtn.disabled = plusBtn
+}
+export function IncreaseQuantity(event){
+    let quantityEle = GetQuantityElement(event);
+    let stockEle = GetStockElement(event);
+    if(Number(quantityEle.innerText.trim()) == Number(stockEle.innerText.trim())){
+        QuantityBtnDisable(quantityEle, false, true)
         return;
-    ChangeQuantity(qElement,1)
+    }
+    QuantityBtnDisable(quantityEle, false, false)
+    ChangeQuantity(quantityEle,1)
 }
 export function DecreaseQuantity(event){
-    let qElement = GetQuantityElement(event)
-    if(Number(qElement.innerText.trim()) == 1)
+    let quantityEle = GetQuantityElement(event)
+    if(Number(quantityEle.innerText.trim()) == 1){
+        QuantityBtnDisable(quantityEle, true,false)
         return;
-    ChangeQuantity(qElement,-1)
+    }
+    QuantityBtnDisable(quantityEle, false,false)
+    ChangeQuantity(quantityEle,-1)
 }
 
 
@@ -25,7 +42,7 @@ export function redirect(pageName){
 }
 
 export function createAlert(message, color, subMessage = "") {
-    const s =0;
+  
 
     const alert = document.createElement("div");
     alert.classList.add("alert", `alert-${color}`, "alert-dismissible", "fade", "show");
@@ -50,6 +67,15 @@ export function createAlert(message, color, subMessage = "") {
 }
 
 export function GetUrlField(fieldName){
+    let search = window.location.search;
+    if (!search) return null;
     return window.location.search.split(fieldName+"=")[1].split("&")[0]
 }
 
+export function getFormFields(id){
+    //gets the form data by id
+    let form = document.getElementById(id);
+    let formData= new FormData(form);
+    return Object.fromEntries(formData.entries());
+    
+}
