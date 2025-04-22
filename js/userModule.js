@@ -43,5 +43,8 @@ export class User{
         return users.find(user => user.email.toLowerCase() === email.toLowerCase());
     }
     
+    static getCurrentUser(){
+        return GetTable('currentUser');
+    }
  
 } 
