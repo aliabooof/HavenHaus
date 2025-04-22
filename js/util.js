@@ -69,7 +69,12 @@ export function createAlert(message, color, subMessage = "") {
 export function GetUrlField(fieldName){
     let search = window.location.search;
     if (!search) return null;
-    return window.location.search.split(fieldName+"=")[1].split("&")[0]
+    let value = window.location.search.split(fieldName+"=")
+    if(value.length > 0)
+        return value[1].split("&")[0]
+    else
+        return null;
+    return 5
 }
 
 export function getFormFields(id){
