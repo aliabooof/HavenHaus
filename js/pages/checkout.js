@@ -1,7 +1,7 @@
-import {GetCartByID, GetProductByID} from "./db.js";
-import {GetUrlField, redirect} from "./util.js";
-
-
+import {GetCartByID, GetProductByID} from "../modules/db.js";
+import {GetUrlField, redirect} from "../util.js";
+import {fetchComponent, convertToHtmlElement} from "../util.js"
+import {Navbar} from  "../componentModules/navbar.js"
 function createSummaryItem(cartItem){
     let product = GetProductByID(cartItem.productID)[0];
     let summaryItemHtml = convertToHtmlElement(summaryItemHtmlString)
@@ -11,6 +11,8 @@ function createSummaryItem(cartItem){
     summaryItemHtml.querySelector("#desc").innerText = product.desc
     return summaryItemHtml;
 }
+
+Navbar.renderNavbar();
 
 let userID = GetUrlField("id");
 if(!userID)
