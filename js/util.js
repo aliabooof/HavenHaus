@@ -84,3 +84,16 @@ export function getFormFields(id){
     return Object.fromEntries(formData.entries());
     
 }
+
+
+async function fetchComponent(url){
+    let response  = await fetch(url)
+    let htmlString  = await response.text();
+    return htmlString;
+}
+function convertToHtmlElement(htmlString){
+    let tempDiv = document.createElement("div")
+    tempDiv.innerHTML = htmlString;
+    let htmlElement= tempDiv.firstChild; 
+    return htmlElement;
+}
