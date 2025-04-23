@@ -1,7 +1,7 @@
 
 
 import { User } from "./userModule.js";
-import { setTable } from "../componentModules/db.js";
+import { setTable } from "../modules/db.js";
 
 export class Auth {
 
@@ -19,6 +19,7 @@ export class Auth {
 
         if (user.password === loginPassword) {
             setTable("currentUser", user);
+            setTable("loggedin",true);
             console.log("Login successful. User:", user);
             return true;
         } else {

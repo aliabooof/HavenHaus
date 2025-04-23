@@ -1,4 +1,4 @@
-import {getTable,add } from "../componentModules/db.js"
+import {getTable,add } from "./db.js"
 export class User{
     constructor({ firstName, lastName, email, role, phone, password }) {
         this.firstName = firstName;
