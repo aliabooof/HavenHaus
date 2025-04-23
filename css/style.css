@@ -37,21 +37,6 @@
 
 
 
-/***** home page category section *****/ 
-
-.category .card{
-  transition: all 0.5s ease-in-out;
-}
-.category .card:hover{
-  transform: scale(1.1);
-}
-
-/***** End home page category section *****/
-
-
-
-
-
 /***** footer*****/ 
 
 .footer{

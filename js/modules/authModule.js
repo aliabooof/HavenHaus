@@ -1,7 +1,7 @@
 
 
 import { User } from "./userModule.js";
-import { setTable } from "../db.js";
+import { setTable } from "../componentModules/db.js";
 
 export class Auth {
 

@@ -1,5 +1,5 @@
-import { redirect , createAlert, getFormFields } from "./util.js";
-import { Auth } from "./modules/authModule.js";
+import { redirect , createAlert, getFormFields } from "../util.js";
+import { Auth } from "../modules/authModule.js";
 
 document.addEventListener('DOMContentLoaded',()=>{
     const form = document.getElementById('loginform');
