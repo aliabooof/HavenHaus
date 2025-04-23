@@ -1,4 +1,4 @@
-import { getTable, add, setTable } from "../db.js";
+import { getTable, add, setTable } from "./db.js";
 
 export class Product {
     constructor({ name, category, price, desc, imageUrl, stock, sellerID, highlights, instructions, reviews }) {
@@ -38,6 +38,9 @@ export class Product {
     // Get all existing product IDs
     static getAllExistingProductIds() {
         return this.getAllProducts().map(product => product.id);
+    }
+    static getProductsByCatId(id) {
+        return this.getAllProducts().filter(product => product.category == id);
     }
 
     // Get product by ID
