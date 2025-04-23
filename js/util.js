@@ -85,13 +85,13 @@ export function getFormFields(id){
     
 }
 
-
-async function fetchComponent(url){
+// Must Use await with call
+export async function fetchComponent(url){
     let response  = await fetch(url)
     let htmlString  = await response.text();
     return htmlString;
 }
-function convertToHtmlElement(htmlString){
+export function convertToHtmlElement(htmlString){
     let tempDiv = document.createElement("div")
     tempDiv.innerHTML = htmlString;
     let htmlElement= tempDiv.firstChild; 
