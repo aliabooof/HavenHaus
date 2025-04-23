@@ -7,6 +7,12 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../css/style.css">
   <script src="../js/load_db.js" ></script>
+  <script type="module">
+    import {Navbar} from "../js/componentModules/navbar.js"
+    await Navbar.renderNavbar();
+  </script>
+  <script type="module" src="../js/searchCatalog.js"></script>
+
   <style>
     
   </style>
@@ -15,7 +21,7 @@
   <!-- Navigation Bar -->
   <div id="navbar"></div>
 
-  <div class="container py-4">
+  <div id="createProductCards" class="container py-4">
     <!-- Header -->
     <div class=" row align-items-center g-3 mb-4">
        <!-- Header H2 -->
@@ -35,9 +41,9 @@
         <div class="col-12 col-md-4 col-lg-3">
           <select class="form-select">
             <option value="all" selected>All Products</option>    <!--add value="all rawan "-->
-            <option value="sofa">Sofas</option>
-            <option value="chairs">Chairs</option>
-            <option value="tables">Tables</option>
+            <option value=1 >Sofas</option>
+            <option value=2 >Chairs</option>
+            <option value=3>Tables</option>
           </select>
         </div>
     
@@ -53,116 +59,8 @@
       </div>
 
     <!-- Product Cards -->
-    <div class="row g-4">
+    <div id ="cards-container" class="row g-4">
 
-      <!-- Card 1 -->
-      <div id="product-card"></div>
-      <!-- <div class="col-12 col-md-6 col-lg-4">
-        <div class="card Mycard shadow-sm">
-          <i class="far fa-heart favorite-icon"></i>
-          <img src="../assets/images/1.jpg" class="card-img-top product-card" alt="Velvet Cream Sofa">
-          <div class="card-body">
-            <h5 class="card-title">Velvet Cream Sofa</h5>
-            <p class="card-text text-muted">Luxurious velvet sofa with modern design</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">$999.99</span>
-              <button class="btn btn-primary">
-                <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- Card 2 -->
-      <!-- <div id="product-card"></div> -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card Mycard shadow-sm">
-          <i class="far fa-heart favorite-icon"></i>
-          <img src="images/2.jpg" class="card-img-top product-card" alt="Leather Cream Sofa">
-          <div class="card-body">
-            <h5 class="card-title">Leather Cream Sofa</h5>
-            <p class="card-text text-muted">Premium leather sofa with elegant design</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">$1299.99</span>
-              <button class="btn btn-primary">
-                <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Card 3 -->
-      <!-- <div id="product-card"></div> -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-          <i class="far fa-heart favorite-icon"></i>
-          <img src="images/3.jpg" class="card-img-top product-card" alt="Oak Cream Sofa">
-          <div class="card-body">
-            <h5 class="card-title">Oak Cream Sofa</h5>
-            <p class="card-text text-muted">Classic oak sofa with comfortable cushions</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">$899.99</span>
-              <button class="btn btn-primary">
-                <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Card 4 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-          <i class="far fa-heart favorite-icon"></i>
-          <img src="images/4.jpg" class="card-img-top product-card" alt="Oak Cream Sofa">
-          <div class="card-body">
-            <h5 class="card-title">Velvet Cream Chair</h5>
-            <p class="card-text text-muted">Elegant velvet chair for your living room</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">$299.99</span>
-              <button class="btn btn-primary">
-                <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Card 5 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-          <i class="far fa-heart favorite-icon"></i>
-          <img src="images/5.jpg" class="card-img-top product-card" alt="Oak Cream Sofa">
-          <div class="card-body">
-            <h5 class="card-title">Leather Cream Chair</h5>
-            <p class="card-text text-muted">Premium leather chair with modern design</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">$399.99</span>
-              <button class="btn btn-primary">
-                <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <!-- Card 6 -->
-      <div class="col-12 col-md-6 col-lg-4">
-        <div class="card shadow-sm">
-          <i class="far fa-heart favorite-icon"></i>
-          <img src="images/6.jpg" class="card-img-top product-card" alt="Oak Cream Sofa">
-          <div class="card-body">
-            <h5 class="card-title">Oak Cream Chair</h5>
-            <p class="card-text text-muted">Classic oak chair with comfortable cushion</p>
-            <div class="d-flex justify-content-between align-items-center">
-              <span class="fw-bold text-primary">$349.99</span>
-              <button class="btn btn-primary">
-                <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </div>
   </div>
@@ -170,10 +68,9 @@
   <!-- Footer -->
   <div id="footer"></div>
 
-  <script type="module" src="../js/main.js"></script>
+  <!-- <script type="module" src="../js/main.js"></script> -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
   <!--only add this rawan -->
-  <script type="module" src="../js/searchCatalog.js"></script>
 </body>
 </html>
