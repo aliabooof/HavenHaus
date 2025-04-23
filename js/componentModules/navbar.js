@@ -1,36 +1,43 @@
 import { getTable } from "../modules/db.js";
-import {User} from "../modules/userModule.js"
-export class Navbar{
+import { Auth } from "../modules/authModule.js";
+import { User } from "../modules/userModule.js";
+export class Navbar {
 
 
     static renderNavbar() {
-  
+
         const isLoggedIn = getTable("loggedin");
         const user = User.getCurrentUser();
         const navbarContainer = document.getElementById("navbar");
-    
+
         if (isLoggedIn && user) {
             console.log(user);
-            
+
             navbarContainer.innerHTML = this.getAuthNavbar();
-    
-            
+
+
             const userName = `${user.firstName} ${user.lastName}`.trim() || "User";
-    
-            
+
+
             navbarContainer.querySelectorAll(".username-placeholder").forEach(el => {
                 el.textContent = userName;
             });
-    
+            const logoutLinks = navbarContainer.querySelectorAll(".logout-link");
+            logoutLinks.forEach(link => {
+                link.addEventListener('click', () => {
+                    console.log("logout");
+                    Auth.logout();
+                });
+            });
         } else {
             navbarContainer.innerHTML = this.getGuestNavbar();
         }
     }
-    
-    
 
 
-    static getGuestNavbar(){
+
+
+    static getGuestNavbar() {
         return `
         <nav class="mynav navbar shadow sticky-top navbar-light bg-light">
         <div class="container">
@@ -62,9 +69,9 @@ export class Navbar{
     </nav>
         `;
     }
-    
 
-    static getAuthNavbar(){
+
+    static getAuthNavbar() {
         return `
         
     <nav  class="mynav navbar navbar-expand-md shadow sticky-top navbar-light bg-light">
@@ -95,7 +102,7 @@ export class Navbar{
                                 <hr class="dropdown-divider" />
                             </li>
                             <li>
-                                <a class="dropdown-item" href="#">Something else here</a>
+                                <a class="logout-link dropdown-item" href="#">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -147,7 +154,7 @@ export class Navbar{
                             <hr class="dropdown-divider" />
                         </li>
                         <li>
-                            <a class="dropdown-item" href="#">Something else here</a>
+                            <a class="dropdown-item logout-link" href="#">Logout</a>
                         </li>
                     </ul>
                 </div>

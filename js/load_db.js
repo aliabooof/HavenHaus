@@ -1,3 +1,4 @@
+
 function LoadFile(url){
     let json = fetch(url).then(data=>data.json())
         json.then(data=> db = data).then(function(data){
@@ -19,4 +20,4 @@ function LoadDB(){
     }
 }
 
-LoadDB()
+LoadDB();

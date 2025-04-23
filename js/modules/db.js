@@ -10,6 +10,10 @@ export function add(tableName,item){
     setTable(tableName,data);
 
 }
+
+export function deleteTable(tableName){
+    localStorage.removeItem(tableName);
+}
 // export function GetUserByID(id){
 //     // return All user with the same ID !! NOT ONLY ONE
 //     let users = getTable("user")

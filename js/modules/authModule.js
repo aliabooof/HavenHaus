@@ -1,7 +1,6 @@
-
-
 import { User } from "./userModule.js";
-import { setTable } from "../modules/db.js";
+import { setTable, deleteTable } from "./db.js";
+import { redirect } from "../util.js";
 
 export class Auth {
 
@@ -44,7 +43,9 @@ export class Auth {
         }
     }
 
-    logout() {
-
+    static logout() {
+        deleteTable("currentUser");
+        deleteTable("loggedin");
+        redirect("../../index.html");
     }
 }
