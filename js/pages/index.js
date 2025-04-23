@@ -1,8 +1,8 @@
 import { createAlert } from "../util.js";
 import { Navbar } from "../componentModules/navbar.js";
 
-document.addEventListener("DOMContentLoaded", () => {
-    Navbar.renderNavbar();
+document.addEventListener("DOMContentLoaded", async () => {
+   await Navbar.renderNavbar();
     const flashData = sessionStorage.getItem("flashAlert");
 
     if (flashData) {
