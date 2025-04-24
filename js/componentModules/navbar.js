@@ -1,20 +1,18 @@
-import { getTable } from "../modules/db.js";
+
 import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
+
 import {fetchComponent, convertToHtmlElement} from "../util.js";
 export class Navbar {
 
 
     static async renderNavbar() {
 
-        const isLoggedIn = getTable("loggedin");
-        const user = User.getCurrentUser();
+        
         const body = document.body;
 
-        if (isLoggedIn && user) {
-            console.log(user);
-            console.log(await this.getAuthNavbar())
-            
+        if (Auth.isLoggedIn()) {
+            const user = User.getCurrentUser();
             body.insertAdjacentElement("afterbegin",await this.getAuthNavbar());
 
 
