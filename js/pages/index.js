@@ -1,8 +1,10 @@
 import { createAlert } from "../util.js";
 import { Navbar } from "../componentModules/navbar.js";
+import { renderFooter } from "../componentModules/footer.js";
 
 document.addEventListener("DOMContentLoaded", async () => {
    await Navbar.renderNavbar();
+   await renderFooter();
     const flashData = sessionStorage.getItem("flashAlert");
 
     if (flashData) {
