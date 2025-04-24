@@ -70,11 +70,10 @@ export function GetUrlField(fieldName){
     let search = window.location.search;
     if (!search) return null;
     let value = window.location.search.split(fieldName+"=")
-    if(value.length > 0)
+    if(value.length > 1)
         return value[1].split("&")[0]
     else
         return null;
-    return 5
 }
 
 export function getFormFields(id){
@@ -93,7 +92,8 @@ export async function fetchComponent(url){
 }
 export function convertToHtmlElement(htmlString){
     let tempDiv = document.createElement("div")
-    tempDiv.innerHTML = htmlString;
+    tempDiv.innerHTML = htmlString.trim();
     let htmlElement= tempDiv.firstChild; 
     return htmlElement;
 }
+
