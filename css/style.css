@@ -187,11 +187,11 @@ body{
   
 }
 .from-bottom-animation{
-  transform: translateY(-100px);
+  transform: translateY(100px);
 }
 
 .from-top-animation{
-  transform: translateY(100px);
+  transform: translateY(-100px);
 }
 
 
