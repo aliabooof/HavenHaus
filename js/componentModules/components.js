@@ -46,6 +46,18 @@ export class Component{
             }
         }
     
+        static async renderCategoryCard(category){
+            const classArr=["from-left-animation","from-right-animation","from-z-animation"];
+            let categoryCard= await fetchComponent("../../components/category-card.html");
+            categoryCard = convertToHtmlElement(categoryCard);
+            categoryCard.id = category.id;
+            categoryCard.querySelector("h5").innerText=category.name;
+            categoryCard.querySelector("p").innerText = category.description;
+            categoryCard.querySelector("img").src=`../../assets/images/category/${category.name}.png`;
+            categoryCard.classList.add(classArr[Math.floor(Math.random() * classArr.length)])
+            const categoryContainer = document.getElementById("category-cards-container");
+            categoryContainer.appendChild(categoryCard);
+        }
     
     
     

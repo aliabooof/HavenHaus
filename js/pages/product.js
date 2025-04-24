@@ -1,11 +1,8 @@
 import {ChangeCartItemQuantity, GetCartItem, GetProductByID} from "../modules/db.js"
 import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect} from "../util.js"
 import { User } from "../modules/userModule.js";
-import { Navbar } from "../componentModules/navbar.js";
-import { renderFooter} from "../componentModules/footer.js";
-await Navbar.renderNavbar();
-await renderFooter()
-
+import { Component } from "../componentModules/components.js";
+await Component.renderNavbar();
 
 function AddToCart(event){
     let user = User.getCurrentUser();

@@ -51,7 +51,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const firstName = document.getElementById("firstName");
   const lastName = document.getElementById("lastName");
   const email = document.getElementById("email");
-  const userType = document.getElementById("userType");
   const phone = document.getElementById("phone");
   const password = document.getElementById("password");
 

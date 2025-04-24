@@ -163,3 +163,42 @@
   font-weight: 700;
 }
 /***** End ofocanvas and cart icon *****/
+/***** animation styles *****/ 
+body{
+  overflow-x: hidden;
+}
+.hidden-animation {
+  opacity: 0;
+  transition: all 1s ease-out;
+  will-change: transform, opacity;
+}
+
+
+.from-left-animation {
+  transform: translateX(-300px);
+}
+
+.from-right-animation {
+  transform: translateX(300px);
+}
+
+.from-z-animation {
+  transform: scale(2)translateZ(300px);
+  
+}
+.from-bottom-animation{
+  transform: translateY(-100px);
+}
+
+.from-top-animation{
+  transform: translateY(100px);
+}
+
+
+
+.show-animation {
+  opacity: 1;
+  transform: none;
+  transition: all 2s ease;
+}
+/***** End animation styles *****/

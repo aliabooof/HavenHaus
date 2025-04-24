@@ -97,3 +97,21 @@ export function convertToHtmlElement(htmlString){
     return htmlElement;
 }
 
+export function observeElements( selector = '.hidden-animation',threshold = 0.2) {
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            console.log(entry.target);
+          entry.target.classList.add('show-animation');
+          obs.unobserve(entry.target); // Animate once
+        }
+      });
+    }, {
+      threshold: threshold
+    });
+  
+    document.querySelectorAll(selector).forEach(el => {
+      observer.observe(el);
+    });
+  }
+  
