@@ -1,10 +1,13 @@
 import {GetCartByID, GetProductByID, ChangeCartItemQuantity,RemoveCartItem} from "../modules/db.js"
 import {IncreaseQuantity as IncQ, DecreaseQuantity as DecQ, redirect} from "../util.js"
 import { User } from "../modules/userModule.js";
-import { Navbar } from "../componentModules/navbar.js";
-import { renderFooter} from "../componentModules/footer.js";
-await Navbar.renderNavbar();
-await renderFooter()
+import { Component } from "../componentModules/components.js";
+  
+
+await Component.renderNavbar();
+await Component.renderFooter();
+await Component.renderCartOffcanvas();
+
 
 
 
