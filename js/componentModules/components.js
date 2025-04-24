@@ -1,7 +1,9 @@
 import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
 import { fetchComponent , convertToHtmlElement } from "../util.js";
-
+import { CreateDisplyCartItem } from "./cart-item.js";
+import { GetCartByID } from "../modules/db.js";
+import { Cart } from "../modules/cart.js";
 export class Component{
 
 
@@ -15,7 +17,19 @@ export class Component{
     static async renderCartOffcanvas(){
         let cartOffcanvas = await fetchComponent("../../components/cart-offcanvas.html")
         cartOffcanvas = convertToHtmlElement(cartOffcanvas)
+        let cartItems = GetCartByID(User.getCurrentUser().id)
         document.body.insertAdjacentElement("beforeend",cartOffcanvas);
+
+        cartItems.forEach((item)=>{
+            let dispalyItem = CreateDisplyCartItem(item);
+            let prodID = dispalyItem.dataset.prodId
+            let prodPrice =  dispalyItem.dataset.prodPrice
+
+            cartOffcanvas.querySelector("#total-price-container").insertAdjacentElement("beforebegin",dispalyItem);
+            Cart.UpdateItemTotalPrice(prodID, prodPrice,item.quantity)
+        })
+        
+
     }
     
     static async renderNavbar() {

@@ -1,6 +1,12 @@
 // import {GetAllProducts} from '../js/modules/db.js';
 import {Product} from "./modules/productModule.js"
 // import {createProductCards} from './db.js';
+import { Component } from "./componentModules/components.js";
+  
+
+await Component.renderNavbar();
+await Component.renderFooter();
+await Component.renderCartOffcanvas();
 
 import {convertToHtmlElement, fetchComponent} from './util.js';
 let cardComponent = await fetchComponent("../components/product-card.html")
