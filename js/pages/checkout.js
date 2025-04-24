@@ -2,11 +2,14 @@ import {GetCartByID, GetProductByID} from "../modules/db.js";
 import {GetUrlField, redirect} from "../util.js";
 import {fetchComponent, convertToHtmlElement} from "../util.js"
 import { User } from "../modules/userModule.js";
-import { Navbar } from "../componentModules/navbar.js";
-import { renderFooter} from "../componentModules/footer.js";
+import { Component } from "../componentModules/components.js";
 import { Auth } from "../modules/authModule.js";
-Navbar.renderNavbar();
-renderFooter()
+  
+
+await Component.renderNavbar();
+await Component.renderFooter();
+await Component.renderCartOffcanvas();
+
 function createSummaryItem(cartItem){
     let product = GetProductByID(cartItem.productID)[0];
     let summaryItemHtml = convertToHtmlElement(summaryItemHtmlString)
