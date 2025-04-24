@@ -83,4 +83,8 @@ export class Product {
         const products = this.getAllProducts().filter(p => p.id !== productId);
         setTable("product", products);
     }
+
+    static getAllProductsCategories(){
+        return getTable("category");
+    }
 }

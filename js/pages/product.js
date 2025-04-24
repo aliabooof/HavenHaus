@@ -2,11 +2,13 @@ import {ChangeCartItemQuantity, GetCartItem, GetProductByID} from "../modules/db
 import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect} from "../util.js"
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
-  
+
+
 
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
+
 
 
 function AddToCart(event){

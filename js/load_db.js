@@ -15,6 +15,7 @@ function LoadDB(){
         LoadFile("../data/product.json")
         LoadFile("../data/orderItem.json")
         LoadFile("../data/cartItem.json")
+        LoadFile("../data/category.json")
 
         localStorage.setItem("IsDBLoaded",true)    
     }
