@@ -3,7 +3,8 @@ import { Component } from "../componentModules/components.js";
 import { Product } from "../modules/productModule.js";
 
 
-document.addEventListener("DOMContentLoaded", async () => {
+
+
    await Component.renderNavbar();
    await Component.renderFooter();
    await Component.renderCartOffcanvas();
@@ -40,4 +41,3 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 
     
-});
