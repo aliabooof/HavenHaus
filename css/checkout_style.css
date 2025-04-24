@@ -15,7 +15,7 @@ input[name]:focus{
     box-shadow: none !important;
 }
 
-#back, button{
+#back, .checkout-button{
     outline: 0;
     border: 0;
     background-color: transparent;
