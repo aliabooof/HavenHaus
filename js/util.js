@@ -70,11 +70,10 @@ export function GetUrlField(fieldName){
     let search = window.location.search;
     if (!search) return null;
     let value = window.location.search.split(fieldName+"=")
-    if(value.length > 0)
+    if(value.length > 1)
         return value[1].split("&")[0]
     else
         return null;
-    return 5
 }
 
 export function getFormFields(id){
@@ -84,3 +83,19 @@ export function getFormFields(id){
     return Object.fromEntries(formData.entries());
     
 }
+<<<<<<< Updated upstream
+=======
+
+// Must Use await with call
+export async function fetchComponent(url){
+    let response  = await fetch(url)
+    let htmlString  = await response.text();
+    return htmlString;
+}
+export function convertToHtmlElement(htmlString){
+    let tempDiv = document.createElement("div")
+    tempDiv.innerHTML = htmlString.trim();
+    let htmlElement= tempDiv.firstChild; 
+    return htmlElement;
+}
+>>>>>>> Stashed changes

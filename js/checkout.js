@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream:js/checkout.js
 import {GetCartByID, GetProductByID} from "./db.js";
 import {GetUrlField, redirect} from "./util.js";
 
@@ -12,31 +13,53 @@ function convertToHtmlElement(htmlString){
     let htmlElement= tempDiv.firstChild; 
     return htmlElement;
 }
+=======
+import {GetCartByID, GetProductByID} from "../modules/db.js";
+import {GetUrlField, redirect} from "../util.js";
+import {fetchComponent, convertToHtmlElement} from "../util.js"
+import { User } from "../modules/userModule.js";
+import { Navbar } from "../componentModules/navbar.js";
+import { renderFooter} from "../componentModules/footer.js";
+
+
+Navbar.renderNavbar();
+renderFooter()
+
+>>>>>>> Stashed changes:js/pages/checkout.js
 function createSummaryItem(cartItem){
     let product = GetProductByID(cartItem.productID)[0];
     let summaryItemHtml = convertToHtmlElement(summaryItemHtmlString)
-    summaryItemHtml.querySelector("#price").innerText = product.price * cartItem.quantity
+    summaryItemHtml.querySelector("#price").innerText = (product.price * cartItem.quantity).toFixed(2)
     summaryItemHtml.querySelector("#quantity").innerText = cartItem.quantity
     summaryItemHtml.querySelector("#prod-name").innerText = product.name
     summaryItemHtml.querySelector("#desc").innerText = product.desc
     return summaryItemHtml;
 }
 
+<<<<<<< Updated upstream:js/checkout.js
 let userID = GetUrlField("id");
 if(!userID)
+=======
+let currUser = User.getCurrentUser();
+if(!currUser)
+>>>>>>> Stashed changes:js/pages/checkout.js
     redirect("../login.html")
+let userID = currUser.id;
+
+
 let summaryItemHtmlString = await fetchComponent("../components/checkout-summary-item.html");
 let cart = GetCartByID(userID);
 
 
+let emtpyElement = document.getElementById("empty");
+let innerContainer = document.getElementById("inner-container");
 if(cart.length == 0){
-    let notFound = document.getElementById("not-found");
-    let innerContainer = document.getElementById("inner-container");
-    notFound.classList.remove("d-none")
-    notFound.classList.add("d-flex");
-    innerContainer.classList.add("d-none");
-}else
+    emtpyElement.classList.remove("d-none")
+    emtpyElement.classList.add("d-flex");
+}
+else
 {
+    innerContainer.classList.remove("d-none")
     let totalPrice = 0;
     cart.forEach(item => {
         let summaryItemContainer = document.getElementById("ordersummary");
@@ -44,6 +67,10 @@ if(cart.length == 0){
         summaryItemContainer.appendChild(summaryItem);
         totalPrice+= Number(summaryItem.querySelector("#price").innerText.trim());
     });
+    totalPrice = totalPrice.toLocaleString('en-US',{
+        maximumFractionDigits:2,
+        minimumFractionDigits:2
+    })
     document.getElementById("subtotal").innerText = totalPrice;
     document.getElementById("total-price").innerText = totalPrice;
     console.log(totalPrice);

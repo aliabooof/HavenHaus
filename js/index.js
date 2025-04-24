@@ -1,8 +1,18 @@
+<<<<<<< Updated upstream:js/index.js
 import { createAlert } from "./util.js";
 
 
 
 document.addEventListener("DOMContentLoaded", () => {
+=======
+import { createAlert } from "../util.js";
+import { Navbar } from "../componentModules/navbar.js";
+import { renderFooter} from "../componentModules/footer.js";
+
+document.addEventListener("DOMContentLoaded", async () => {
+    await Navbar.renderNavbar();
+    await renderFooter()
+>>>>>>> Stashed changes:js/pages/index.js
     const flashData = sessionStorage.getItem("flashAlert");
 
     if (flashData) {
