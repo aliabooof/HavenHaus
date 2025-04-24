@@ -1,0 +1,45 @@
+<div class="offcanvas offcanvas-end" tabindex="-1" id="cartCanvas" aria-labelledby="cartCanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="cartCanvasLabel">Shopping Cart</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+
+      <!-- Cart Item -->
+      <div class="cart-item" data-price="50">
+        <img src="https://via.placeholder.com/60" alt="Product Image">
+        <div class="cart-item-info">
+          <div class="cart-item-title">Wireless Headphones</div>
+          <div class="quantity-controls">
+            <button class="btn btn-outline-secondary btn-sm decrement"><i class="bi bi-dash"></i></button>
+            <span class="quantity">2</span>
+            <button class="btn btn-outline-secondary btn-sm increment"><i class="bi bi-plus"></i></button>
+          </div>
+          <div class="item-total text-muted">Total: $100</div>
+        </div>
+        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+      </div>
+
+      <div class="cart-item" data-price="120">
+        <img src="https://via.placeholder.com/60" alt="Product Image">
+        <div class="cart-item-info">
+          <div class="cart-item-title">Smart Watch</div>
+          <div class="quantity-controls">
+            <button class="btn btn-outline-secondary btn-sm decrement"><i class="bi bi-dash"></i></button>
+            <span class="quantity">1</span>
+            <button class="btn btn-outline-secondary btn-sm increment"><i class="bi bi-plus"></i></button>
+          </div>
+          <div class="item-total text-muted">Total: $120</div>
+        </div>
+        <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+      </div>
+
+      <!-- Total -->
+      <div class="d-flex justify-content-between align-items-center mt-4">
+        <span class="cart-total">Total:</span>
+        <span class="cart-total" id="grandTotal">$220</span>
+      </div>
+
+      <button class="btn btn-success w-100 mt-3">Proceed to Checkout</button>
+    </div>
+  </div>
