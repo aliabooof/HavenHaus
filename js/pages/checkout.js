@@ -4,6 +4,7 @@ import {fetchComponent, convertToHtmlElement} from "../util.js"
 import { User } from "../modules/userModule.js";
 import { Navbar } from "../componentModules/navbar.js";
 import { renderFooter} from "../componentModules/footer.js";
+import { Auth } from "../modules/authModule.js";
 Navbar.renderNavbar();
 renderFooter()
 function createSummaryItem(cartItem){
@@ -16,10 +17,10 @@ function createSummaryItem(cartItem){
     return summaryItemHtml;
 }
 
-let currUser = User.getCurrentUser();
-if(!currUser)
+if(!Auth.isLoggedIn())
+    redirect("../login.html");
 
-    redirect("../login.html")
+let currUser = User.getCurrentUser();
 let userID = currUser.id;
 
 

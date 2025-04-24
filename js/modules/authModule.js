@@ -1,5 +1,5 @@
 import { User } from "./userModule.js";
-import { setTable, deleteTable } from "./db.js";
+import { setTable, deleteTable, getTable } from "./db.js";
 import { redirect } from "../util.js";
 
 export class Auth {
@@ -47,5 +47,11 @@ export class Auth {
         deleteTable("currentUser");
         deleteTable("loggedin");
         redirect("../../index.html");
+    }
+    static isLoggedIn(){
+        const isLoggedIn = getTable("loggedin");
+        const state = User.getCurrentUser();
+
+        return isLoggedIn && state ;
     }
 }
