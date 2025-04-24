@@ -86,4 +86,3 @@ export function RemoveCartItem(userID, productID){
     });
     setTable("cartItem", carts)
 }
-
