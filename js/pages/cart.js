@@ -16,7 +16,7 @@ document.getElementById("items-container").dataset.totalPrice = "{}"
 
 
 // if not logged in redirect to login
-if(!Auth.isLoggedIn)
+if(!Auth.isLoggedIn())
      redirect("../../login.html");
     
 let cartID= User.getCurrentUser().id;

@@ -6,7 +6,7 @@ import { Cart } from "../modules/cart.js";
 
 
 let cartID;
-if(Auth.isLoggedIn)
+if(Auth.isLoggedIn())
     cartID = User.getCurrentUser().id;
 let cartItemString = await fetchComponent("../../components/cart-item.html")
 

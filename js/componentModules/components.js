@@ -61,7 +61,7 @@ export class Component{
         }
     
         static async renderCategoryCard(category){
-            const classArr=["from-left-animation","from-right-animation","from-z-animation"];
+            const classArr=["from-left-animation","from-right-animation","from-z-animation","from-top-animation","from-bottom-animation"];
             let categoryCard= await fetchComponent("../../components/category-card.html");
             categoryCard = convertToHtmlElement(categoryCard);
             categoryCard.id = category.id;

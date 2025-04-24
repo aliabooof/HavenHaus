@@ -1,13 +1,15 @@
 import { createAlert,observeElements } from "../util.js";
 import { Component } from "../componentModules/components.js";
 import { Product } from "../modules/productModule.js";
+import { Auth } from "../modules/authModule.js";
 
 
 
 
    await Component.renderNavbar();
    await Component.renderFooter();
-   await Component.renderCartOffcanvas();
+   if(Auth.isLoggedIn())
+        await Component.renderCartOffcanvas();
    const flashData = sessionStorage.getItem("flashAlert");
 
     if (flashData) {
