@@ -14,29 +14,100 @@ function validateCheckout(firstName, lastName, email, phone, address, city, coun
   let isValid = true;
   let firstInvalidField = null;
 
-  const fields = [
-    { field: firstName, validator: Validation.validateName, message: "Enter a valid first name." },
-    { field: lastName, validator: Validation.validateName, message: "Enter a valid last name." },
-    { field: email, validator: Validation.validateEmail, message: "Enter a valid email address." },
-    { field: phone, validator: Validation.validatePhone, message: "Enter a valid phone number." },
-    { field: address, validator: Validation.validateAddress, message: "Address is too short." },
-    { field: city, validator: Validation.validateCity, message: "Enter a valid city." },
-    { field: country, validator: Validation.validateCountry, message: "Enter a valid country." },
-    { field: zip, validator: Validation.validateZipCode, message: "Enter a valid zip code." },
-    { field: cnumber, validator: Validation.validateCreditCard, message: "Enter a valid credit card number." },
-    { field: cname, validator: Validation.validateName, message: "Enter a valid card name." },
-    { field: expiryDate, validator: Validation.validateExpiryDate, message: "Enter a valid expiry date." },
-    { field: ccv, validator: Validation.validateCVV, message: "Enter a valid ccv." }
-  ];
+  if (!Validation.validateName(firstName.value)) {
+    Validation.showError(firstName, "Enter a valid first name.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = firstName;
+  } else {
+    Validation.clearError(firstName);
+  }
 
-  for (const { field, validator, message } of fields) {
-    if (!validator(field.value)) {
-      Validation.showError(field, message);
-      isValid = false;
-      if (!firstInvalidField) firstInvalidField = field;
-    } else {
-      Validation.clearError(field);
-    }
+  if (!Validation.validateName(lastName.value)) {
+    Validation.showError(lastName, "Enter a valid last name.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = lastName;
+  } else {
+    Validation.clearError(lastName);
+  }
+
+  if (!Validation.validateEmail(email.value)) {
+    Validation.showError(email, "Enter a valid email address.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = email;
+  } else {
+    Validation.clearError(email);
+  }
+
+  if (!Validation.validatePhone(phone.value)) {
+    Validation.showError(phone, "Enter a valid phone number.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = phone;
+  } else {
+    Validation.clearError(phone);
+  }
+
+  if (!Validation.validateAddress(address.value)) {
+    Validation.showError(address, "Address is too short.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = address;
+  } else {
+    Validation.clearError(address);
+  }
+
+  if (!Validation.validateCity(city.value)) {
+    Validation.showError(city, "Enter a valid city.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = city;
+  } else {
+    Validation.clearError(city);
+  }
+
+  if (!Validation.validateCountry(country.value)) {
+    Validation.showError(country, "Enter a valid country.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = country;
+  } else {
+    Validation.clearError(country);
+  }
+
+  if (!Validation.validateZipCode(zip.value)) {
+    Validation.showError(zip, "Enter a valid zip code.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = zip;
+  } else {
+    Validation.clearError(zip);
+  }
+
+  if (!Validation.validateCreditCard(cnumber.value)) {
+    Validation.showError(cnumber, "Enter a valid credit card number.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = cnumber;
+  } else {
+    Validation.clearError(cnumber);
+  }
+
+  if (!Validation.validateName(cname.value)) {
+    Validation.showError(cname, "Enter a valid card name.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = cname;
+  } else {
+    Validation.clearError(cname);
+  }
+
+  if (!Validation.validateExpiryDate(expiryDate.value)) {
+    Validation.showError(expiryDate, "Enter a valid expiry date.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = expiryDate;
+  } else {
+    Validation.clearError(expiryDate);
+  }
+
+  if (!Validation.validateCVV(ccv.value)) {
+    Validation.showError(ccv, "Enter a valid CVV.");
+    isValid = false;
+    if (!firstInvalidField) firstInvalidField = ccv;
+  } else {
+    Validation.clearError(ccv);
   }
 
   if (!isValid && firstInvalidField) {
