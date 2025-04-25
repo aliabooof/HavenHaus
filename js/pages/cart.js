@@ -17,7 +17,7 @@ await Component.renderNavbar();
 await Component.renderFooter();
 // await Component.renderCartOffcanvas();
 
-document.getElementById("items-container").dataset.totalPrice = "{}"
+document.getElementById("cart-items-container").dataset.totalPrice = "{}"
 
 
 
@@ -44,14 +44,15 @@ function showCart(){
 let emtpyElement = document.getElementById("empty");
 let mainContainer = document.getElementById("main-container");
 if(cart.length == 0)
-  showEmptyCart()
+    Cart.showEmpty("main-container")
 else{
     
-    showCart()
+    Cart.showCartContainer("main-container")
     mainContainer.classList.remove("d-none");
     let itemsContainer;
-    itemsContainer = document.getElementById("items-container");
+    itemsContainer = document.getElementById("cart-items-container");
     Cart.DispalyCartItems(itemsContainer,cart);
+    // Cart.UpdateItemTotalPrice(cart.prodID,)
     
 }
 

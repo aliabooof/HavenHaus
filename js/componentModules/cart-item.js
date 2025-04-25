@@ -67,15 +67,11 @@ function DeleteCard(event){
     RemoveCartItem(cartID, prodID)
     Cart.UpdateItemTotalPrice(prodID,prodPrice,0)
     
-    if (document.getElementById("items-container")) {
-        
-        if(document.getElementById("items-container").children.length ==0)
-            showEmptyCart()
-    }
-    if (document.getElementById("cart-items-container")) {
-        document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = document.getElementById("cart-items-container").children.length);
+    let cartItemsContainer = document.getElementById("cart-items-container");
+    if (cartItemsContainer) {
+        document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = cartItemsContainer.children.length);
         if(document.getElementById("cart-items-container").children.length ==0)
-        Cart.showEmpty();
+        Cart.showEmpty("main-container");
     }
     // show empty cart if now items
 }

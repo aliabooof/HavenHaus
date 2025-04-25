@@ -24,6 +24,10 @@ export class Cart{
         cart.forEach(cartItem => {
             let displayItem = CreateDisplyCartItem(cartItem);
             itemsContainer.appendChild(displayItem)
+            // console.log("prodPrice dataset",)
+            let prodPrice = displayItem.dataset.prodPrice;
+                Cart.UpdateItemTotalPrice(cartItem.productID,prodPrice,cartItem.quantity)
+
             // totalPrice[cartItem.id] =  cartItem.quantity * displayItem.dataset.prodPrice;
         });
     }
@@ -55,9 +59,9 @@ export class Cart{
     }
 
 
-    static showEmpty() {
+    static showEmpty(containerToHide = "cart-items-container") {
        
-        document.getElementById("cart-items-container").classList.add("d-none")
+        document.getElementById(containerToHide).classList.add("d-none")
         
         const emptyElement = document.getElementById("empty")
         emptyElement.classList.remove("d-none")
@@ -67,8 +71,8 @@ export class Cart{
             window.location.assign(`../../pages/catalog.html`)
         })
     }
-    static showCartContainer(){
-        document.getElementById("cart-items-container").classList.remove("d-none")
+    static showCartContainer(containerToHide = "cart-items-container"){
+        document.getElementById(containerToHide).classList.remove("d-none")
         
         const emptyElement = document.getElementById("empty")
         emptyElement.classList.add("d-none")
