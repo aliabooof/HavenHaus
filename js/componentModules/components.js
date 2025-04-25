@@ -15,11 +15,26 @@ export class Component{
     }
 
     static async renderCartOffcanvas(){
+        if(!Auth.isLoggedIn())
+            return;
         let cartOffcanvas = await fetchComponent("../../components/cart-offcanvas.html")
         cartOffcanvas = convertToHtmlElement(cartOffcanvas)
-        let cartItems = GetCartByID(User.getCurrentUser().id)
         document.body.insertAdjacentElement("beforeend",cartOffcanvas);
-
+        
+        let cartItems = GetCartByID(User.getCurrentUser().id)
+        if(cartItems.length == 0){
+            Array.from(cartOffcanvas.children).forEach(item=>
+                item.classList.add("d-none")
+            )
+            cartOffcanvas.querySelector(".offcanvas-header").classList.remove("d-none")
+            cartOffcanvas.querySelector("#empty").classList.remove("d-none")
+            cartOffcanvas.querySelector("#empty").classList.add("d-flex")
+            cartOffcanvas.querySelector("#empty a").addEventListener("click",(event)=>{
+                event.preventDefault();
+                window.location.assign(`../../pages/catalog.html`)
+            })
+            return;
+        }
         cartItems.forEach((item)=>{
             let dispalyItem = CreateDisplyCartItem(item);
             let prodID = dispalyItem.dataset.prodId

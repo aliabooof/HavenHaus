@@ -175,23 +175,23 @@ body{
 
 
 .from-left-animation {
-  transform: translateX(-300px);
+  transform: translateX(-5rem);
 }
 
 .from-right-animation {
-  transform: translateX(300px);
+  transform: translateX(5rem);
 }
 
 .from-z-animation {
-  transform: scale(2)translateZ(300px);
+  transform: scale(2) translateZ(5rem);
   
 }
 .from-bottom-animation{
-  transform: translateY(100px);
+  transform: translateY(4rem);
 }
 
 .from-top-animation{
-  transform: translateY(-100px);
+  transform: translateY(-4rem);
 }
 
 
