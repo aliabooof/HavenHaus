@@ -16,7 +16,9 @@
     { "id": "james_smith_012", "firstName": "James", "lastName": "Smith", "email": "james@example.com", "password": "password12", "role": "1", "phone": "201234567901" },
     { "id": "sophia_davis_013", "firstName": "Sophia", "lastName": "Davis", "email": "sophia@example.com", "password": "password13", "role": "2", "phone": "201234567902" },
     { "id": "william_garcia_014", "firstName": "William", "lastName": "Garcia", "email": "william@example.com", "password": "password14", "role": "1", "phone": "201234567903" },
-    { "id": "charlotte_moore_015", "firstName": "Charlotte", "lastName": "Moore", "email": "charlotte@example.com", "password": "password15", "role": "2", "phone": "201234567904" }
+    { "id": "charlotte_moore_015", "firstName": "Charlotte", "lastName": "Moore", "email": "charlotte@example.com", "password": "password15", "role": "2", "phone": "201234567904" },
+    { "id": "3ssam", "firstName": "Ahmed", "lastName": "Essam", "email": "3ssam@gmail.com", "password": "123123", "role": "0", "phone": "201234567904" }
+
   ]
 
 }

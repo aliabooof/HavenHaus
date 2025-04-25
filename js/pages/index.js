@@ -27,6 +27,7 @@ import { Auth } from "../modules/authModule.js";
         sessionStorage.removeItem("flashAlert");
     }
 
+
     let categories = Product.getAllProductsCategories();
     console.log(categories)
 
@@ -34,6 +35,7 @@ import { Auth } from "../modules/authModule.js";
         await Component.renderCategoryCard(cat);
     }
     
+
     // await catArray.forEach(async cat => {
     //      await Component.renderCategoryCard(cat);
         
