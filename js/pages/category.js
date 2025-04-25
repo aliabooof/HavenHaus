@@ -1,4 +1,4 @@
-import {GetUrlField} from '../util.js';
+import {GetUrlField,observeElements} from '../util.js';
 import {Component} from '../componentModules/components.js';
 import { Product } from '../modules/productModule.js';
 import { Auth } from '../modules/authModule.js';
@@ -14,4 +14,6 @@ document.getElementById("category-name").innerText = Product.getCategoryById(cat
 
  for (const prod of productsByCategory) {
          await Component.renderProductCard(prod);
-     }
+}
+
+observeElements();

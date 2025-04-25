@@ -12,7 +12,7 @@ import { User } from "../modules/userModule.js";
 
 
 import { Component } from "../componentModules/components.js";
-import { Cart } from "../modules/cart.js";
+import { Cart } from "../modules/cartModule.js";
 await Component.renderNavbar();
 await Component.renderFooter();
 // await Component.renderCartOffcanvas();
