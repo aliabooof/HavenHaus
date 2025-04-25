@@ -94,7 +94,7 @@ export class Component {
         productCard.id = product.id;
         productCard.querySelector("h5").innerText = product.name;
         productCard.querySelector("p").innerText = product.desc;
-        productCard.querySelector("span").innerText = product.price;
+        productCard.querySelector("span").innerText = "$ " + product.price;
         productCard.querySelector("button").addEventListener("click", () => {
             // Cart.addToCart(productCard.id)
             Cart.cartUi(productCard.id)
