@@ -8,6 +8,7 @@ import { Auth } from "../modules/authModule.js";
 
    await Component.renderNavbar();
    await Component.renderFooter();
+
    if(Auth.isLoggedIn())
         await Component.renderCartOffcanvas();
    const flashData = sessionStorage.getItem("flashAlert");
@@ -26,15 +27,23 @@ import { Auth } from "../modules/authModule.js";
         sessionStorage.removeItem("flashAlert");
     }
 
-    let catArray = Product.getAllProductsCategories();
-    console.log(catArray)
+    let categories = Product.getAllProductsCategories();
+    console.log(categories)
+
+    for (const cat of categories) {
+        await Component.renderCategoryCard(cat);
+    }
+    
     // await catArray.forEach(async cat => {
     //      await Component.renderCategoryCard(cat);
         
     // });
 
-    for (const cat of catArray) {
-        await Component.renderCategoryCard(cat);
+    let featuredProducts = Product.getFeaturedProducs();
+    console.log(featuredProducts);
+
+    for (const prod of featuredProducts) {
+        await Component.renderProductCard(prod);
     }
     
 

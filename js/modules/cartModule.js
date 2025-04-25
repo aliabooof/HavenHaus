@@ -1,4 +1,8 @@
 import { CreateDisplyCartItem } from "../componentModules/cart-item.js";
+import { User } from "./userModule.js";
+import { ChangeCartItemQuantity } from "./db.js";
+import { redirect } from "../util.js";
+import { Auth } from "./authModule.js";
 
 export class Cart{
 
@@ -22,5 +26,19 @@ export class Cart{
             itemsContainer.appendChild(displayItem)
             // totalPrice[cartItem.id] =  cartItem.quantity * displayItem.dataset.prodPrice;
         });
+    }
+
+    static addToCart(productId){
+            let user = User.getCurrentUser();
+            if(!user) redirect("../../login.html");    
+            
+            ChangeCartItemQuantity(user.id, productId);
+                
+        }
+
+    static cartUi(productId){
+        console.log(productId);
+        if(!Auth.isLoggedIn()) redirect("../../login.html");
+
     }
 }

@@ -1,7 +1,7 @@
 import { getTable, add, setTable } from "./db.js";
 
 export class Product {
-    constructor({ name, category, price, desc, imageUrl, stock, sellerID, highlights, instructions, reviews }) {
+    constructor({ name, category, price, desc, imageUrl, stock, sellerID, highlights, instructions, reviews,featured=false }) {
         this.name = name;
         this.category = category;
         this.price = price;
@@ -12,6 +12,7 @@ export class Product {
         this.highlights = highlights || "No highlights provided.";
         this.instructions = instructions || "No instructions provided.";
         this.reviews = reviews || [];
+        this.featured = featured;
         this.id = this.#generateUniqueId(name, category);
     }
 
@@ -86,5 +87,9 @@ export class Product {
 
     static getAllProductsCategories(){
         return getTable("category");
+    }
+
+    static getFeaturedProducs(){
+        return this.getAllProducts().filter(product => product.featured == true);
     }
 }
