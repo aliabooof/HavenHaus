@@ -2,7 +2,7 @@ import { fetchComponent, convertToHtmlElement, IncreaseQuantity as IncQ, Decreas
 import { GetProductByID, ChangeCartItemQuantity,RemoveCartItem} from "../modules/db.js";
 import { User } from "../modules/userModule.js"; 
 import { Auth } from "../modules/authModule.js";
-import { Cart } from "../modules/cart.js"; 
+import { Cart } from "../modules/cartModule.js"; 
 
 
 let cartID;
@@ -66,8 +66,10 @@ function DeleteCard(event){
     // remove item form database then update total price 
     RemoveCartItem(cartID, prodID)
     Cart.UpdateItemTotalPrice(prodID,prodPrice,0)
-    
+    if (document.getElementById("items-container")) {
+        
+        if(document.getElementById("items-container").children.length ==0)
+            showEmptyCart()
+    }
     // show empty cart if now items
-    if(document.getElementById("items-container").children.length ==0)
-        showEmptyCart()
 }
