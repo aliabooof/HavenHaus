@@ -1,6 +1,6 @@
 import { CreateDisplyCartItem } from "../componentModules/cart-item.js";
 import { User } from "./userModule.js";
-import { ChangeCartItemQuantity } from "./db.js";
+import { ChangeCartItemQuantity, AddCartItem,GetCartByID } from "./db.js";
 import { redirect } from "../util.js";
 import { Auth } from "./authModule.js";
 
@@ -39,6 +39,40 @@ export class Cart{
     static cartUi(productId){
         console.log(productId);
         if(!Auth.isLoggedIn()) redirect("../../login.html");
+        const userId =User.getCurrentUser().id;
+        AddCartItem(userId, productId);
+        const cart = GetCartByID(userId);
+        document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = cart.length);
+        if(!cart.length){
+            this.showEmpty();
+        }else{
+            this.showCartContainer();
+            const cartItemsContainer = document.getElementById("cart-items-container");
+            cartItemsContainer.innerHTML = "";
+            this.DispalyCartItems(cartItemsContainer,cart);
+        }
 
+    }
+
+
+    static showEmpty() {
+       
+        document.getElementById("cart-items-container").classList.add("d-none")
+        
+        const emptyElement = document.getElementById("empty")
+        emptyElement.classList.remove("d-none")
+        emptyElement.classList.add("d-flex")
+        emptyElement.querySelector("#empty a").addEventListener("click", (event) => {
+            event.preventDefault();
+            window.location.assign(`../../pages/catalog.html`)
+        })
+    }
+    static showCartContainer(){
+        document.getElementById("cart-items-container").classList.remove("d-none")
+        
+        const emptyElement = document.getElementById("empty")
+        emptyElement.classList.add("d-none")
+        emptyElement.classList.remove("d-flex")
+        
     }
 }
