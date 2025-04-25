@@ -15,6 +15,9 @@ import { Component } from "../componentModules/components.js";
 import { Cart } from "../modules/cartModule.js";
 await Component.renderNavbar();
 await Component.renderFooter();
+document.querySelectorAll(".fa-cart-shopping").forEach(element=>{
+    element.parentElement.classList.add("d-none")
+})
 // await Component.renderCartOffcanvas();
 
 document.getElementById("cart-items-container").dataset.totalPrice = "{}"

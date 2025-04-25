@@ -41,16 +41,20 @@ export class Cart{
         }
 
     static cartUi(productId){
-        console.log(productId);
+        // console.log(productId);
         if(!Auth.isLoggedIn()) redirect("../../login.html");
         const userId =User.getCurrentUser().id;
+        if(!userId || !productId){
+            console.log(userId,productId);
+            return
+        }   
         AddCartItem(userId, productId);
         const cart = GetCartByID(userId);
         document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = cart.length);
         if(!cart.length){
             this.showEmpty();
         }else{
-            this.showCartContainer();
+            this.showCartContainer("main-container");
             const cartItemsContainer = document.getElementById("cart-items-container");
             cartItemsContainer.innerHTML = "";
             this.DispalyCartItems(cartItemsContainer,cart);
