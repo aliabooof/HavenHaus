@@ -1,6 +1,6 @@
 import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
-import { fetchComponent, convertToHtmlElement } from "../util.js";
+import { fetchComponent, convertToHtmlElement, redirect } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
@@ -24,19 +24,18 @@ export class Component {
         let cartOffcanvas = await fetchComponent("../../components/cart-offcanvas.html")
         cartOffcanvas = convertToHtmlElement(cartOffcanvas)
         document.body.insertAdjacentElement("beforeend", cartOffcanvas);
-
+        cartOffcanvas.querySelector(".btn-go-to-cart").addEventListener("click",()=>{
+            redirect("../../pages/cart.html")
+        })
         let cartItems = GetCartByID(User.getCurrentUser().id)
         if (cartItems.length == 0) {
-           Cart.showEmpty();
+           Cart.showEmpty("main-container");
             return;
         }
         cartItems.forEach((item) => {
             let dispalyItem = CreateDisplyCartItem(item);
             let prodID = dispalyItem.dataset.prodId
             let prodPrice = dispalyItem.dataset.prodPrice
-
-
-
 
             cartOffcanvas.querySelector("#cart-items-container").insertAdjacentElement("beforeend", dispalyItem);
             Cart.UpdateItemTotalPrice(prodID, prodPrice, item.quantity)
@@ -97,7 +96,7 @@ export class Component {
         productCard.querySelector("p").innerText = product.desc;
         productCard.querySelector("span").innerText = "$ " + product.price;
         productCard.querySelector("button").addEventListener("click", () => {
-            Cart.addToCart(productCard.id)
+            // Cart.addToCart(productCard.id)
             Cart.cartUi(productCard.id)
         });
         // productCard.querySelector("img")="";

@@ -40,6 +40,10 @@ function DecreaseQuantity(event){
     let prodID = card.dataset.prodId
     let prodPrice =  card.dataset.prodPrice
     // console.log(cartID,prodID)
+    if(!card || !prodID || !prodPrice){
+        console.log(card, prodID, prodPrice);
+        return
+    }   
     
     DecQ(event)
     let quantity = Number(event.target.nextElementSibling.innerText.trim())
@@ -51,7 +55,10 @@ function IncreaseQuantity(event){
     let card = event.target.closest(".card")
     let prodID = card.dataset.prodId
     let prodPrice =  card.dataset.prodPrice
-
+    if(!card || !prodID || !prodPrice){
+        console.log("card:",card,"prodID", prodID, "prodPrice", prodPrice);
+        return
+    }   
     IncQ(event)
     let quantity = Number(event.target.previousElementSibling.innerText.trim())
     ChangeCartItemQuantity(cartID, prodID, quantity)

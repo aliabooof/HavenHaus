@@ -105,7 +105,7 @@ export function observeElements( selector = '.hidden-animation',threshold = 0) {
     const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-            console.log(entry.target);
+            // console.log(entry.target);
           entry.target.classList.add('show-animation');
           obs.unobserve(entry.target); 
         }
