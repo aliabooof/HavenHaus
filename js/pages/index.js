@@ -27,7 +27,7 @@ import { Auth } from "../modules/authModule.js";
     }
 
     let catArray = Product.getAllProductsCategories();
-    console.log(catArray)
+    // console.log(catArray)
     // await catArray.forEach(async cat => {
     //      await Component.renderCategoryCard(cat);
         
