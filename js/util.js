@@ -66,14 +66,18 @@ export function createAlert(message, color, subMessage = "") {
     return alert;
 }
 
-export function GetUrlField(fieldName){
-    let search = window.location.search;
-    if (!search) return null;
-    let value = window.location.search.split(fieldName+"=")
-    if(value.length > 1)
-        return value[1].split("&")[0]
-    else
-        return null;
+// export function GetUrlField(fieldName){
+//     let search = window.location.search;
+//     if (!search) return null;
+//     let value = window.location.search.split(fieldName+"=")
+//     if(value.length > 1)
+//         return value[1].split("&")[0]
+//     else
+//         return null;
+// }
+export function GetUrlField(fieldName) {
+    const params = new URLSearchParams(window.location.search);
+    return params.get(fieldName);
 }
 
 export function getFormFields(id){

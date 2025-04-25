@@ -92,4 +92,9 @@ export class Product {
     static getFeaturedProducs(){
         return this.getAllProducts().filter(product => product.featured == true);
     }
+    static getCategoryById(id) {
+        
+        return this.getAllProductsCategories().find(cat => cat.id == id);
+    }
+    
 }

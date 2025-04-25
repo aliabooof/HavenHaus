@@ -66,10 +66,16 @@ function DeleteCard(event){
     // remove item form database then update total price 
     RemoveCartItem(cartID, prodID)
     Cart.UpdateItemTotalPrice(prodID,prodPrice,0)
+    
     if (document.getElementById("items-container")) {
         
         if(document.getElementById("items-container").children.length ==0)
             showEmptyCart()
+    }
+    if (document.getElementById("cart-items-container")) {
+        document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = document.getElementById("cart-items-container").children.length);
+        if(document.getElementById("cart-items-container").children.length ==0)
+        Cart.showEmpty();
     }
     // show empty cart if now items
 }

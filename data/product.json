@@ -1,19 +1,13 @@
 {
   "product": [
-    { "id": 1, "sellerID": 2, "name": "Widget", "category": 2, "price": 199.99, "desc": "Durable and sleek", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 42,"featured":true },
-    { "id": 2, "sellerID": 2, "name": "Gadget", "category": 1, "price": 89.99, "desc": "Compact with many features", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 12,"featured":false },
-    { "id": 3, "sellerID": 2, "name": "Headphones", "category": 3, "price": 49.50, "desc": "High-quality sound", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 25,"featured":true },
-    { "id": 4, "sellerID": 3, "name": "Camera", "category": 4, "price": 250.00, "desc": "Perfect for vlogging", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 5,"featured":false },
-    { "id": 5, "sellerID": 3, "name": "Monitor", "category": 2, "price": 159.99, "desc": "Full HD display", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 10,"featured":false },
-    { "id": 6, "sellerID": 3, "name": "Mouse", "category": 2, "price": 29.99, "desc": "Ergonomic design", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 50,"featured":true },
-    { "id": 7, "sellerID": 4, "name": "Keyboard", "category": 2, "price": 39.99, "desc": "Mechanical keys", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 30,"featured":false },
-    { "id": 8, "sellerID": 4, "name": "Laptop", "category": 1, "price": 799.99, "desc": "Lightweight and powerful", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 8,"featured":true },
-    { "id": 9, "sellerID": 4, "name": "Tablet", "category": 1, "price": 399.00, "desc": "Long battery life", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 15,"featured":true },
-    { "id": 10, "sellerID": 2, "name": "Speaker", "category": 3, "price": 59.00, "desc": "Portable Bluetooth", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 33,"featured":false },
-    { "id": 11, "sellerID": 3, "name": "Smartwatch", "category": 1, "price": 129.99, "desc": "Health tracking features", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 20,"featured":false },
-    { "id": 12, "sellerID": 2, "name": "Drone", "category": 5, "price": 299.99, "desc": "4K video supported", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 7,"featured":true },
-    { "id": 13, "sellerID": 4, "name": "Webcam", "category": 4, "price": 69.99, "desc": "HD clarity", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 18,"featured":false },
-    { "id": 14, "sellerID": 3, "name": "Microphone", "category": 4, "price": 89.99, "desc": "Noise cancelling", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 22,"featured":false },
-    { "id": 15, "sellerID": 2, "name": "Charger", "category": 2, "price": 19.99, "desc": "Fast charging", "imageUrl": "https://placeimg.com/640/480/tech", "stock": 45,"featured":false }
+    { "id": 1, "sellerID": 2, "name": "Modern Dining Chair", "category": 1, "price": 129.99, "desc": "Elegant wooden dining chair with cushioned seat.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 15, "featured": true },
+    { "id": 2, "sellerID": 2, "name": "Luxury Recliner Sofa", "category": 2, "price": 899.99, "desc": "Three-seater recliner with genuine leather.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 5, "featured": true },
+    { "id": 3, "sellerID": 3, "name": "Oak Coffee Table", "category": 3, "price": 249.50, "desc": "Solid oak wood with lower shelf for magazines.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 12, "featured": false },
+    { "id": 4, "sellerID": 3, "name": "L-Shaped Sectional", "category": 4, "price": 1199.00, "desc": "Spacious sectional with modular design.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 3, "featured": true },
+    { "id": 5, "sellerID": 3, "name": "Queen Platform Bed", "category": 5, "price": 599.99, "desc": "Modern bed with storage drawers and headboard.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 7, "featured": false },
+    { "id": 6, "sellerID": 4, "name": "Multi-purpose Cabinet", "category": 6, "price": 199.00, "desc": "Versatile storage cabinet with 4 drawers.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 10, "featured": true },
+    { "id": 7, "sellerID": 4, "name": "Adjustable Office Desk", "category": 7, "price": 349.00, "desc": "Sit-stand desk with adjustable height.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 8, "featured": false },
+    { "id": 8, "sellerID": 2, "name": "Outdoor Lounge Set", "category": 8, "price": 899.00, "desc": "Weatherproof set with sofa, chairs, and table.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 6, "featured": true },
+    { "id": 9, "sellerID": 2, "name": "Bohemian Wall Rug", "category": 9, "price": 89.00, "desc": "Hand-woven wall art piece with fringe accents.", "imageUrl": "https://placeimg.com/640/480/furniture", "stock": 20, "featured": false }
   ]
 }
