@@ -121,4 +121,37 @@ export class Component {
 
    
 
+
+    static async renderInquiryCard(inquiry){
+        
+        const inquiryContainer = document.getElementById("inquiries-card-container");
+        const inquiryHeader = await fetchComponent("../../components/inquiry-card.html");
+        const inquiryHeaderElement = convertToHtmlElement(inquiryHeader);
+        inquiryHeaderElement.querySelector("h5").innerText = inquiry.title;
+        inquiryHeaderElement.querySelectorAll("p")[0].innerText = inquiry.date;
+        inquiryHeaderElement.querySelectorAll("p")[1].innerText = inquiry.summary;
+        inquiryHeaderElement.querySelector("button").setAttribute('data-bs-toggle',inquiry.id);
+        const inquiryBody = await fetchComponent("../../components/inquiry-information-popup.html");
+        const inquiryBodyElement = convertToHtmlElement(inquiryBody);
+        inquiryBodyElement.id=inquiry.id;
+        inquiryBodyElement.querySelector("h5").innerText = inquiry.title;
+        const pArr = inquiryBodyElement.querySelectorAll("p");
+        pArr[0].childNodes[1].nodeValue = inquiry.name;
+        pArr[1].childNodes[1].nodeValue = inquiry.email;
+        pArr[2].childNodes[1].nodeValue = inquiry.date;
+        pArr[3].childNodes[1].nodeValue = inquiry.details.statues;
+        pArr[3].childNodes[1].nodeValue.classList = inquiry.details.statusClass;
+        pArr[4].innerText = inquiry.message;
+        inquiryContainer.insertAdjacentElement("beforeend",inquiryHeaderElement);
+        inquiryContainer.insertAdjacentElement("beforeend",inquiryBodyElement);
+        const replyMessageCard = inquiryBodyElement.querySelector('conversation-container-parent');
+        if(!inquiry.reply){
+            replyMessageCard.classList.add("d-none")
+        }else{
+            replyMessageCard.querySelector("message-text").innerText = inquiry.reply;
+        }
+
+
+    }
+
 }

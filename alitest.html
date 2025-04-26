@@ -2,204 +2,32 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Bootstrap Horizontal Tabs</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Support Inquiries</title>
   <style>
-    body{
-      overflow-x: hidden;
-    }
-    .hidden {
-      opacity: 0;
-      transition: all 1s ease-out;
-      will-change: transform, opacity;
-    }
-    
-    /* Animate directions */
-    .from-left {
-      transform: translateX(-300px);
-    }
-    
-    .from-right {
-      transform: translateX(300px);
-    }
-    
-    .from-z {
-      transform: scale(2)translateZ(300px);
-      
-    }
-    
-    /* Final state */
-    .show {
-      opacity: 1;
-      transform: none; /* This is KEY to reset all transforms */
-    }
-    </style>
-    
-    
-    
+    body { font-family: Arial; padding: 20px; }
+    .inquiry, .reply { margin-bottom: 1em; padding: 10px; border: 1px solid #ccc; border-radius: 8px; }
+    .reply { background-color: #f0f8ff; }
+    .admin-reply-form { margin-top: 10px; }
+  </style>
 </head>
-<body class="p-4">
-
-  <pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div id=""  class="col-12 col-md-6 col-lg-4 m-3 card p-3 text-center shadow border-1 border-light rounded-4 " style="width: 20rem;">
-    <div class="card Mycard shadow-sm">
-      <i class="far fa-heart favorite-icon"></i>
-      <img src="../assets/images/1.jpg" class="card-img-top product-card" alt="Velvet Cream Sofa">
-      <div class="card-body">
-        <h5 class="card-title">Velvet Cream Sofa</h5>
-        <p class="card-text text-muted">Luxurious velvet sofa with modern design</p>
-        <div class="d-flex justify-content-between align-items-center">
-          <span class="fw-bold text-primary">$999.99</span>
-          <button class="btn btn-primary">
-            <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </pre>
-  <section class="category">
-    <div class="container">
-        <div class="row m-5">
-            <div class="col-12 text-center hidden from-left ">
-                <p class="fs-1 fw-bold ">Find Your Design Inspiration</p>
-            </div>
-            <div class="col-12 text-center hidden from-right">
-                <p class="fs-5 w-75 mx-auto ">Explore curated design ideas and transform your space into a reflection
-                    of your personality.</p>
-            </div>
-        </div>
-
-        <div class="row d-flex justify-content-center gap-5 my-5">
-            <div class="card p-3 text-center shadow border-1 border-light rounded-4 col-12 col-md-4 hidden from-left"
-                style="width: 20rem;">
-                <img src="assets/images/category/DiningRoom.jpeg" class="card-img-top rounded-4" alt="living">
-                <div class="card-body ">
-                    <h5 class="card-title ">Living Room</h5>
-                    <p class="card-text text-muted">Some quick example text to build on the card title and make up
-                        the bulk of the card's content.</p>
-                    <a href=""
-                        class="card-link link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover ">Explore
-                        Ideas →</a>
-                </div>
-            </div>
-            <!-- <div id="category-card"></div> -->
-            <div class="card p-3 text-center shadow border-1 border-light rounded-4 col-12 col-md-4 hidden from-z"
-                style="width: 20rem;">
-                <img src="assets/images/category/DiningRoom.jpeg" class="card-img-top rounded-4" alt="living">
-                <div class="card-body ">
-                    <h5 class="card-title ">Living Room</h5>
-                    <p class="card-text text-muted">Some quick example text to build on the card title and make up
-                        the bulk of the card's content.</p>
-                    <a href=""
-                        class="card-link link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover ">Explore
-                        Ideas →</a>
-                </div>
-            </div>
-            <div class="card p-3 text-center shadow border-1 border-light rounded-4 col-12 col-md-4 hidden from-right"
-                style="width: 20rem;">
-                <img src="assets/images/category/DiningRoom.jpeg" class="card-img-top rounded-4" alt="living">
-                <div class="card-body ">
-                    <h5 class="card-title ">Living Room</h5>
-                    <p class="card-text text-muted">Some quick example text to build on the card title and make up
-                        the bulk of the card's content.</p>
-                    <a href=""
-                        class="card-link link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover ">Explore
-                        Ideas →</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-            obs.unobserve(entry.target); // Animate once
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
-    
-      document.querySelectorAll('.hidden').forEach(el => {
-        observer.observe(el);
-      });
-    });
-    </script>
-    
+<body>
+
+  <!-- USER AREA -->
+  <h2>User Panel</h2>
+  <div>
+    <input type="text" id="userId" placeholder="User ID">
+    <textarea id="userMessage" placeholder="Write your inquiry..."></textarea>
+    <button >Submit</button>
+  </div>
+  <div id="userInquiries"></div>
+
+  <hr>
+
+  <!-- ADMIN AREA -->
+  <h2>Admin Panel</h2>
+  <div id="adminInquiries"></div>
+
+  <script src="inquiries.js"></script>
+  <script src="ui.js"></script>
 </body>
 </html>
