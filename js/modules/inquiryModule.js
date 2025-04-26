@@ -23,7 +23,10 @@ export class Inquiry {
         this.reply = null; 
         this.id = this.#generateUniqueId(userId);
         this.summary = this.#generateSummary(message);
-    
+        this.details = {
+            status:"Pending",
+            statusClass:"bg-warning"
+        }
     }
 
     // Generate a random base ID using userId and timestamp
@@ -56,7 +59,7 @@ export class Inquiry {
 
     // Get inquiries by user ID
     static getInquiriesByUser(userId) {
-        return this.getAllInquiries().filter(i => i.userId === userId);
+        return this.getAllInquiries().filter(i => i.userId == userId);
     }
 
     // Reply to an inquiry by ID
