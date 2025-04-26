@@ -66,7 +66,7 @@ export class Validation {
     // <label for="expiry">Expiry Date</label>
 {/* <input type="month" id="expiry" name="expiry" min="2025-04" required></input> */}
     
-    const regex = /^(0[1-9]|1[0-2])\/(\d{2}|\d{4})$/;
+    const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
     if (typeof expiry !== 'string' || !regex.test(expiry.trim())) return false;
 
     const [monthStr, yearStr] = expiry.split('/');

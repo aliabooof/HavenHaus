@@ -1,5 +1,7 @@
 {
+
     "inquiry": [
+
         {
             "id": 1,
             "userId": "aliouf_3532",
@@ -30,7 +32,9 @@
                 "statusClass": "bg-info"
             },
             "message": "Hello, I'm based in Germany and I'm interested in ordering several items from your store. Do you offer international shipping to the EU? If so, what are the shipping costs and estimated delivery times? Also, will there be any additional customs charges? Thank you in advance for your assistance.",
+
             "reply": "ok im processing your order"
+
         },
         {
             "id": 3,

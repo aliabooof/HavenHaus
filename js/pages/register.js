@@ -1,16 +1,15 @@
-
 import { redirect, createAlert, getFormFields } from "../util.js";
 import { Auth } from "../modules/authModule.js";
 import { Validation } from "../modules/validation.js";
 
-function validateRegistration( firstName, lastName, email, phone, password ) {
+function validateRegistration(firstName, lastName, email, phone, password) {
   let isValid = true;
-  console.log("heey");
-  console.log(firstName.value)
+  let firstInvalidField = null;
 
   if (!Validation.validateName(firstName.value)) {
     Validation.showError(firstName, "First name is required (e.g., Ahmed)");
     isValid = false;
+    if (!firstInvalidField) firstInvalidField = firstName;
   } else {
     Validation.clearError(firstName);
   }
@@ -18,6 +17,7 @@ function validateRegistration( firstName, lastName, email, phone, password ) {
   if (!Validation.validateName(lastName.value)) {
     Validation.showError(lastName, "Last name is required (e.g., Ali)");
     isValid = false;
+    if (!firstInvalidField) firstInvalidField = lastName;
   } else {
     Validation.clearError(lastName);
   }
@@ -25,6 +25,7 @@ function validateRegistration( firstName, lastName, email, phone, password ) {
   if (!Validation.validateEmail(email.value)) {
     Validation.showError(email, "Enter a valid email address (e.g., user@example.com)");
     isValid = false;
+    if (!firstInvalidField) firstInvalidField = email;
   } else {
     Validation.clearError(email);
   }
@@ -32,6 +33,7 @@ function validateRegistration( firstName, lastName, email, phone, password ) {
   if (phone.value.trim() !== "" && !Validation.validatePhone(phone.value)) {
     Validation.showError(phone, "Phone must be 10 to 15 digits (e.g., 0123456789)");
     isValid = false;
+    if (!firstInvalidField) firstInvalidField = phone;
   } else {
     Validation.clearError(phone);
   }
@@ -39,8 +41,14 @@ function validateRegistration( firstName, lastName, email, phone, password ) {
   if (!Validation.validatePassword(password.value)) {
     Validation.showError(password, "Password must be at least 6 characters (e.g., 123456)");
     isValid = false;
+    if (!firstInvalidField) firstInvalidField = password;
   } else {
     Validation.clearError(password);
+  }
+
+  if (!isValid && firstInvalidField) {
+    firstInvalidField.scrollIntoView({ behavior: "smooth", block: "center" });
+    firstInvalidField.focus();
   }
 
   return isValid;
@@ -59,8 +67,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const data = getFormFields("registerform"); 
 
-    let flag = validateRegistration(firstName,lastName,email,phone,password)
-    if (!flag) return;
+    const isValid = validateRegistration(firstName, lastName, email, phone, password);
+    if (!isValid) return;
 
     if (Auth.register(data)) {
       const alert = createAlert(
