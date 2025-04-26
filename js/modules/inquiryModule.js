@@ -2,14 +2,26 @@
 import { getTable, add, setTable } from "./db.js";
 
 export class Inquiry {
-    constructor() {
+
+    constructor(userId,title,name,email,message) {
+//         console.log(
+//             userId,
+//             title,
+//             name,
+//             email,
+//             message,
+//             new Date().toISOString(),
+//             this.#generateUniqueId(userId),
+//             this.#generateSummary(message),
+//         )
         this.userId = userId;
+        this.title = title;
+        this.name = name
+        this.email = email;
         this.message = message;
         this.createdAt = new Date().toISOString();
         this.reply = null; 
         this.id = this.#generateUniqueId(userId);
-        this.id = this.#generateUniqueId(userId);
-        this.title = title;
         this.summary = this.#generateSummary(message);
     
     }
