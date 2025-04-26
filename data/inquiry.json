@@ -1,0 +1,53 @@
+{
+    "inquiry": [
+        {
+            "id": 1,
+            "userId": "aliouf_3532",
+            "title": "Product Availability",
+            "date": "April 23, 2025",
+            "summary": "Inquiry about the availability of the latest smartphone model...",
+            "name": "John Smith",
+            "email": "john.smith@example.com",
+            "details": {
+                "status": "Pending",
+                "statusClass": "bg-warning"
+            },
+            "message": "I'm interested in purchasing the latest XYZ Smartphone model. Could you please let me know if it's currently in stock? Also, do you offer any promotions for first-time customers? I would appreciate any information about color options available as well.",
+            "reply": "ok im processing your order"
+        },
+        {
+            "id": 2,
+            "userId": "aliouf_3532",
+            "title": "Shipping Question",
+            "date": "April 20, 2025",
+            "summary": "Customer is asking about international shipping options...",
+            "customer": {
+                "name": "Maria Garcia",
+                "email": "maria.garcia@example.com"
+            },
+            "details": {
+                "status": "In Progress",
+                "statusClass": "bg-info"
+            },
+            "message": "Hello, I'm based in Germany and I'm interested in ordering several items from your store. Do you offer international shipping to the EU? If so, what are the shipping costs and estimated delivery times? Also, will there be any additional customs charges? Thank you in advance for your assistance.",
+            "reply": "ok im processing your order"
+        },
+        {
+            "id": 3,
+            "userId": "aliouf_3532",
+            "title": "Return Policy",
+            "date": "April 18, 2025",
+            "summary": "Question about our return policy for damaged items...",
+            "customer": {
+                "name": "Alex Johnson",
+                "email": "alex.johnson@example.com"
+            },
+            "details": {
+                "status": "Resolved",
+                "statusClass": "bg-success"
+            },
+            "message": "I recently received my order (Order #12345) but unfortunately one of the items arrived damaged. I would like to know what your return policy is for damaged items. Do I need to send it back, or can you send a replacement directly? I have attached photos of the damaged product for your reference.",
+            "reply": "ok im processing your order"
+        }
+    ]
+}

@@ -1,21 +1,23 @@
 
-function LoadFile(url){
-    let json = fetch(url).then(data=>data.json())
-        json.then(data=> db = data).then(function(data){
-            for(const key in db){
-                localStorage.setItem(`${key}`,JSON.stringify(db[key]))
-            }
-        })
+async function  LoadFile(url){
+    let response = await fetch(url)
+    let json = await response.json();
+        
+    for(const key in json){
+        localStorage.setItem(`${key}`,JSON.stringify(json[key]))
+        // console.log(`${key}, ${JSON.stringify(json[key])}`)
+    }
 }
 
-function LoadDB(){
+async function LoadDB(){
     if(!window.localStorage.getItem("IsDBLoaded")){
-        LoadFile("../data/user.json")
-        LoadFile("../data/order.json")
-        LoadFile("../data/product.json")
-        LoadFile("../data/orderItem.json")
-        LoadFile("../data/cartItem.json")
-        LoadFile("../data/category.json")
+      await  LoadFile("../data/user.json")
+      await  LoadFile("../data/order.json")
+      await  LoadFile("../data/product.json")
+      await  LoadFile("../data/orderItem.json")
+      await  LoadFile("../data/cartItem.json")
+      await  LoadFile("../data/category.json")
+      await  LoadFile("../data/inquiry.json")
 
         localStorage.setItem("IsDBLoaded",true)    
     }
