@@ -1,7 +1,7 @@
 {
     "orderItem": [
-      { "productID": 1, "sellerID": 2, "orderID": 1, "quantity": 1, "status": 0 },
-      { "productID": 3, "sellerID": 2, "orderID": 1, "quantity": 1, "status": 0 },
+      { "productID": "ModernDiningChair_1_q1w2e3r", "sellerID": 2, "orderID": 1, "quantity": 1, "status": 0 },
+      { "productID": "PullOutSofa_2_e5r6t7y", "sellerID": 2, "orderID": 1, "quantity": 1, "status": 0 },
       { "productID": 4, "sellerID": 3, "orderID": 2, "quantity": 1, "status": 1 },
       { "productID": 2, "sellerID": 2, "orderID": 3, "quantity": 2, "status": 0 },
       { "productID": 5, "sellerID": 3, "orderID": 3, "quantity": 1, "status": 0 },
