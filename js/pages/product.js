@@ -1,7 +1,9 @@
 import {ChangeCartItemQuantity, GetCartItem, GetProductByID} from "../modules/db.js"
-import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect} from "../util.js"
+import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect, getFormFields, createAlert} from "../util.js"
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
+import { Product } from "../modules/productModule.js";
+import { Auth } from "../modules/authModule.js";
 
 
 
@@ -21,12 +23,13 @@ function AddToCart(event){
 
 let productId = GetUrlField("prod-id")
 // redirect if prod-id is not set properly in url (id is wrong)
-if(!productId) redirect("../../pages/not-found.html")
+if(!productId) redirect("../../pages/not-found.html")   
     
-let product = GetProductByID(productId);
+let product = Product.getProductById(productId);
+
 // redirect if product not found (id is wrong)
-if(product.length == 0) redirect("../../pages/not-found.html")
-product = product[0]
+if(!product) redirect("../../pages/not-found.html")
+
     
 // add product details to page
 document.querySelector("#product-name").innerText = product.name
@@ -52,6 +55,29 @@ document.querySelector(".quantity").innerText = quantity
 document.getElementById("increaseQuantityBtn").addEventListener("click",IncreaseQuantity)
 document.getElementById("decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)
 document.getElementById("addToCartBtn").addEventListener("click",AddToCart)
-// window.addEventListener("load",function(event){
 
-// })
+let productReviews = product.reviews;
+
+if(productReviews.length !== 0){
+
+    for (const review of productReviews) {
+        await Component.renderReviews(review);
+    }
+}
+
+let reviewForm = document.getElementById("addReviewForm");
+
+reviewForm.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    if(!Auth.isLoggedIn()){
+        createAlert("Please Log In to Submit a Review","primary","You must be logged in to leave a review. Please log in to share your thoughts.");
+        return;
+    }
+    const review = getFormFields("addReviewForm");
+    review.customerName = [currUser.firstName,currUser.lastName].join(' ');
+    review.date = new Date().toLocaleDateString('en-GB');
+    
+    Product.addReview(productId,review);
+    
+    redirect(`../../pages/product.html?prod-id=${productId}`);
+})

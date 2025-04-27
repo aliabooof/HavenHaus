@@ -1,6 +1,6 @@
 import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
-import { fetchComponent, convertToHtmlElement, redirect } from "../util.js";
+import { fetchComponent, convertToHtmlElement, redirect, createAlert } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
@@ -108,6 +108,10 @@ export class Component {
         
         const productButton = productCard.querySelector("button");
         productButton.addEventListener("click", () => {
+            if(!Auth.isLoggedIn()){
+                createAlert("Please Log In","primary","You must be logged in to add items to your cart. Please log in to continue.");
+                return;
+            }
             Cart.addToCart(productCard.id)
             Cart.cartUi(productCard.id)
         });
@@ -184,6 +188,18 @@ export class Component {
 
     static async renderSellerProduct(product){
 
+    }
+    
+    static async renderReviews(review){
+
+        const reviewCard = await fetchComponent("../../components/reviewCard.html");
+        const reviewCardElemnt = convertToHtmlElement(reviewCard);
+        const reviewContainer = document.getElementById("reviews-container").querySelector("div");
+        reviewCardElemnt.querySelector("h5").innerText = review.customerName;
+        reviewCardElemnt.querySelector("small").innerText = review.date;
+        reviewCardElemnt.querySelector("p").innerText = review.text;
+
+        reviewContainer.insertAdjacentElement("beforeend",reviewCardElemnt);
     }
 
 }

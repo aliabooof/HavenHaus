@@ -110,6 +110,10 @@ export class Product {
         return this.getAllProducts().filter(product => product.featured == true);
     }
 
+    static getProductReviewsById(id){
+        return this.getProductById(id).reviews;
+    }
+
     //
     static getCategoryById(id) {
         

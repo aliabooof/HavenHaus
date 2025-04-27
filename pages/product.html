@@ -136,7 +136,7 @@
                                           </button>
                                     </li>
                                     <li class="nav-item">
-                                        <button class="nav-link" id="inst-tab" data-bs-toggle="tab" data-bs-target="#reviews" type="button" role="tab">
+                                        <button class="nav-link" id="inst-tab" data-bs-toggle="tab" data-bs-target="#reviews-container" type="button" role="tab">
                                             Reviews (<span class="review-count">42</span>)
                                           </button>
                                     </li>
@@ -154,9 +154,28 @@
                                         <h5>Instructions</h5>
                                         <p id="product-instructions">This is the product instructions section.</p>
                                     </div>
-                                    <div id="reviews" class="tab-pane fade"  role="tabpanel">
+                                    <div id="reviews-container" class="tab-pane fade"  role="tabpanel">
                                         <h5>Reviews</h5>
                                         <p id="product-reviews">This is the product reviews section.</p>
+                                        <div style="overflow-y: scroll; height: 200px;">
+
+                                        </div>
+                                        <div class="card mt-4 bg-light">
+                                            <div class="card-body">
+                                              <h5 class="card-title">Submit Your Review</h5>
+                                              <form id="addReviewForm">
+                                                <!-- Review Text -->
+                                                <div class="mb-3">
+                                                  <label for="reviewText" class="form-label">Your Review</label>
+                                                  <textarea class="form-control" id="reviewText" rows="3" name="text" placeholder="Write your review here..."></textarea>
+                                                </div>
+                                          
+                                                <!-- Submit Button -->
+                                                <button type="submit" class="btn btn-primary">Submit Review</button>
+                                              </form>
+                                            </div>
+                                          </div>
+                                          
                                     </div>
                                 </div>
                             </div><!--Other Sections-->
