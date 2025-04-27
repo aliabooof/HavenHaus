@@ -9,7 +9,7 @@ async function  LoadFile(url){
     }
 }
 
-async function LoadDB(){
+ async function LoadDB(){
     if(!window.localStorage.getItem("IsDBLoaded")){
 
       await  LoadFile("../data/user.json")
@@ -25,4 +25,4 @@ async function LoadDB(){
     }
 }
 
-await LoadDB();
+LoadDB();

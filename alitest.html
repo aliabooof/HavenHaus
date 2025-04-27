@@ -1,262 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inquiry Cards with Modal</title>
+    <title>Checkout Form</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-         .card {
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .inquiry-date {
-            font-size: 0.8rem;
-            color: #6c757d;
-        }
-        .message-bubble {
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            position: relative;
-        }
-        .message-agent {
-            background-color: #f0f7ff;
-            border-top-left-radius: 0;
-        }
-        .message-customer {
-            background-color: #f1f1f1;
-            border-top-right-radius: 0;
-            text-align: right;
-        }
-        .message-time {
-            font-size: 0.7rem;
-            color: #6c757d;
-            margin-top: 0.3rem;
-        }
-        .message-name {
-            font-weight: bold;
-            margin-bottom: 0.3rem;
-        }
-        .unread-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-        }
-    </style>
+    <script type="module">
+        import {Product} from "./js/modules/productModule.js";
+        const products =Product.getAllProducts();
+        console.log(products);
+
+
+
+        const editBtns = document.querySelectorAll('.edit-btn');
+            editBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const productId = row.getAttribute('data-product-id');
+                    
+                    // Find product in our sample data
+                    const product = products.find(p => p.id == productId);
+                    
+                    if (product) {
+                        // Fill the form with product data
+                        document.getElementById('productId').value = product.id;
+                        document.getElementById('productName').value = product.name;
+                        document.getElementById('productSKU').value = product.sku;
+                        document.getElementById('productPrice').value = product.price;
+                        document.getElementById('productStock').value = product.stock;
+                        document.getElementById('productCategory').value = product.category;
+                        document.getElementById('productDescription').value = product.description;
+                        
+                        // Show current image
+                        document.getElementById('currentImage').src = product.image;
+                        document.getElementById('currentImageContainer').classList.remove('d-none');
+                        
+                        // Update modal title
+                        document.getElementById('productModalLabel').textContent = 'Edit Product';
+                        
+                        // Show the modal
+                        productModal.show();
+                    }
+                });
+            });
+    </script>
 </head>
-
 <body>
-    <div class="container py-5">
-        <h1 class="text-center mb-5">Customer Inquiries</h1>
-
-
-        <div id="inquiries-card-container" class="row">
-            <!-- Inquiry Card 1 -->
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Product Availability</h5>
-                        <p class="inquiry-date">April 23, 2025</p>
-                        <p class="card-text">Inquiry about the availability of the latest smartphone model...</p>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inquiryModal1">View
-                            Inquiry</button>
-                    </div>
-                </div>
-            </div>
-
-
-            <!-- Inquiry Card 2 -->
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Shipping Question</h5>
-                        <p class="inquiry-date">April 20, 2025</p>
-                        <p class="card-text">Customer is asking about international shipping options...</p>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inquiryModal2">View
-                            Inquiry</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Inquiry Card 3 -->
-            <div class="col-md-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <h5 class="card-title">Return Policy</h5>
-                        <p class="inquiry-date">April 18, 2025</p>
-                        <p class="card-text">Question about our return policy for damaged items...</p>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#inquiryModal3">View
-                            Inquiry</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div id="inquiries-card-body-container">
-          <!-- Modal for Inquiry 2 -->
-    <div class="modal fade" id="inquiryModal2" tabindex="-1" aria-labelledby="inquiryModalLabel2" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-              <div class="modal-header bg-primary text-white">
-                  <h5 class="modal-title" id="inquiryModalLabel2">Shipping Question</h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-              </div>
-              <div class="modal-body">
-                  <div class="row mb-3">
-                      <div class="col-md-6">
-                          <p><strong>Customer:</strong> Maria Garcia</p>
-                          <p><strong>Email:</strong> maria.garcia@example.com</p>
-                          <p><strong>Date:</strong> April 20, 2025</p>
-                      </div>
-                      <div class="col-md-6">
-                          <p><strong>Status:</strong> <span class="badge bg-info">In Progress</span></p>
-                          <p><strong>Category:</strong> Shipping</p>
-                          <p><strong>Priority:</strong> High</p>
-                      </div>
-                  </div>
-                  <div class="card mb-3">
-                      <div class="card-header">
-                          <h6 class="mb-0">Inquiry Details</h6>
-                      </div>
-                      <div class="card-body">
-                          <p>Hello, I'm based in Germany and I'm interested in ordering several items from your store.
-                              Do you offer international shipping to the EU? If so, what are the shipping costs and
-                              estimated delivery times? Also, will there be any additional customs charges? Thank you
-                              in advance for your assistance.</p>
-                      </div>
-                  </div>
-                  <div class="card">
-                      <div class="card-header">
-                          <h6 class="mb-0">Response</h6>
-                      </div>
-                      <div class="card-body">
-                          <textarea class="form-control" rows="5" placeholder="Type your response here..."></textarea>
-                      </div>
-                  </div>
-              </div>
-              <div class="modal-footer">
-                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-success">Send Response</button>
-              </div>
-          </div>
-      </div>
-  </div>
-        </div>
-    </div>
+        <!-- Sample Product 1 -->
+                            <tr data-product-id="1">
+                                <td><img src="/api/placeholder/50/50" alt="Product" class="img-thumbnail" width="50"></td>
+                                <td>Wireless Headphones</td>
+                                <td>WH-001</td>
+                                <td>Electronics</td>
+                                <td>$89.99</td>
+                                <td>24</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Sample Product 2 -->
+                            <tr data-product-id="2">
+                                <td><img src="/api/placeholder/50/50" alt="Product" class="img-thumbnail" width="50"></td>
+                                <td>Cotton T-Shirt</td>
+                                <td>CTS-452</td>
+                                <td>Clothing</td>
+                                <td>$19.99</td>
+                                <td>120</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Sample Product 3 -->
+                            <tr data-product-id="3">
+                                <td><img src="/api/placeholder/50/50" alt="Product" class="img-thumbnail" width="50"></td>
+                                <td>Coffee Maker</td>
+                                <td>HK-789</td>
+                                <td>Home & Kitchen</td>
+                                <td>$49.99</td>
+                                <td>15</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </td>
+                            </tr>
 
 
 
-    
 
-    <!-- Modal for Inquiry 3 -->
-    <div class="modal fade" id="inquiryModal3" tabindex="-1" aria-labelledby="inquiryModalLabel3" aria-hidden="true">
+
+
+      <!-- Add/Edit Product Modal -->
+      <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="inquiryModalLabel3">Return Policy</h5>
+                    <h5 class="modal-title" id="productModalLabel">Add New Product</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Customer:</strong> Alex Johnson</p>
-                            <p><strong>Email:</strong> alex.johnson@example.com</p>
-                            <p><strong>Date:</strong> April 18, 2025</p>
+                    <form id="productForm">
+                        <input type="hidden" id="productId" value="">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="productName" class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="productName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productSKU" class="form-label">SKU</label>
+                                <input type="text" class="form-control" id="productSKU" required>
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <p><strong>Status:</strong> <span class="badge bg-success">Resolved</span></p>
-                            <p><strong>Category:</strong> Returns</p>
-                            <p><strong>Priority:</strong> Medium</p>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="productPrice" class="form-label">Price ($)</label>
+                                <input type="number" class="form-control" id="productPrice" step="0.01" min="0" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="productStock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="productStock" min="0" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="productCategory" class="form-label">Category</label>
+                                <select class="form-control" id="productCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="home">Home & Kitchen</option>
+                                    <option value="books">Books</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
                         </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h6 class="mb-0">Inquiry Details</h6>
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
                         </div>
-                        <div class="card-body">
-                            <p>I recently received my order (Order #12345) but unfortunately one of the items arrived
-                                damaged. I would like to know what your return policy is for damaged items. Do I need to
-                                send it back, or can you send a replacement directly? I have attached photos of the
-                                damaged product for your reference.</p>
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Product Image</label>
+                            <input type="file" class="form-control" id="productImage">
                         </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="mb-0">Response</h6>
+                        <div id="currentImageContainer" class="mb-3 d-none">
+                            <label class="form-label">Current Image</label>
+                            <div>
+                                <img id="currentImage" src="/api/placeholder/100/100" alt="Current product image" class="img-thumbnail" style="max-width: 100px;">
+                            </div>
                         </div>
-                        <div class="card-body">
-                            <textarea class="form-control" rows="5" placeholder="Type your response here..."></textarea>
-                        </div>
-                    </div>
+                    </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Send Response</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveProductBtn">Save Product</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-    
-            <!-- Modal for Inquiry 1 -->
-            <div class="modal fade" id="inquiryModal1" tabindex="-1" aria-labelledby="inquiryModalLabel1"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header bg-primary text-white">
-                            <h5 class="modal-title" id="inquiryModalLabel1">Product Availability Inquiry</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <p><strong>Customer:</strong> John Smith</p>
-                                    <p><strong>Email:</strong> john.smith@example.com</p>
-                                    <p><strong>Date:</strong> April 23, 2025</p>
-                                </div>
-                                <div class="col-md-6">
-                                    <p><strong>Status:</strong> <span class="badge bg-warning">Pending</span></p>
-                                    <p><strong>Category:</strong> Product Information</p>
-                                    <p><strong>Priority:</strong> Medium</p>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="card-header">
-                                    <h6 class="mb-0">Inquiry Details</h6>
-                                </div>
-                                <div class="card-body">
-                                    <p>I'm interested in purchasing the latest XYZ Smartphone model. Could you please
-                                        let me know if it's currently in stock? Also, do you offer any promotions for
-                                        first-time customers? I would appreciate any information about color options
-                                        available as well.</p>
-                                </div>
-                            </div>
-                            <div class="card mb-3">
-                                <div class="conversation-container">
-                                    <!-- 👇 Support Team Reply Bubble -->
-                                    <div class="message-bubble message-agent">
-                                      <div class="message-name">Support Team</div>
-                                      <div class="message-text">
-                                        Thank you for your inquiry about our XYZ Smartphone model. We currently have this model in stock in Black, Blue, and Silver colors. For first-time customers, we offer a 10% discount on your first purchase. Please use code <strong>WELCOME10</strong> at checkout. Let me know if you have any other questions!
-                                      </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            </div>
-                </div>
-            </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
 </body>
-
 </html>

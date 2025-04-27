@@ -1,114 +1,80 @@
+// Import Modules
 import { add, GetCartByID, GetProductByID } from "../modules/db.js";
-import { getFormFields, GetUrlField, redirect } from "../util.js";
-import { fetchComponent, convertToHtmlElement } from "../util.js";
+import { createAlert, getFormFields, GetUrlField, redirect, fetchComponent, convertToHtmlElement } from "../util.js";
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
 import { Auth } from "../modules/authModule.js";
 import { Validation } from "../modules/validation.js";
 
+// Render Layout Components
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
 
-function validateCheckout(firstName, lastName, email, phone, address, city, country, zip, cname, cnumber, expiryDate, ccv) {
+// DOM Elements
+const fields = {
+  firstName: document.getElementById("firstName"),
+  lastName: document.getElementById("lastName"),
+  email: document.getElementById("email"),
+  phone: document.getElementById("phone"),
+  address: document.getElementById("address"),
+  city: document.getElementById("city"),
+  country: document.getElementById("country"),
+  zip: document.getElementById("zip"),
+  cnumber: document.getElementById("cnumber"),
+  cname: document.getElementById("cname"),
+  expiryDate: document.getElementById("expiryDate"),
+  ccv: document.getElementById("ccv"),
+  creditCardRadio: document.getElementById('pmethod-ccard'),
+  cashRadio: document.getElementById('cash'),
+  creditCardDetails: document.getElementById('credit-card-fields')
+};
+
+// Authentication Check
+if (!Auth.isLoggedIn()) {
+  redirect("../login.html");
+}
+
+const currentUser = User.getCurrentUser();
+const cart = GetCartByID(currentUser.id);
+
+// Utility Functions
+
+function validateCheckout() {
   let isValid = true;
   let firstInvalidField = null;
 
-  if (!Validation.validateName(firstName.value)) {
-    Validation.showError(firstName, "Enter a valid first name.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = firstName;
-  } else {
-    Validation.clearError(firstName);
+  const validations = [
+    { field: fields.firstName, method: Validation.validateName, message: "Enter a valid first name." },
+    { field: fields.lastName, method: Validation.validateName, message: "Enter a valid last name." },
+    { field: fields.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+    { field: fields.phone, method: Validation.validatePhone, message: "Enter a valid phone number." },
+    { field: fields.address, method: Validation.validateAddress, message: "Address is too short." },
+    { field: fields.city, method: Validation.validateCity, message: "Enter a valid city." },
+    { field: fields.country, method: Validation.validateCountry, message: "Enter a valid country." },
+    { field: fields.zip, method: Validation.validateZipCode, message: "Enter a valid zip code." }
+  ];
+
+  // Credit Card Validations (if selected)
+  if (fields.creditCardRadio.checked) {
+    validations.push(
+      { field: fields.cnumber, method: Validation.validateCreditCard, message: "Enter a valid credit card number." },
+      { field: fields.cname, method: Validation.validateName, message: "Enter a valid cardholder name." },
+      { field: fields.expiryDate, method: Validation.validateExpiryDate, message: "Enter a valid expiry date." },
+      { field: fields.ccv, method: Validation.validateCVV, message: "Enter a valid CVV." }
+    );
   }
 
-  if (!Validation.validateName(lastName.value)) {
-    Validation.showError(lastName, "Enter a valid last name.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = lastName;
-  } else {
-    Validation.clearError(lastName);
-  }
-
-  if (!Validation.validateEmail(email.value)) {
-    Validation.showError(email, "Enter a valid email address.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = email;
-  } else {
-    Validation.clearError(email);
-  }
-
-  if (!Validation.validatePhone(phone.value)) {
-    Validation.showError(phone, "Enter a valid phone number.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = phone;
-  } else {
-    Validation.clearError(phone);
-  }
-
-  if (!Validation.validateAddress(address.value)) {
-    Validation.showError(address, "Address is too short.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = address;
-  } else {
-    Validation.clearError(address);
-  }
-
-  if (!Validation.validateCity(city.value)) {
-    Validation.showError(city, "Enter a valid city.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = city;
-  } else {
-    Validation.clearError(city);
-  }
-
-  if (!Validation.validateCountry(country.value)) {
-    Validation.showError(country, "Enter a valid country.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = country;
-  } else {
-    Validation.clearError(country);
-  }
-
-  if (!Validation.validateZipCode(zip.value)) {
-    Validation.showError(zip, "Enter a valid zip code.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = zip;
-  } else {
-    Validation.clearError(zip);
-  }
-
-  if (!Validation.validateCreditCard(cnumber.value)) {
-    Validation.showError(cnumber, "Enter a valid credit card number.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = cnumber;
-  } else {
-    Validation.clearError(cnumber);
-  }
-
-  if (!Validation.validateName(cname.value)) {
-    Validation.showError(cname, "Enter a valid card name.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = cname;
-  } else {
-    Validation.clearError(cname);
-  }
-
-  if (!Validation.validateExpiryDate(expiryDate.value)) {
-    Validation.showError(expiryDate, "Enter a valid expiry date.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = expiryDate;
-  } else {
-    Validation.clearError(expiryDate);
-  }
-
-  if (!Validation.validateCVV(ccv.value)) {
-    Validation.showError(ccv, "Enter a valid CVV.");
-    isValid = false;
-    if (!firstInvalidField) firstInvalidField = ccv;
-  } else {
-    Validation.clearError(ccv);
-  }
+  // Run validations
+  validations.forEach(({ field, method, message }) => {
+    if (!method(field.value)) {
+      Validation.showError(field, message);
+      isValid = false;
+      if (!firstInvalidField) firstInvalidField = field;
+    } else {
+      Validation.clearError(field);
+    }
+  });
 
   if (!isValid && firstInvalidField) {
     firstInvalidField.scrollIntoView({ behavior: "smooth", block: "center" });
@@ -118,65 +84,62 @@ function validateCheckout(firstName, lastName, email, phone, address, city, coun
   return isValid;
 }
 
-function createSummaryItem(cartItem) {
-  let product = GetProductByID(cartItem.productID)[0];
-  let summaryItemHtml = convertToHtmlElement(summaryItemHtmlString);
-  summaryItemHtml.querySelector("#price").innerText = (product.price * cartItem.quantity).toFixed(2);
-  summaryItemHtml.querySelector("#quantity").innerText = cartItem.quantity;
-  summaryItemHtml.querySelector("#prod-name").innerText = product.name;
-  summaryItemHtml.querySelector("#desc").innerText = product.desc;
-  return summaryItemHtml;
+function toggleCreditCardDetails() {
+  fields.creditCardDetails.style.display = fields.creditCardRadio.checked ? 'block' : 'none';
 }
 
-if (!Auth.isLoggedIn())
-  redirect("../login.html");
+function createSummaryItem(cartItem, summaryItemTemplate) {
+  const product = GetProductByID(cartItem.productID)[0];
+  const summaryItemElement = convertToHtmlElement(summaryItemTemplate);
 
-let currUser = User.getCurrentUser();
-let userID = currUser.id;
+  summaryItemElement.querySelector("#price").innerText = (product.price * cartItem.quantity).toFixed(2);
+  summaryItemElement.querySelector("#quantity").innerText = cartItem.quantity;
+  summaryItemElement.querySelector("#prod-name").innerText = product.name;
+  summaryItemElement.querySelector("#desc").innerText = product.desc;
 
-let summaryItemHtmlString = await fetchComponent("../components/checkout-summary-item.html");
-let cart = GetCartByID(userID);
+  return summaryItemElement;
+}
 
-let emtpyElement = document.getElementById("empty");
-let innerContainer = document.getElementById("inner-container");
-if (cart.length == 0) {
-  emtpyElement.classList.remove("d-none");
-  emtpyElement.classList.add("d-flex");
-} else {
-  innerContainer.classList.remove("d-none");
+async function renderCartSummary() {
+  const summaryItemTemplate = await fetchComponent("../components/checkout-summary-item.html");
+
+  const emptyElement = document.getElementById("empty");
+  const container = document.getElementById("inner-container");
+
+  if (cart.length === 0) {
+    emptyElement.classList.replace("d-none", "d-flex");
+    return;
+  }
+
+  container.classList.remove("d-none");
+
   let totalPrice = 0;
+  const summaryContainer = document.getElementById("ordersummary");
+
   cart.forEach(item => {
-    let summaryItemContainer = document.getElementById("ordersummary");
-    let summaryItem = createSummaryItem(item);
-    summaryItemContainer.appendChild(summaryItem);
-    totalPrice += Number(summaryItem.querySelector("#price").innerText.trim());
+    const summaryItem = createSummaryItem(item, summaryItemTemplate);
+    summaryContainer.appendChild(summaryItem);
+    totalPrice += parseFloat(summaryItem.querySelector("#price").innerText);
   });
-  totalPrice = totalPrice.toLocaleString('en-US', {
-    maximumFractionDigits: 2,
-    minimumFractionDigits: 2
-  });
-  document.getElementById("subtotal").innerText = totalPrice;
-  document.getElementById("total-price").innerText = totalPrice;
+
+  const formattedTotal = totalPrice.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  document.getElementById("subtotal").innerText = formattedTotal;
+  document.getElementById("total-price").innerText = formattedTotal;
 }
 
-const form = document.getElementById("checkoutform");
-form.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const firstName = document.getElementById("firstName");
-  const lastName = document.getElementById("lastName");
-  const email = document.getElementById("email");
-  const phone = document.getElementById("phone");
-  const address = document.getElementById("address");
-  const city = document.getElementById("city");
-  const country = document.getElementById("country");
-  const zip = document.getElementById("zip");
-  const cnumber = document.getElementById("cnumber");
-  const cname = document.getElementById("cname");
-  const expiryDate = document.getElementById("expiryDate");
-  const ccv = document.getElementById("ccv");
 
-  if (validateCheckout(firstName, lastName, email, phone, address, city, country, zip, cname, cnumber, expiryDate, ccv)) {
-    alert("Checkout successful!");
-    form.submit();
+fields.creditCardRadio.addEventListener('change', toggleCreditCardDetails);
+fields.cashRadio.addEventListener('change', toggleCreditCardDetails);
+
+const checkoutForm = document.getElementById("checkoutform");
+checkoutForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (validateCheckout()) {
+    createAlert("Successfully ordered", "success");
+    checkoutForm.submit();
   }
 });
+
+
+await renderCartSummary();
+toggleCreditCardDetails();

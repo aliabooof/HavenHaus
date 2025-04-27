@@ -1,24 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Checkout</title>
-    
+
     <!-- Bootstrap & FontAwesome -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/checkout_style.css">
     <link rel="stylesheet" href="../css/empty.css">
     <link rel="stylesheet" href="../css/style.css">
 
     <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js" integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+        crossorigin="anonymous"></script>
     <script src="../js/pages/checkout.js" type="module"></script>
 </head>
+
 <body>
 
     <div id="total-price-holder" class="d-none" data-total-price="{}"></div>
@@ -27,12 +31,17 @@
     <div id="navbar"></div>
 
     <!-- Checkout Header -->
-    <header class="container d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-md-between mt-5">
+    <header
+        class="container d-flex flex-column flex-md-row align-items-start align-items-md-center justify-content-md-between mt-5">
         <h2>Checkout</h2>
         <ul class="mb-0 mt-md-0 mt-2 list-unstyled">
-            <li class="list-inline-item"><span class="rounded-circle px-2" style="background-color: #dbeafe; color: #63bbfe;">1</span> Cart</li>
-            <li class="list-inline-item"><i class="fa-solid fa-greater-than"></i> <span class="bg-primary text-light rounded-circle px-2">2</span> <span class="text-primary">Shipping</span></li>
-            <li class="list-inline-item"><i class="fa-solid fa-greater-than"></i> <span class="rounded-circle px-2" style="background-color: #f3f4f6;">3</span> Payment</li>
+            <li class="list-inline-item"><span class="rounded-circle px-2"
+                    style="background-color: #dbeafe; color: #63bbfe;">1</span> Cart</li>
+            <li class="list-inline-item"><i class="fa-solid fa-greater-than"></i> <span
+                    class="bg-primary text-light rounded-circle px-2">2</span> <span
+                    class="text-primary">Shipping</span></li>
+            <li class="list-inline-item"><i class="fa-solid fa-greater-than"></i> <span class="rounded-circle px-2"
+                    style="background-color: #f3f4f6;">3</span> Payment</li>
         </ul>
     </header>
 
@@ -91,51 +100,35 @@
                 <h3 class="pt-3">Payment Method</h3>
 
                 <div class="pt-3">
-                    <input name="pmethod" id="pmethod-ccard" type="radio"> 
+                    <input  name="pmethod" id="pmethod-ccard" type="radio">
                     <label for="pmethod-ccard">Credit Card</label>
                 </div>
                 <div id="credit-card-fields" class="container py-2">
                     <div class="col-12 col-md">
-                    <label for="cnumber" class="form-label">Card Number</label>
-                    <input type="text" id="cnumber" name="cnumber" class="form-control" placeholder="1234 5678 9012 3456">
+                        <label for="cnumber" class="form-label">Card Number</label>
+                        <input type="text" id="cnumber" name="cnumber" class="form-control"
+                            placeholder="1234 5678 9012 3456">
                     </div>
                     <div class="col-12 col-md">
-                    <label for="cname" class="form-label">Card Name</label>
-                    <input type="text" id="cname" name="cname" class="form-control" placeholder="Cardholder name">
+                        <label for="cname" class="form-label">Card Name</label>
+                        <input type="text" id="cname" name="cname" class="form-control" placeholder="Cardholder name">
                     </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
                         <div class="w-50 me-2">
                             <label for="expiryDate" class="form-label">Expiry Date</label>
-                            <input type="text" id="expiryDate" name="expiryDate" class="form-control" placeholder="MM/YY">
+                            <input type="text" id="expiryDate" name="expiryDate" class="form-control"
+                                placeholder="MM/YY">
                         </div>
                         <div class="w-25">
                             <label for="ccv" class="form-label">CCV</label>
-                            <input type="text" 
-                            id="ccv" 
-                            name="ccv" 
-                            class="form-control" 
-                            placeholder="123" 
-                            maxlength="3" 
-    
-                            inputmode="numeric" 
-                            
-                            title="Please enter exactly 3 digits">
+                            <input type="text" id="ccv" name="ccv" class="form-control" placeholder="123" maxlength="3"
+                                inputmode="numeric" title="Please enter exactly 3 digits">
                         </div>
                     </div>
                 </div>
 
-                <div class="pt-3">
-                    <input name="pmethod" id="paypal" type="radio"> 
-                    <label for="paypal">PayPal</label>
-                </div>
-
-                <div class="pt-3">
-                    <input name="pmethod" id="bank" type="radio"> 
-                    <label for="bank">Bank Transfer</label>
-                </div>
-
                 <div class="pt-3 pb-3">
-                    <input name="pmethod" id="cash" type="radio"> 
+                    <input name="pmethod" id="cash" type="radio">
                     <label for="cash">Cash on Delivery</label>
                 </div>
 
@@ -173,4 +166,5 @@
     <div id="footer"></div>
 
 </body>
+
 </html>

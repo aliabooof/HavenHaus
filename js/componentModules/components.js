@@ -56,7 +56,9 @@ export class Component {
 
             document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = cart.length)
             const userName = `${user.firstName} ${user.lastName}`.trim() || "User";
-
+            if( User.getCurrentUser.role == 1){
+                document.querySelectorAll('[title="Cart"]').forEach(c=>c.remove());
+            }
 
             body.querySelectorAll(".username-placeholder").forEach(el => {
                 el.textContent = userName;
@@ -91,15 +93,29 @@ export class Component {
         const classArr = ["from-left-animation", "from-right-animation", "from-z-animation", "from-top-animation", "from-bottom-animation"];
         let productCard = await fetchComponent("../../components/product-card.html");
         productCard = convertToHtmlElement(productCard);
+        
         productCard.id = product.id;
-        productCard.querySelector("h5").innerText = product.name;
+        
+        const prodductName =  productCard.querySelector("h5");
+        prodductName.innerText = product.name;
+        prodductName.addEventListener('click',()=>redirect(`../../pages/product.html?prod-id=${product.id}`))
+        
+        const productImg =  productCard.querySelector("img");
+        productImg.addEventListener('click',()=>redirect(`../../pages/product.html?prod-id=${product.id}`))
+        
         productCard.querySelector("p").innerText = product.desc;
         productCard.querySelector("span").innerText = "$ " + product.price;
-        productCard.querySelector("button").addEventListener("click", () => {
-            // Cart.addToCart(productCard.id)
+        
+        const productButton = productCard.querySelector("button");
+        productButton.addEventListener("click", () => {
+            Cart.addToCart(productCard.id)
             Cart.cartUi(productCard.id)
         });
-        // productCard.querySelector("img")="";
+        
+        if(User.getCurrentUser()!==null && User.getCurrentUser().role === 1){
+            
+            productCard.querySelector("button").remove();
+        }
         productCard.classList.add(classArr[Math.floor(Math.random() * classArr.length)])
         const productContainer = document.getElementById("cards-container");
         productContainer.appendChild(productCard);
@@ -165,5 +181,9 @@ export class Component {
         inquirybodyContainer.insertAdjacentElement("beforeend", inquiryBodyElement);
     }
     
+
+    static async renderSellerProduct(product){
+
+    }
 
 }
