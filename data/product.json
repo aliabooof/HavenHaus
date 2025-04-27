@@ -16,7 +16,19 @@
         "Durable Finish",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [
+        {
+          "date": "12/5/2015",
+          "customerName": "Ali",
+          "text": "hal aljf aljfl fsljfs fsja fljasfl"
+        },
+        {
+          "date": "12/5/2015",
+          "customerName": "Ali",
+          "text": "hal aljf aljfl fsljfs fsja fljasfl"
+        }
+      ]
     },
     {
       "id": "PlushSofa_2_t4y5u6i",
@@ -1348,7 +1360,19 @@
         "Space Saving",
         "Multi-functional"
       ],
-      "instructions": "Assembly required, instructions included."
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [
+        {
+          "date": "12/5/2015",
+          "customerName": "Ali",
+          "text": "hal aljf aljfl fsljfs fsja fljasfl"
+        },
+        {
+          "date": "12/5/2015",
+          "customerName": "Ali",
+          "text": "hal aljf aljfl fsljfs fsja fljasfl"
+        }
+      ]
     },
     {
       "id": "ClubChair_2_g6h7j8k",
