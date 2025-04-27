@@ -1,205 +1,160 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Bootstrap Horizontal Tabs</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    body{
-      overflow-x: hidden;
-    }
-    .hidden {
-      opacity: 0;
-      transition: all 1s ease-out;
-      will-change: transform, opacity;
-    }
-    
-    /* Animate directions */
-    .from-left {
-      transform: translateX(-300px);
-    }
-    
-    .from-right {
-      transform: translateX(300px);
-    }
-    
-    .from-z {
-      transform: scale(2)translateZ(300px);
-      
-    }
-    
-    /* Final state */
-    .show {
-      opacity: 1;
-      transform: none; /* This is KEY to reset all transforms */
-    }
-    </style>
-    
-    
-    
-</head>
-<body class="p-4">
-
-  <pre>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <div id=""  class="col-12 col-md-6 col-lg-4 m-3 card p-3 text-center shadow border-1 border-light rounded-4 " style="width: 20rem;">
-    <div class="card Mycard shadow-sm">
-      <i class="far fa-heart favorite-icon"></i>
-      <img src="../assets/images/1.jpg" class="card-img-top product-card" alt="Velvet Cream Sofa">
-      <div class="card-body">
-        <h5 class="card-title">Velvet Cream Sofa</h5>
-        <p class="card-text text-muted">Luxurious velvet sofa with modern design</p>
-        <div class="d-flex justify-content-between align-items-center">
-          <span class="fw-bold text-primary">$999.99</span>
-          <button class="btn btn-primary">
-            <i class="fas fa-shopping-cart me-1"></i> Add to Cart
-          </button>
-        </div>
-      </div>
-    </div>
-  </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </pre>
-  <section class="category">
-    <div class="container">
-        <div class="row m-5">
-            <div class="col-12 text-center hidden from-left ">
-                <p class="fs-1 fw-bold ">Find Your Design Inspiration</p>
-            </div>
-            <div class="col-12 text-center hidden from-right">
-                <p class="fs-5 w-75 mx-auto ">Explore curated design ideas and transform your space into a reflection
-                    of your personality.</p>
-            </div>
-        </div>
-
-        <div class="row d-flex justify-content-center gap-5 my-5">
-            <div class="card p-3 text-center shadow border-1 border-light rounded-4 col-12 col-md-4 hidden from-left"
-                style="width: 20rem;">
-                <img src="assets/images/category/DiningRoom.jpeg" class="card-img-top rounded-4" alt="living">
-                <div class="card-body ">
-                    <h5 class="card-title ">Living Room</h5>
-                    <p class="card-text text-muted">Some quick example text to build on the card title and make up
-                        the bulk of the card's content.</p>
-                    <a href=""
-                        class="card-link link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover ">Explore
-                        Ideas →</a>
-                </div>
-            </div>
-            <!-- <div id="category-card"></div> -->
-            <div class="card p-3 text-center shadow border-1 border-light rounded-4 col-12 col-md-4 hidden from-z"
-                style="width: 20rem;">
-                <img src="assets/images/category/DiningRoom.jpeg" class="card-img-top rounded-4" alt="living">
-                <div class="card-body ">
-                    <h5 class="card-title ">Living Room</h5>
-                    <p class="card-text text-muted">Some quick example text to build on the card title and make up
-                        the bulk of the card's content.</p>
-                    <a href=""
-                        class="card-link link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover ">Explore
-                        Ideas →</a>
-                </div>
-            </div>
-            <div class="card p-3 text-center shadow border-1 border-light rounded-4 col-12 col-md-4 hidden from-right"
-                style="width: 20rem;">
-                <img src="assets/images/category/DiningRoom.jpeg" class="card-img-top rounded-4" alt="living">
-                <div class="card-body ">
-                    <h5 class="card-title ">Living Room</h5>
-                    <p class="card-text text-muted">Some quick example text to build on the card title and make up
-                        the bulk of the card's content.</p>
-                    <a href=""
-                        class="card-link link-offset-2 link-offset-3-hover link-underline link-underline-opacity-0 link-underline-opacity-75-hover ">Explore
-                        Ideas →</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("show");
-            obs.unobserve(entry.target); // Animate once
-          }
-        });
-      }, {
-        threshold: 0.2
-      });
-    
-      document.querySelectorAll('.hidden').forEach(el => {
-        observer.observe(el);
-      });
-    });
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Form</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <script type="module">
+        import {Product} from "./js/modules/productModule.js";
+        const products =Product.getAllProducts();
+        console.log(products);
+
+
+
+        const editBtns = document.querySelectorAll('.edit-btn');
+            editBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    const productId = row.getAttribute('data-product-id');
+                    
+                    // Find product in our sample data
+                    const product = products.find(p => p.id == productId);
+                    
+                    if (product) {
+                        // Fill the form with product data
+                        document.getElementById('productId').value = product.id;
+                        document.getElementById('productName').value = product.name;
+                        document.getElementById('productSKU').value = product.sku;
+                        document.getElementById('productPrice').value = product.price;
+                        document.getElementById('productStock').value = product.stock;
+                        document.getElementById('productCategory').value = product.category;
+                        document.getElementById('productDescription').value = product.description;
+                        
+                        // Show current image
+                        document.getElementById('currentImage').src = product.image;
+                        document.getElementById('currentImageContainer').classList.remove('d-none');
+                        
+                        // Update modal title
+                        document.getElementById('productModalLabel').textContent = 'Edit Product';
+                        
+                        // Show the modal
+                        productModal.show();
+                    }
+                });
+            });
     </script>
-    
+</head>
+<body>
+        <!-- Sample Product 1 -->
+                            <tr data-product-id="1">
+                                <td><img src="/api/placeholder/50/50" alt="Product" class="img-thumbnail" width="50"></td>
+                                <td>Wireless Headphones</td>
+                                <td>WH-001</td>
+                                <td>Electronics</td>
+                                <td>$89.99</td>
+                                <td>24</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Sample Product 2 -->
+                            <tr data-product-id="2">
+                                <td><img src="/api/placeholder/50/50" alt="Product" class="img-thumbnail" width="50"></td>
+                                <td>Cotton T-Shirt</td>
+                                <td>CTS-452</td>
+                                <td>Clothing</td>
+                                <td>$19.99</td>
+                                <td>120</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </td>
+                            </tr>
+                            <!-- Sample Product 3 -->
+                            <tr data-product-id="3">
+                                <td><img src="/api/placeholder/50/50" alt="Product" class="img-thumbnail" width="50"></td>
+                                <td>Coffee Maker</td>
+                                <td>HK-789</td>
+                                <td>Home & Kitchen</td>
+                                <td>$49.99</td>
+                                <td>15</td>
+                                <td>
+                                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                                </td>
+                            </tr>
+
+
+
+
+
+
+      <!-- Add/Edit Product Modal -->
+      <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="productModalLabel">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <input type="hidden" id="productId" value="">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="productName" class="form-label">Product Name</label>
+                                <input type="text" class="form-control" id="productName" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="productSKU" class="form-label">SKU</label>
+                                <input type="text" class="form-control" id="productSKU" required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label for="productPrice" class="form-label">Price ($)</label>
+                                <input type="number" class="form-control" id="productPrice" step="0.01" min="0" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="productStock" class="form-label">Stock</label>
+                                <input type="number" class="form-control" id="productStock" min="0" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="productCategory" class="form-label">Category</label>
+                                <select class="form-control" id="productCategory" required>
+                                    <option value="">Select Category</option>
+                                    <option value="electronics">Electronics</option>
+                                    <option value="clothing">Clothing</option>
+                                    <option value="home">Home & Kitchen</option>
+                                    <option value="books">Books</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productDescription" class="form-label">Description</label>
+                            <textarea class="form-control" id="productDescription" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Product Image</label>
+                            <input type="file" class="form-control" id="productImage">
+                        </div>
+                        <div id="currentImageContainer" class="mb-3 d-none">
+                            <label class="form-label">Current Image</label>
+                            <div>
+                                <img id="currentImage" src="/api/placeholder/100/100" alt="Current product image" class="img-thumbnail" style="max-width: 100px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="saveProductBtn">Save Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

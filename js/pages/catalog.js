@@ -2,6 +2,10 @@ import { Product } from "../modules/productModule.js";
 import { convertToHtmlElement, fetchComponent, observeElements } from "../util.js";
 import { Component } from "../componentModules/components.js";
 
+await Component.renderNavbar();
+await Component.renderFooter();
+await Component.renderCartOffcanvas();
+
 const priceChange = document.getElementById("priceFilter");
 const chooseCategory = document.querySelector('.form-select');
 const searchInput = document.querySelector('input[type="text"]');
@@ -32,7 +36,9 @@ async function filterAndRenderProducts() {
     const selectedCategory = chooseCategory.value;
     if (selectedCategory !== 'all') {
         filtered = Product.getProductsByCatId(selectedCategory);
+
         // console.log(filtered);
+
     }
 
     if(await productNotFound(filtered.length)){

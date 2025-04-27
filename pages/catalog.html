@@ -13,7 +13,8 @@
     import {Navbar} from "../js/componentModules/navbar.js"
     await Navbar.renderNavbar();
   </script> -->
-  <script type="module" src="../js/searchCatalog.js"></script>
+  <!-- <script type="module" src="../js/searchCatalog.js"></script> -->
+   <script src="../js/pages/catalog.js" type="module" defer></script>
 
 
   <style>
@@ -44,17 +45,24 @@
         <div class="col-12 col-md-4 col-lg-3">
           <select class="form-select">
             <option value="all" selected>All Products</option>    <!--add value="all rawan "-->
-            <option value=1 >Sofas</option>
-            <option value=2 >Chairs</option>
+            <option value=1 >Chairs</option>
+            <option value=2 >Sofas</option>
             <option value=3>Tables</option>
+            <option value=4>Sectionals</option>
+            <option value=5>Beds</option>
+            <option value=6>Storage</option>
+            <option value=7>Office Furniture</option>
+            <option value=8>Outdoor Furniture</option>
+            <option value=9>Decor & Accessories</option>
+            
           </select>
         </div>
     
         <!-- Dropdown: Featured -->
         <div class="col-12 col-md-4 col-lg-3">
           <select id="priceFilter" class="form-select">   <!-- add id rawan -->
-            <option selected>Featured</option>
-            <option value="latest">Latest</option>
+            <option selected value="latest">Latest</option>
+            <option value="featured">Featured</option>
             <option value="price-low-high">Price: Low to High</option>
             <option value="price-high-low">Price: High to Low</option>
           </select>

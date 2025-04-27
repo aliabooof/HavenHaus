@@ -54,14 +54,8 @@ export class Product {
         return this.getAllProducts().filter(product => product.sellerID === sellerID);
     }
 
-    // Search products by keyword in name or description
-    static searchProducts(keyword) {
-        const lowerKeyword = keyword.toLowerCase();
-        return this.getAllProducts().filter(product =>
-            product.name.toLowerCase().includes(lowerKeyword) ||
-            product.desc.toLowerCase().includes(lowerKeyword)
-        );
-    }
+ 
+
 
     // Add new product
     static addProduct(product) {
@@ -80,6 +74,29 @@ export class Product {
         }
     }
 
+    //Update product
+    static updateProduct(updatedProduct) {
+        const products = this.getAllProducts();
+        const index = products.findIndex(product => product.id === updatedProduct.id);
+    
+        if (index === -1) {
+            throw new Error(`Product with ID ${updatedProduct.id} not found.`);
+        }
+        
+        const cleanUpdates = {};
+        for (const [key, value] of Object.entries(updatedProduct)) {
+            if (value !== undefined && value !== null && key !== 'id') {
+                cleanUpdates[key] = value;
+            }
+        }
+
+        // Merge the updated fields
+        products[index] = { ...products[index], ...updatedProduct };
+    
+        setTable("product", products);
+    }
+
+
     static removeProduct(productId) {
         const products = this.getAllProducts().filter(p => p.id !== productId);
         setTable("product", products);
@@ -92,9 +109,18 @@ export class Product {
     static getFeaturedProducs(){
         return this.getAllProducts().filter(product => product.featured == true);
     }
+
+    static getProductReviewsById(id){
+        return this.getProductById(id).reviews;
+    }
+
+    //
     static getCategoryById(id) {
         
         return this.getAllProductsCategories().find(cat => cat.id == id);
     }
+    
+        
+    
     
 }

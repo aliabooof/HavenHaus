@@ -2,10 +2,9 @@ import { createAlert,observeElements } from "../util.js";
 import { Component } from "../componentModules/components.js";
 import { Product } from "../modules/productModule.js";
 import { Auth } from "../modules/authModule.js";
+import { LoadDB } from "../load_db.js";
 
-
-
-
+   await LoadDB();
    await Component.renderNavbar();
    await Component.renderFooter();
 
