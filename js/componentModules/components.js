@@ -129,6 +129,7 @@ export class Component {
 
     static async  #getGuestNavbar() {
         const nav = await fetchComponent("../../components/guestNavbar.html")
+        
         return convertToHtmlElement(nav);
 
     }
@@ -223,6 +224,12 @@ export class Component {
         const container = document.getElementById("content");
         container.innerHTML = "";
         container.appendChild(userTable);
+
+        
+            for (let element of userTable.children) {
+                container.appendChild(child);
+            }
+        
 
     }
 

@@ -94,17 +94,84 @@ export async function fetchComponent(url){
     let htmlString  = await response.text();
     return htmlString;
 }
-export function convertToHtmlElement(htmlString){
+// export function convertToHtmlElement(htmlString){
 
-    let tempDiv = document.createElement("div")
-    console.log(tempDiv);
-    tempDiv.innerHTML = htmlString.trim();
-    console.log(tempDiv);
+//     let tempDiv = document.createElement("tbody");
+//     tempDiv.innerHTML = htmlString.trim();
 
-    let htmlElement= tempDiv; 
-    console.log(htmlElement);   
-    return htmlElement;
+//     if (isTableRow) {
+//         tempContainer = document.createElement("table");
+//         tempContainer.innerHTML = `<tbody>${htmlString}</tbody>`;
+//         return tempContainer.querySelector("tbody").firstElementChild; // Get the <tr> directly
+//     } 
+
+//     if (tempDiv.childNodes.length === 1) {
+//         return tempDiv.firstChild; 
+//     } else {
+//         let fragment = document.createDocumentFragment();
+//         while (tempDiv.firstChild) {
+//             fragment.appendChild(tempDiv.firstChild);
+//         }
+//         return fragment;
+//     }
+// }
+
+
+export function convertToHtmlElement(htmlString) {
+    htmlString = htmlString.trim();
+
+    let tempContainer;
+    let fragment = document.createDocumentFragment();
+
+    // Check special cases first
+    if (htmlString.startsWith("<tr")) {
+        tempContainer = document.createElement("table");
+        tempContainer.innerHTML = `<tbody>${htmlString}</tbody>`;
+        let tbody = tempContainer.querySelector("tbody");
+
+        // If only one <tr>, return it directly
+        if (tbody.children.length === 1) {
+            return tbody.firstElementChild;
+        }
+
+        // If multiple <tr>, move them all into fragment
+        while (tbody.firstChild) {
+            fragment.appendChild(tbody.firstChild);
+        }
+        return fragment;
+    }
+    
+    if (htmlString.startsWith("<td") || htmlString.startsWith("<th")) {
+        tempContainer = document.createElement("table");
+        tempContainer.innerHTML = `<tbody><tr>${htmlString}</tr></tbody>`;
+        let tr = tempContainer.querySelector("tr");
+
+        if (tr.children.length === 1) {
+            return tr.firstElementChild;
+        }
+
+        while (tr.firstChild) {
+            fragment.appendChild(tr.firstChild);
+        }
+        return fragment;
+    }
+
+ 
+    tempContainer = document.createElement("div");
+    tempContainer.innerHTML = htmlString;
+
+  
+    if (tempContainer.children.length === 1) {
+        return tempContainer.firstElementChild;
+    }
+
+    
+    while (tempContainer.firstChild) {
+        fragment.appendChild(tempContainer.firstChild);
+    }
+    return fragment;
 }
+
 
 export function observeElements( selector = '.hidden-animation',threshold = 0) {
     const observer = new IntersectionObserver((entries, obs) => {
