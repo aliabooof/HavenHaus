@@ -202,4 +202,28 @@ export class Component {
         reviewContainer.insertAdjacentElement("beforeend",reviewCardElemnt);
     }
 
+    static async renderUserTable(user){
+
+        const userrow = await fetchComponent("../../components/userRows.html");
+        const userrowElemnt = convertToHtmlElement(userrow);
+        const rows = userrowElemnt.querySelectorAll("th");
+        rows[0].innerText = user.id;
+        rows[1].innerText = user.firstName + " " + user.lastName;
+        rows[2].innerText = user.email;
+        rows[3].innerText = user.role;
+
+        document.getElementById("userTableBody").insertAdjacentElement("beforeend",userrowElemnt);
+
+    }
+
+    static async renderTable(){
+    
+        const usertable = await fetchComponent("../../components/userTable.html");
+        const userTable = convertToHtmlElement(usertable);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(userTable);
+
+    }
+
 }

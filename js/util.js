@@ -95,9 +95,14 @@ export async function fetchComponent(url){
     return htmlString;
 }
 export function convertToHtmlElement(htmlString){
+
     let tempDiv = document.createElement("div")
+    console.log(tempDiv);
     tempDiv.innerHTML = htmlString.trim();
-    let htmlElement= tempDiv.firstChild; 
+    console.log(tempDiv);
+
+    let htmlElement= tempDiv; 
+    console.log(htmlElement);   
     return htmlElement;
 }
 
