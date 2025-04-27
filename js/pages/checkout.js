@@ -127,7 +127,7 @@ async function renderCartSummary() {
   document.getElementById("total-price").innerText = formattedTotal;
 }
 
-// Event Listeners
+
 fields.creditCardRadio.addEventListener('change', toggleCreditCardDetails);
 fields.cashRadio.addEventListener('change', toggleCreditCardDetails);
 
@@ -140,6 +140,6 @@ checkoutForm.addEventListener("submit", (e) => {
   }
 });
 
-// Initialize
+
 await renderCartSummary();
 toggleCreditCardDetails();

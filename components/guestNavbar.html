@@ -1,31 +1,30 @@
-<nav class="mynav navbar shadow sticky-top navbar-light bg-light">
+<nav class="mynav navbar shadow sticky-top navbar-expand-sm navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="../index.html">Title</a>
-
-        <div id="navbarNav">
-            <ul class="navbar-nav d-flex flex-row gap-4">
-                
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-item fs-5" href="../index.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-
-
-                        <a class="nav-link nav-link-item fs-5" href="../pages/catalog.html">Catalog</a>
-
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-item fs-5" href="../index.html#category-section">Our Collection</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link nav-link-item fs-5" href="">About Us</a>
-                    </li>
-                
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+            <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link nav-link-item fs-5" href="../index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-item fs-5" href="../pages/catalog.html">Catalog</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-item fs-5" href="../index.html#category-section">Our Collection</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-item fs-5" href="../pages/about.html">About Us</a>
+                </li>
             </ul>
-        </div>
-
-        <div>
-            <a class="btn btn-outline-primary" href="/login.html">Login</a>
+            <div class="d-flex">
+                <a class="btn btn-outline-primary" href="../login.html">Login</a>
+            </div>
         </div>
     </div>
 </nav>
