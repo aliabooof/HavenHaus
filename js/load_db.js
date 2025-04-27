@@ -9,7 +9,7 @@ async function  LoadFile(url){
     }
 }
 
- async function LoadDB(){
+ export async function LoadDB(){
     if(!window.localStorage.getItem("IsDBLoaded")){
 
       await  LoadFile("../data/user.json")

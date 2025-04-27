@@ -7,8 +7,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
         <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-        
-        <script src="../js/load_db.js"></script>
         <script src="../js/pages/product.js" type="module"></script>
         <link rel="stylesheet" href="../css/product.css">
         <link rel="stylesheet" href="../css/style.css">
@@ -137,7 +135,7 @@
                                     </li>
                                     <li class="nav-item">
                                         <button class="nav-link" id="inst-tab" data-bs-toggle="tab" data-bs-target="#reviews-container" type="button" role="tab">
-                                            Reviews (<span class="review-count">42</span>)
+                                            Reviews (<span id="review-count" class="review-count">0</span>)
                                           </button>
                                     </li>
                                 </ul>
@@ -157,7 +155,7 @@
                                     <div id="reviews-container" class="tab-pane fade"  role="tabpanel">
                                         <h5>Reviews</h5>
                                         <p id="product-reviews">This is the product reviews section.</p>
-                                        <div style="overflow-y: scroll; height: 200px;">
+                                        <div style="overflow-y: auto; height: 200px;">
 
                                         </div>
                                         <div class="card mt-4 bg-light">
