@@ -4,9 +4,10 @@ import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
 import { Product } from "../modules/productModule.js";
 import { Auth } from "../modules/authModule.js";
+import { LoadDB } from "../load_db.js";
 
 
-
+await LoadDB();
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
@@ -56,11 +57,11 @@ document.getElementById("increaseQuantityBtn").addEventListener("click",Increase
 document.getElementById("decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)
 document.getElementById("addToCartBtn").addEventListener("click",AddToCart)
 
-let productReviews = product.reviews;
 
-if(productReviews.length !== 0){
-
-    for (const review of productReviews) {
+console.log(product.reviews.length);
+if(product.reviews.length !== 0){
+    document.getElementById("review-count").innerText = product.reviews.length;
+    for (const review of product.reviews) {
         await Component.renderReviews(review);
     }
 }
@@ -69,7 +70,7 @@ let reviewForm = document.getElementById("addReviewForm");
 
 reviewForm.addEventListener("submit",(e)=>{
     e.preventDefault();
-    if(!Auth.isLoggedIn()){
+    if(!Auth.isLoggedIn() && !currUser){
         createAlert("Please Log In to Submit a Review","primary","You must be logged in to leave a review. Please log in to share your thoughts.");
         return;
     }
