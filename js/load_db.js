@@ -1,11 +1,12 @@
-
+console.log("hello")
 async function  LoadFile(url){
-    let response = await fetch(url)
+    let response = await fetch(url);
     let json = await response.json();
         
     for(const key in json){
         localStorage.setItem(`${key}`,JSON.stringify(json[key]))
         // console.log(`${key}, ${JSON.stringify(json[key])}`)
+
     }
 }
 
