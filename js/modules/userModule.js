@@ -1,4 +1,4 @@
-import {getTable,add } from "./db.js"
+import {getTable,add,setTable } from "./db.js"
 export class User{
     constructor({ firstName, lastName, email, role, phone, password }) {
         this.firstName = firstName;
@@ -65,8 +65,8 @@ export class User{
     }
 
     static removeUser(id) {
-            const users = this.getAllProducts().filter(user => user.id !== id);
-            setTable("product", products);
-        }
+            const users = this.getAllUsers().filter(user => user.id !== id);
+            setTable("users", users);
+    }
  
 } 
