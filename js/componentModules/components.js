@@ -207,12 +207,15 @@ export class Component {
 
         const userrow = await fetchComponent("../../components/userRows.html");
         const userrowElemnt = convertToHtmlElement(userrow);
-        const rows = userrowElemnt.querySelectorAll("th");
+        const rows = userrowElemnt.querySelectorAll("td");
         rows[0].innerText = user.id;
         rows[1].innerText = user.firstName + " " + user.lastName;
         rows[2].innerText = user.email;
         rows[3].innerText = user.role;
-
+        userrowElemnt.querySelector(".delete-button").addEventListener("click",(e)=>{
+            User.removeUser(user.id);
+            e.target.parentNode.parentNode.remove();
+        })
         document.getElementById("userTableBody").insertAdjacentElement("beforeend",userrowElemnt);
 
     }
