@@ -19,6 +19,36 @@
       "instructions": "Assembly required, instructions included."
     },
     {
+      "id": "9",
+      "sellerID": 2,
+      "name": "Modern Dining Chair",
+      "category": 1,
+      "price": 129.99,
+      "desc": "Elegant wooden dining chair with cushioned seat.",
+      "imageUrl": "https://placeimg.com/640/480/furniture",
+      "stock": 15,
+      "featured": false,
+      "warranty": "1 Year Manufacturer Warranty",
+      "highlights": [
+        "Comfortable Cushioning",
+        "Durable Finish",
+        "Easy Assembly"
+      ],
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [
+        {
+          "date": "12/5/2015",
+          "customerName": "Ali",
+          "text": "hal aljf aljfl fsljfs fsja fljasfl"
+        },
+        {
+          "date": "12/5/2015",
+          "customerName": "Ali",
+          "text": "hal aljf aljfl fsljfs fsja fljasfl"
+        }
+      ]
+    },
+    {
       "id": "PlushSofa_2_t4y5u6i",
       "sellerID": 3,
       "name": "Plush Sofa",

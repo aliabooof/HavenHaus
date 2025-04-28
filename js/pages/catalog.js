@@ -69,6 +69,7 @@ async function filterAndRenderProducts() {
     container.innerHTML = "";
     for (const product of filtered) {
         await Component.renderProductCard(product);
+        observeElements();
     }
 
     

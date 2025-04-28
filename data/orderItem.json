@@ -8,7 +8,7 @@
       { "productID": 6, "sellerID": 3, "orderID": 4, "quantity": 2, "status": 1 },
       { "productID": 7, "sellerID": 4, "orderID": 4, "quantity": 2, "status": 1 },
       { "productID": 8, "sellerID": 4, "orderID": 5, "quantity": 2, "status": 1 },
-      { "productID": 9, "sellerID": 4, "orderID": 6, "quantity": 1, "status": 0 },
+      { "productID": 9, "sellerID": 2, "orderID": 6, "quantity": 1, "status": 0 },
       { "productID": 10, "sellerID": 2, "orderID": 7, "quantity": 1, "status": 0 },
       { "productID": 11, "sellerID": 3, "orderID": 7, "quantity": 1, "status": 0 },
       { "productID": 12, "sellerID": 2, "orderID": 8, "quantity": 1, "status": 1 },
