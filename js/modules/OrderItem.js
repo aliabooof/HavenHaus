@@ -16,11 +16,11 @@ export class OrderItem {
             return getTable("orderItem") || [];
     }
     static getOrderItemsBySellerId(sellerId) {
-        return this.getAllOrderItems().filter(item => item.sellerID === sellerId );
+        return this.getAllOrderItems().filter(item => item.sellerID == sellerId );
     }
     static getOrderItemsByProductId(productId) {
         this.getAllOrderItems().filter(item => item.productID == productId )
-        return this.getAllOrderItems().filter(item => item.productID === productId );
+        return this.getAllOrderItems().filter(item => item.productID == productId );
     }
     // static getProductQuantityByProductId(productId) {
     //     let product = Product.getProductById();
