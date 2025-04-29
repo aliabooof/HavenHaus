@@ -281,17 +281,17 @@ function loadOrderDashboardChart() {
                 }
             }
             }
-
+        });
        
     }
 
 
-    });
+
     
     // console.log(ordersCount);
 
 
-}
+
 
 
 document.getElementById("user_button").addEventListener("click", async () => {
