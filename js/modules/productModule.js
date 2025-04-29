@@ -51,7 +51,7 @@ export class Product {
 
     // Get all products by a specific seller
     static getProductsBySeller(sellerID) {
-        return this.getAllProducts().filter(product => product.sellerID === sellerID);
+        return this.getAllProducts().filter(product => product.sellerID == sellerID);
     }
 
  
