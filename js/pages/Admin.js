@@ -3,15 +3,18 @@ import { Product } from "../modules/productModule.js";
 import { Order } from "../modules/order.js";
 import { Component } from "../componentModules/components.js";
 import { LoadDB } from "../load_db.js";
-import {OrderItem} from "../modules/OrderItem.js";
-
+import { Inquiry } from "../modules/inquiryModule.js";
 
 await LoadDB();
 
 let users = User.getAllUsers();
-animateCount("totalUsers",users.length);
 
-async function handleSearch(keyword) {
+
+
+
+
+
+ async function handleSearch(keyword) {
     if (keyword.trim() === "") {
         
         Component.renderPage(1);
@@ -54,7 +57,7 @@ function animateCount(id, endValue, duration = 1000){
         if (startValue >= endValue){
             clearInterval(counter);
         }
-},stepTime);
+   },stepTime);
 }
 
 async function loadContent(x) {
@@ -63,18 +66,17 @@ async function loadContent(x) {
             await Component.renderCharts();
             await loadDashboardCharts();
             break;
-
             case 2:
                 const users = User.getAllUsers();
                 animateCount("totalUsers",users.length);
                 await Component.renderTable();
+                console.log(document.querySelectorAll('tr').length)
+               
                 document.getElementById("searchInput").addEventListener('input',(e)=>{
                     handleSearch(e.target.value);
                 });
 
                 break;
-
-
         case 3:
             await Component.renderProducts();
             await loadProductDashboardChart();
@@ -84,8 +86,7 @@ async function loadContent(x) {
             await loadOrderDashboardChart();
             break;
         case 5:
-            await Component.renderSupport();
-
+            await Component.renderSupport(Inquiry.getAllInquiries());
             break;
     }
 }
@@ -230,7 +231,7 @@ function loadOrderDashboardChart() {
     const sellers = sellersData.map(user => `${user.firstName} ${user.lastName}`);
     // console.log(sellers);
     const ordersCount = sellersData.map(seller => {
-        const orders = OrderItem.getOrderItemsBySellerId(seller.id);
+        const orders = Order.getOrdersByUser(seller.id);
         return orders.length; // number of orders for this seller
     });
     new Chart(dashOrder, {

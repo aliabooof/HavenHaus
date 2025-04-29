@@ -1,9 +1,12 @@
 import { Component } from "../componentModules/components.js"
 import { Inquiry } from "../modules/inquiryModule.js";
 import { User } from "../modules/userModule.js";
-import { convertToHtmlElement, fetchComponent, observeElements, redirect } from "../util.js";
+import { convertToHtmlElement, createAlert, fetchComponent, getFormInputs, observeElements, redirect } from "../util.js";
 import { Auth } from "../modules/authModule.js";
+import { LoadDB } from "../load_db.js";
+import { Validation } from "../modules/validation.js";
 
+await LoadDB();
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
@@ -14,7 +17,9 @@ const newInquiry2 = document.getElementById("new-inquiry-button2");
 newInquiry2.addEventListener("click",()=>redirect('../../login.html'));
 
 
-if(Auth.isLoggedIn()){
+async function  loadInquires(){
+    document.getElementById('inquiries-card-header-container').innerHTML="";
+
     const inquiries = Inquiry.getInquiriesByUser(User.getCurrentUser().id||[]);
     newInquiry1.classList.remove("d-none");
     newInquiry2.classList.add("d-none");
@@ -22,6 +27,7 @@ if(Auth.isLoggedIn()){
         for (const inquiry of inquiries){
             console.log(inquiry.details.status);
             await Component.renderInquiryCard(inquiry);
+            observeElements();
         }
     }else{
         let notfound = await fetchComponent("../../components/no-product-found.html");
@@ -31,18 +37,31 @@ if(Auth.isLoggedIn()){
         notfound.removeChild( notfound.querySelector("a"))
         document.getElementById("not-found-element").appendChild(notfound)
     }
+    observeElements();
+}
+if(Auth.isLoggedIn()){
+    await loadInquires();
 
 
 }
 
 
-document.querySelector('form').addEventListener('submit', function(event) {
+
+let form =document.getElementById('submit-inquiry-form')
+form.addEventListener('submit', async function(event) {
     if(!Auth.isLoggedIn())
         redirect("../../login.html")
     
     event.preventDefault();
+    
+    const formInputs = getFormInputs(form);
+    const validationRules = Validation.userInquiryForm(formInputs);
+    if(!Validation.validateForm(form, validationRules)){
+        return;
+    }
+    
+    
     let userId = User.getCurrentUser().id;
-
     const inquiryData= {
         id: userId, 
         title: document.getElementById('title').value.trim(),
@@ -51,10 +70,15 @@ document.querySelector('form').addEventListener('submit', function(event) {
         message: document.getElementById('message').value.trim()
     };
     let inquiry = new Inquiry(...Object.values(inquiryData))
-    // console.log('Form submitted:', formData);
+    
     Inquiry.addInquiry(inquiry)
-
-    alert("Thank you for your inquiry, " + inquiryData.name + "! We'll get back to you soon.");
+    await loadInquires();
+    createAlert("inuiry submitees ","success");
+    let modalElement = document.getElementById('newInquiryModal');
+    console.log(modalElement);
+    let modalInstance = bootstrap.Modal.getInstance(modalElement);
+    modalInstance.hide();
+    
 
 });
 

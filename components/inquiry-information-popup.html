@@ -1,4 +1,4 @@
-<div class="modal fade" id="" tabindex="-1" aria-labelledby="inquiryModalLabel1" aria-hidden="true">
+<div class="modal fade" id="" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -41,6 +41,25 @@
                     </div>
                 </div>
             </div>
+
+
+            <form id="inquiry-form-id" class="reply-form d-none">
+                <div class="mb-3">
+                    <label for="reply" class="form-label">Reply Message</label>
+                    <textarea class="form-control" name="reply" id="reply" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Update Status</label>
+                    <select class="form-select" name="status" id="status">
+                        <option value="pending" selected>Pending</option>
+                        <option value="resolved">Resolved</option>
+                        <option value="closed">Closed</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Send Reply</button>
+            </form>
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 
