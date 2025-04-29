@@ -1,9 +1,10 @@
 import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
-import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields } from "../util.js";
+import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields, getFormInputs } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
+import {Validation} from "../modules/validation.js";
 
 export class Component {
 
@@ -203,93 +204,6 @@ export class Component {
         reviewContainer.insertAdjacentElement("beforeend", reviewCardElemnt);
     }
 
-    // static async renderUserTable(user) {
-
-    //     const userrow = await fetchComponent("../../components/userRows.html");
-    //     const userrowElemnt = convertToHtmlElement(userrow);
-    //     const cols = userrowElemnt.querySelectorAll("td");
-    //     cols[0].innerText = user.id;
-    //     cols[1].innerText = user.firstName + " " + user.lastName;
-    //     cols[2].innerText = user.email;
-    //     cols[3].innerText = user.role==1?"Seller":"Customer";
-    //     userrowElemnt.querySelector(".delete-button").addEventListener("click", (e) => {
-    //         User.removeUser(user.id);
-    //         e.target.closest("tr").remove();
-    //     })
-    //     const editButton = userrowElemnt.querySelector(".edit-button");
-    //     editButton.setAttribute('data-bs-toggle', `#editUserModal${user.id}`);
-    //     editButton.addEventListener('click', async () => {
-    //         let modalElement = document.getElementById(`editUserModal${user.id}`);
-
-    //         if (!modalElement) {
-    //             // Render the form content if the modal doesn't exist
-    //             await this.renderEditUserForm(user.id);
-    //             modalElement = document.getElementById(`editUserModal${user.id}`);
-
-    //             // Attach event listeners only ONCE after the modal is created
-    //             modalElement.addEventListener('hide.bs.modal', () => {
-    //                 if (document.activeElement && modalElement.contains(document.activeElement)) {
-    //                     document.activeElement.blur();
-    //                 }
-    //             });
-
-    //             // Listen for modal hide event and dispose of the modal
-    //             modalElement.addEventListener('hidden.bs.modal', () => {
-    //                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    //                 if (modalInstance) {
-    //                     modalInstance.dispose();
-    //                 }
-    //                 modalElement.remove();
-    //             }, { once: true });
-
-    //             // Attach form submit listener to handle form data
-    //             const form = modalElement.querySelector("form");  // Assuming the modal contains a form element
-    //             this.#setFormInputs(form, user);
-    //             form.addEventListener('submit', async (e) => {
-    //                 e.preventDefault();
-    //                 const formData = getFormFields('editUserForm');
-    //                 formData.id = user.id;
-    //                 User.updateUser(formData);
-    //                 formData.id = user.id;
-    //                 User.updateUser(formData);
-    //                 cols[1].innerText = formData.firstName + " " + formData.lastName;
-    //                 cols[2].innerText = formData.email;
-    //                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    //                 if (modalInstance) {
-    //                     modalInstance.hide();
-    //                 }
-
-    //             });
-    //         }
-
-    //         // Show the modal when ready
-    //         let modalInstance = bootstrap.Modal.getInstance(modalElement);
-    //         if (!modalInstance) {
-    //             modalInstance = new bootstrap.Modal(modalElement);
-    //         }
-    //         modalInstance.show();
-    //     });
-
-    //     document.getElementById("userTableBody").insertAdjacentElement("beforeend", userrowElemnt);
-
-    // }
-
-    // static async renderTable() {
-
-    //     const usertable = await fetchComponent("../../components/userTable.html");
-    //     const userTable = convertToHtmlElement(usertable);
-    //     const container = document.getElementById("content");
-    //     container.innerHTML = "";
-    //     container.appendChild(userTable);
-
-
-    //     for (let child of userTable.children) {
-    //         container.appendChild(child);
-    //     }
-
-
-    // }
-
 
 
     static users = [];
@@ -337,6 +251,9 @@ export class Component {
         userrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
             User.removeUser(user.id);
             e.target.closest("tr").remove();
+            this.users=User.getAllUsers();
+           this.renderPage(1);
+            this.renderPaginationControls();
         });
 
         const editButton = userrowElement.querySelector(".edit-button");
@@ -370,13 +287,24 @@ export class Component {
             }, { once: true });
     
             const form = modalElement.querySelector("form");
-            this.#setFormInputs(form, user);
+            this.#setEditFormInputs(form, user);
     
-            form.addEventListener('submit', async (e) => {
+            form.addEventListener('submit',  (e) => {
                 e.preventDefault();
                 const formData = getFormFields('editUserForm');
+                const formInputs = getFormInputs(form);
+                const validationRules = Validation.editUserRules(formInputs);
+                if(!(Validation.validateForm(form,validationRules))){
+                    return;
+                }
+
+                if(User.isEmailUsedByAnotherUser(formData.email,user.id)){
+                    createAlert("Email Already Exists.","warning","This email is already used by another user.");
+                    return;
+                }
+
                 formData.id = user.id;
-                await User.updateUser(formData);
+                User.updateUser(formData);
     
                 const cols = userrowElement.querySelectorAll("td");
                 cols[1].innerText = `${formData.firstName} ${formData.lastName}`;
@@ -418,7 +346,7 @@ static renderPaginationControls() {
     prevButton.disabled = this.currentPage === 1;
     prevButton.addEventListener("click", () => {
         if (this.currentPage > 1) {
-            this.currentPage -= 1; // ⭐ Update currentPage immediately
+            this.currentPage -= 1; 
             this.renderPage(this.currentPage);
             this.renderPaginationControls();
         }
@@ -432,7 +360,7 @@ static renderPaginationControls() {
             pageButton.classList.add("active");
         }
         pageButton.addEventListener("click", () => {
-            this.currentPage = i; // ⭐ Set currentPage immediately
+            this.currentPage = i; 
             this.renderPage(this.currentPage);
             this.renderPaginationControls();
         });
@@ -444,7 +372,7 @@ static renderPaginationControls() {
     nextButton.disabled = this.currentPage === totalPages;
     nextButton.addEventListener("click", () => {
         if (this.currentPage < totalPages) {
-            this.currentPage += 1; // ⭐ Update currentPage immediately
+            this.currentPage += 1; 
             this.renderPage(this.currentPage);
             this.renderPaginationControls();
         }
@@ -463,49 +391,22 @@ static renderPaginationControls() {
 }
 
 
-    static #setFormInputs(form, user) {
-    const formInputs = this.getFormInputs(form)
-    console.log(formInputs);
-    formInputs.firstName.value = user.firstName;
-    formInputs.lastName.value = user.lastName;
-    formInputs.email.value = user.email;
-    formInputs.phone.value = user.phone;
-    formInputs.password.value = user.password;
-
-}
-
-    static getFormInputs(form) {
-    const firstName = form.querySelector("#firstName");
-    const lastName = form.querySelector("#lastName");
-    const email = form.querySelector("#email");
-    const phone = form.querySelector("#phone");
-    const password = form.querySelector("#password");
-
-
-    return {
-        firstName,
-        lastName,
-        email,
-        phone,
-        password
-    };
-}
 
 
 updateTableRow(userId, updatedData) {
     const userRow = document.querySelector(`#userRow${userId}`);
 
     if (userRow) {
-
+        
         userRow.querySelector(".user-name").innerText = `${updatedData.firstName} ${updatedData.lastName}`;
         userRow.querySelector(".user-email").innerText = updatedData.email;
         userRow.querySelector(".user-role").innerText = updatedData.role;
     }
-
+    
 }
 
 static async renderCharts(){
-
+    
     const dashboard = await fetchComponent("../../components/dashboard.html");
     const chart = convertToHtmlElement(dashboard);
     const container = document.getElementById("content");
@@ -513,8 +414,8 @@ static async renderCharts(){
     container.appendChild(chart);
 }
 
-    static async renderProducts(){
-
+static async renderProducts(){
+    
     const product = await fetchComponent("../../components/products-dashboard.html");
     const product_chart = convertToHtmlElement(product);
     const container = document.getElementById("content");
@@ -522,8 +423,8 @@ static async renderCharts(){
     container.appendChild(product_chart);
 }
 
-    static async renderSupport(){
-
+static async renderSupport(){
+    
     const support = await fetchComponent("../../components/support-dashboard.html");
     const support_content = convertToHtmlElement(support);
     const container = document.getElementById("content");
@@ -531,7 +432,7 @@ static async renderCharts(){
     container.appendChild(support_content);
 }
 
-    static async renderOrders(){
+static async renderOrders(){
     const order = await fetchComponent("../../components/order-dashboard.html");
     const orders_content = convertToHtmlElement(order);
     const container = document.getElementById("content");
@@ -539,4 +440,14 @@ static async renderCharts(){
     container.appendChild(orders_content);
 }
 
+static #setEditFormInputs(form, user) {
+const formInputs = getFormInputs(form)
+console.log(formInputs);
+formInputs.firstName.value = user.firstName;
+formInputs.lastName.value = user.lastName;
+formInputs.email.value = user.email;
+formInputs.phone.value = user.phone;
+formInputs.password.value = user.password;
+
+}
 }

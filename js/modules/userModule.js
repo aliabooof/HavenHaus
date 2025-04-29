@@ -63,7 +63,7 @@ export class User{
 
     static updateUser(updatedUser){
         const users = this.getAllUsers();
-        const index = users.findIndex(user => user.id == user.id);
+        const index = users.findIndex(user => user.id == updatedUser.id);
     
         if (index === -1) {
             throw new Error(`Product with ID ${updatedUser.id} not found.`);
@@ -76,7 +76,7 @@ export class User{
             }
         }
 
-        // Merge the updated fields
+        
         users[index] = { ...users[index], ...updatedUser };
     
         setTable("user", users);
@@ -88,6 +88,13 @@ export class User{
         const users = this.getAllUsers();
         return users.filter(user => user.role == role);
     }
+
+
+    static isEmailUsedByAnotherUser(email, userIdToExclude ) {
+        return this.getAllUsers().some(user => user.email === email && user.id !== userIdToExclude);
+
+    }
+
 
     static removeUser(id) {
             const users = this.getAllUsers().filter(user => user.id !== id);
