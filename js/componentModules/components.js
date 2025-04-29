@@ -67,8 +67,13 @@ export class Component {
             const logoutLinks = body.querySelectorAll(".logout-link");
             logoutLinks.forEach(link => {
                 link.addEventListener('click', () => {
-
                     Auth.logout();
+                });
+            });
+            const profileLinks = body.querySelectorAll(".profile-link");
+            profileLinks.forEach(link => {
+                link.addEventListener('click', (e) =>{
+                    e.target.href = "../../pages/profile.html";
                 });
             });
         } else {

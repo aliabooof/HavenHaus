@@ -80,6 +80,7 @@ export class User{
         users[index] = { ...users[index], ...updatedUser };
     
         setTable("user", users);
+        setTable("currentUser", updatedUser);
     }
     static addUser(user){
         add("user",user);
@@ -100,7 +101,5 @@ export class User{
             const users = this.getAllUsers().filter(user => user.id !== id);
             setTable("user", users);
     }
-
-    
  
 } 
