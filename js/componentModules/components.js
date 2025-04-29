@@ -366,6 +366,14 @@ static async handleEditUser(user, userrowElement) {
             if (modalInstance) {
                 modalInstance.dispose();
             }
+
+        
+    }
+
+   
+
+
+
             modalElement.remove();
         }, { once: true });
 
@@ -502,4 +510,40 @@ static renderPaginationControls() {
         }
 
     }
+
+ static async renderCharts(){
+    
+        const dashboard = await fetchComponent("../../components/dashboard.html");
+        const chart = convertToHtmlElement(dashboard);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(chart);
+    }
+
+    static async renderProducts(){
+    
+        const product = await fetchComponent("../../components/products-dashboard.html");
+        const product_chart = convertToHtmlElement(product);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(product_chart);
+    }
+
+    static async renderSupport(){
+    
+        const support = await fetchComponent("../../components/support-dashboard.html");
+        const support_content = convertToHtmlElement(support);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(support_content);
+    }
+
+    static async renderOrders(){
+        const order = await fetchComponent("../../components/order-dashboard.html");
+        const orders_content = convertToHtmlElement(order);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(orders_content);
+    }
+
 }
