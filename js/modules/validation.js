@@ -154,6 +154,13 @@ static checkoutRuls(inputs){
     ]
 }
 
+static userInquiryForm(inputs){
+  return[
+    { field: inputs.title, method: Validation.validateName, message: "Enter a valid Title." },
+    { field: inputs.name, method: Validation.validateName, message: "Enter a valid name." },
+    { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+  ]
+}
 
 
 
