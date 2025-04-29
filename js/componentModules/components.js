@@ -293,119 +293,112 @@ export class Component {
 
 
     static users = [];
-static pageSize = 5; 
-static currentPage = 1;
+    static pageSize = 5;
+    static currentPage = 1;
 
-static async renderTable() {
-    const usertable = await fetchComponent("../../components/userTable.html");
-    const userTable = convertToHtmlElement(usertable);
-    const container = document.getElementById("content");
-    container.innerHTML = "";
-    container.appendChild(userTable);
+    static async renderTable() {
+        const usertable = await fetchComponent("../../components/userTable.html");
+        const userTable = convertToHtmlElement(usertable);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(userTable);
 
+
+        this.users = await User.getAllUsers();
+
+        this.renderPage(1);
+        this.renderPaginationControls();
+    }
+
+    static async renderPage(pageNumber) {
+        const userTableBody = document.getElementById("userTableBody");
+        userTableBody.innerHTML = "";
+
+        const startIndex = (pageNumber - 1) * this.pageSize;
+        const endIndex = startIndex + this.pageSize;
+        const usersToRender = this.users.slice(startIndex, endIndex);
+
+        for (const user of usersToRender) {
+            await this.renderUserRow(user);
+        }
+        this.currentPage = pageNumber;
+    }
+
+    static async renderUserRow(user) {
+        const userrow = await fetchComponent("../../components/userRows.html");
+        const userrowElement = convertToHtmlElement(userrow);
+        const cols = userrowElement.querySelectorAll("td");
+
+        cols[0].innerText = user.id;
+        cols[1].innerText = `${user.firstName} ${user.lastName}`;
+        cols[2].innerText = user.email;
+        cols[3].innerText = user.role == 1 ? "Seller" : "Customer";
+
+        userrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
+            User.removeUser(user.id);
+            e.target.closest("tr").remove();
+        });
+
+        const editButton = userrowElement.querySelector(".edit-button");
+        editButton.setAttribute('data-bs-toggle', `#editUserModal${user.id}`);
+        editButton.addEventListener('click', async () => {
+            await this.handleEditUser(user, userrowElement);
+        });
+
+        document.getElementById("userTableBody").appendChild(userrowElement);
+    }
+
+    static async handleEditUser(user, userrowElement) {
+        let modalElement = document.getElementById(`editUserModal${user.id}`);
     
-    this.users = await User.getAllUsers(); 
-
-    this.renderPage(1);
-    this.renderPaginationControls();
-}
-
-static async renderPage(pageNumber) {
-    const userTableBody = document.getElementById("userTableBody");
-    userTableBody.innerHTML = "";
-
-    const startIndex = (pageNumber - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    const usersToRender = this.users.slice(startIndex, endIndex);
-
-    for (const user of usersToRender) {
-        await this.renderUserRow(user); 
+        if (!modalElement) {
+            await this.renderEditUserForm(user.id);
+            modalElement = document.getElementById(`editUserModal${user.id}`);
+    
+            modalElement.addEventListener('hide.bs.modal', () => {
+                if (document.activeElement && modalElement.contains(document.activeElement)) {
+                    document.activeElement.blur();
+                }
+            });
+    
+            modalElement.addEventListener('hidden.bs.modal', () => {
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                if (modalInstance) {
+                    modalInstance.dispose();
+                }
+                modalElement.remove();
+            }, { once: true });
+    
+            const form = modalElement.querySelector("form");
+            this.#setFormInputs(form, user);
+    
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const formData = getFormFields('editUserForm');
+                formData.id = user.id;
+                await User.updateUser(formData);
+    
+                const cols = userrowElement.querySelectorAll("td");
+                cols[1].innerText = `${formData.firstName} ${formData.lastName}`;
+                cols[2].innerText = formData.email;
+    
+                const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                if (modalInstance) {
+                    modalInstance.hide();
+                }
+            });
+        }
+    
+        let modalInstance = bootstrap.Modal.getInstance(modalElement);
+        if (!modalInstance) {
+            modalInstance = new bootstrap.Modal(modalElement);
+        }
+        modalInstance.show();
     }
-    this.currentPage = pageNumber;
-}
-
-static async renderUserRow(user) {
-    const userrow = await fetchComponent("../../components/userRows.html");
-    const userrowElement = convertToHtmlElement(userrow);
-    const cols = userrowElement.querySelectorAll("td");
-
-    cols[0].innerText = user.id;
-    cols[1].innerText = `${user.firstName} ${user.lastName}`;
-    cols[2].innerText = user.email;
-    cols[3].innerText = user.role == 1 ? "Seller" : "Customer";
-
-    userrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
-        User.removeUser(user.id);
-        e.target.closest("tr").remove();
-    });
-
-    const editButton = userrowElement.querySelector(".edit-button");
-    editButton.setAttribute('data-bs-toggle', `#editUserModal${user.id}`);
-    editButton.addEventListener('click', async () => {
-        await this.handleEditUser(user, userrowElement);
-    });
-
-    document.getElementById("userTableBody").appendChild(userrowElement);
-}
-
-static async handleEditUser(user, userrowElement) {
-    let modalElement = document.getElementById(`editUserModal${user.id}`);
-
-    if (!modalElement) {
-        await this.renderEditUserForm(user.id);
-        modalElement = document.getElementById(`editUserModal${user.id}`);
-
-        modalElement.addEventListener('hide.bs.modal', () => {
-            if (document.activeElement && modalElement.contains(document.activeElement)) {
-                document.activeElement.blur();
-            }
-        });
-
-        modalElement.addEventListener('hidden.bs.modal', () => {
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            if (modalInstance) {
-                modalInstance.dispose();
-            }
-
-        
-    }
-
-   
-
-
-
-            modalElement.remove();
-        }, { once: true });
-
-        const form = modalElement.querySelector("form");
-        this.#setFormInputs(form, user);
-
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const formData = getFormFields('editUserForm');
-            formData.id = user.id;
-            await User.updateUser(formData);
-
-            const cols = userrowElement.querySelectorAll("td");
-            cols[1].innerText = `${formData.firstName} ${formData.lastName}`;
-            cols[2].innerText = formData.email;
-
-            const modalInstance = bootstrap.Modal.getInstance(modalElement);
-            if (modalInstance) {
-                modalInstance.hide();
-            }
-        });
-    }
-
-    let modalInstance = bootstrap.Modal.getInstance(modalElement);
-    if (!modalInstance) {
-        modalInstance = new bootstrap.Modal(modalElement);
-    }
-    modalInstance.show();
-}
+    
 
 static renderPaginationControls() {
-    
+
 
     let paginationContainer = document.getElementById("paginationControls");
 
@@ -416,7 +409,7 @@ static renderPaginationControls() {
         document.getElementById("content").appendChild(paginationContainer);
     }
 
-    paginationContainer.innerHTML = ""; 
+    paginationContainer.innerHTML = "";
 
     const totalPages = Math.ceil(this.users.length / this.pageSize);
 
@@ -462,88 +455,88 @@ static renderPaginationControls() {
 
 
     static async renderEditUserForm(userId) {
-        const editForm = await fetchComponent("../../components/edit-user-form.html");
-        const editFormElement = convertToHtmlElement(editForm);
-        editFormElement.setAttribute('id', `editUserModal${userId}`);
-        document.getElementById("editFormModal").appendChild(editFormElement);
+    const editForm = await fetchComponent("../../components/edit-user-form.html");
+    const editFormElement = convertToHtmlElement(editForm);
+    editFormElement.setAttribute('id', `editUserModal${userId}`);
+    document.getElementById("editFormModal").appendChild(editFormElement);
 
-    }
+}
 
 
     static #setFormInputs(form, user) {
-        const formInputs = this.getFormInputs(form)
-        console.log(formInputs);
-        formInputs.firstName.value = user.firstName;
-        formInputs.lastName.value = user.lastName;
-        formInputs.email.value = user.email;
-        formInputs.phone.value = user.phone;
-        formInputs.password.value = user.password;
+    const formInputs = this.getFormInputs(form)
+    console.log(formInputs);
+    formInputs.firstName.value = user.firstName;
+    formInputs.lastName.value = user.lastName;
+    formInputs.email.value = user.email;
+    formInputs.phone.value = user.phone;
+    formInputs.password.value = user.password;
 
-    }
+}
 
     static getFormInputs(form) {
-        const firstName = form.querySelector("#firstName");
-        const lastName = form.querySelector("#lastName");
-        const email = form.querySelector("#email");
-        const phone = form.querySelector("#phone");
-        const password = form.querySelector("#password");
+    const firstName = form.querySelector("#firstName");
+    const lastName = form.querySelector("#lastName");
+    const email = form.querySelector("#email");
+    const phone = form.querySelector("#phone");
+    const password = form.querySelector("#password");
 
 
-        return {
-            firstName,
-            lastName,
-            email,
-            phone,
-            password
-        };
+    return {
+        firstName,
+        lastName,
+        email,
+        phone,
+        password
+    };
+}
+
+
+updateTableRow(userId, updatedData) {
+    const userRow = document.querySelector(`#userRow${userId}`);
+
+    if (userRow) {
+
+        userRow.querySelector(".user-name").innerText = `${updatedData.firstName} ${updatedData.lastName}`;
+        userRow.querySelector(".user-email").innerText = updatedData.email;
+        userRow.querySelector(".user-role").innerText = updatedData.role;
     }
 
+}
 
-    updateTableRow(userId, updatedData) {
-        const userRow = document.querySelector(`#userRow${userId}`);
+static async renderCharts(){
 
-        if (userRow) {
-
-            userRow.querySelector(".user-name").innerText = `${updatedData.firstName} ${updatedData.lastName}`;
-            userRow.querySelector(".user-email").innerText = updatedData.email;
-            userRow.querySelector(".user-role").innerText = updatedData.role;
-        }
-
-    }
-
- static async renderCharts(){
-    
-        const dashboard = await fetchComponent("../../components/dashboard.html");
-        const chart = convertToHtmlElement(dashboard);
-        const container = document.getElementById("content");
-        container.innerHTML = "";
-        container.appendChild(chart);
-    }
+    const dashboard = await fetchComponent("../../components/dashboard.html");
+    const chart = convertToHtmlElement(dashboard);
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+    container.appendChild(chart);
+}
 
     static async renderProducts(){
-    
-        const product = await fetchComponent("../../components/products-dashboard.html");
-        const product_chart = convertToHtmlElement(product);
-        const container = document.getElementById("content");
-        container.innerHTML = "";
-        container.appendChild(product_chart);
-    }
+
+    const product = await fetchComponent("../../components/products-dashboard.html");
+    const product_chart = convertToHtmlElement(product);
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+    container.appendChild(product_chart);
+}
 
     static async renderSupport(){
-    
-        const support = await fetchComponent("../../components/support-dashboard.html");
-        const support_content = convertToHtmlElement(support);
-        const container = document.getElementById("content");
-        container.innerHTML = "";
-        container.appendChild(support_content);
-    }
+
+    const support = await fetchComponent("../../components/support-dashboard.html");
+    const support_content = convertToHtmlElement(support);
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+    container.appendChild(support_content);
+}
 
     static async renderOrders(){
-        const order = await fetchComponent("../../components/order-dashboard.html");
-        const orders_content = convertToHtmlElement(order);
-        const container = document.getElementById("content");
-        container.innerHTML = "";
-        container.appendChild(orders_content);
-    }
+    const order = await fetchComponent("../../components/order-dashboard.html");
+    const orders_content = convertToHtmlElement(order);
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+    container.appendChild(orders_content);
+}
 
 }
