@@ -1,4 +1,4 @@
-import {getTable,add } from "./db.js"
+import {getTable,add,setTable } from "./db.js"
 export class User{
     constructor({ firstName, lastName, email, role, phone, password }) {
         this.firstName = firstName;
@@ -7,6 +7,7 @@ export class User{
         this.role = role;
         this.phone = phone;
         this.password = password;
+    
         this.id = this.#generateUniqueId(firstName,lastName);
     }
 
@@ -60,6 +61,26 @@ export class User{
         return false;
     }
 
+    static updateUser(updatedUser){
+        const users = this.getAllUsers();
+        const index = users.findIndex(user => user.id == user.id);
+    
+        if (index === -1) {
+            throw new Error(`Product with ID ${updatedUser.id} not found.`);
+        }
+        
+        const cleanUpdates = {};
+        for (const [key, value] of Object.entries(updatedUser)) {
+            if (value !== undefined && value !== null && key !== 'id') {
+                cleanUpdates[key] = value;
+            }
+        }
+
+        // Merge the updated fields
+        users[index] = { ...users[index], ...updatedUser };
+    
+        setTable("user", users);
+    }
     static addUser(user){
         add("user",user);
     }
@@ -69,8 +90,10 @@ export class User{
     }
 
     static removeUser(id) {
-            const users = this.getAllProducts().filter(user => user.id !== id);
-            setTable("product", products);
-        }
+            const users = this.getAllUsers().filter(user => user.id !== id);
+            setTable("user", users);
+    }
+
+    
  
 } 

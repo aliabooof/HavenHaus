@@ -36,11 +36,11 @@ export class Order {
     }
 
     static getOrdersByUser(userId) {
-        return this.getAllOrders().filter(order => order.userId = userId);
+       return this.getAllOrders().filter(order => order.userId == userId);
     }
 
     static getOrderById(orderId) {
-        return this.getAllOrders().find(order => order.id === orderId);
+        return this.getAllOrders().find(order => order.id == orderId);
     }
 
     static addOrder(order) {
@@ -48,13 +48,13 @@ export class Order {
     }
 
     static removeOrder(orderId) {
-        const orders = this.getAllOrders().filter(order => order.id !== orderId);
+        const orders = this.getAllOrders().filter(order => order.id != orderId);
         setTable("order", orders);
     }
 
     static updateOrderStatus(orderId, newStatus) {
         const orders = this.getAllOrders().map(order =>
-            order.id === orderId ? { ...order, status: newStatus } : order
+            order.id == orderId ? { ...order, status: newStatus } : order
         );
         setTable("order", orders);
     }
