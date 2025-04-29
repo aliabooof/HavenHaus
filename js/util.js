@@ -191,3 +191,16 @@ export function observeElements( selector = '.hidden-animation',threshold = 0) {
     });
   }
   
+
+
+export function getFormInputs(form) {
+    const elements = form.querySelectorAll("input, select, textarea");
+    const inputs = {};
+  
+    elements.forEach((el) => {
+      const key = el.name || el.id;
+      if (key) inputs[key] = el;
+    });
+  
+    return inputs;
+  }

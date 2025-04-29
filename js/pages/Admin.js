@@ -11,26 +11,6 @@ await LoadDB();
 let users = User.getAllUsers();
 animateCount("totalUsers",users.length);
 
-
-
-
-
-// function filterTable() {
-//     const searchInput = document.getElementById("searchInput").value.toLowerCase();
-//     const rows = document.querySelectorAll("#userTableBody tr");
-
-//     rows.forEach(row => {
-//         const name = row.cells[1].textContent.toLowerCase(); 
-//         if (name.includes(searchInput)) {
-//           row.style.display = ""; 
-//         } else {
-//           row.style.display = "none"; 
-//         }
-//     });
-// }
-
-
-
 async function handleSearch(keyword) {
     if (keyword.trim() === "") {
         
@@ -83,14 +63,18 @@ async function loadContent(x) {
             await Component.renderCharts();
             await loadDashboardCharts();
             break;
-        case 2:
-            const users = User.getAllUsers();
-            animateCount("totalUsers",users.length);
-            await Component.renderTable();
-            document.getElementById("searchInput").addEventListener('input',(e)=>{
-                handleSearch(e.target.value);
-            })
-            break;
+
+            case 2:
+                const users = User.getAllUsers();
+                animateCount("totalUsers",users.length);
+                await Component.renderTable();
+                document.getElementById("searchInput").addEventListener('input',(e)=>{
+                    handleSearch(e.target.value);
+                });
+
+                break;
+
+
         case 3:
             await Component.renderProducts();
             await loadProductDashboardChart();

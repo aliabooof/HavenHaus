@@ -71,7 +71,7 @@ export class Product {
         }
     }
 
-    //Update product
+    
     static updateProduct(updatedProduct) {
         const products = this.getAllProducts();
         const index = products.findIndex(product => product.id === updatedProduct.id);
@@ -87,7 +87,7 @@ export class Product {
             }
         }
 
-        // Merge the updated fields
+        
         products[index] = { ...products[index], ...updatedProduct };
     
         setTable("product", products);
