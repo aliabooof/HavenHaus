@@ -36,7 +36,7 @@ export class Order {
     }
 
     static getOrdersByUser(userId) {
-        return this.getAllOrders().filter(order => order.userId === userId);
+        return this.getAllOrders().filter(order => order.userId = userId);
     }
 
     static getOrderById(orderId) {

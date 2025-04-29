@@ -63,6 +63,10 @@ export class User{
     static addUser(user){
         add("user",user);
     }
+    static getUserByRole(role){
+        const users = this.getAllUsers();
+        return users.filter(user => user.role == role);
+    }
 
     static removeUser(id) {
             const users = this.getAllProducts().filter(user => user.id !== id);
