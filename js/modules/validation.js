@@ -64,9 +64,7 @@ export class Validation {
 
   static validateExpiryDate(expiry) {
 
-    // works well with this html line 
-    // <label for="expiry">Expiry Date</label>
-    {/* <input type="month" id="expiry" name="expiry" min="2025-04" required></input> */ }
+   
 
     const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
     if (typeof expiry !== 'string' || !regex.test(expiry.trim())) return false;
@@ -85,6 +83,22 @@ export class Validation {
   static validateCVV(cvv) {
     const regex = /^\d{3,4}$/;
     return typeof cvv === 'string' && regex.test(cvv.trim());
+  }
+
+  // static validateImage(image) {
+  //   const regex = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+  //   return typeof image === 'string' && regex.test(image.trim());
+  // }
+  static validateImage(file) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
+    const maxSizeInBytes = 5 * 1024 * 1024;
+  
+    return (
+      file instanceof File &&
+      allowedTypes.includes(file.type) &&
+      file.size > 0 &&
+      file.size <= maxSizeInBytes
+    );
   }
 
   static showError(input, message) {

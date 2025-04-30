@@ -56,7 +56,7 @@ export class Component {
 
             document.querySelectorAll("#cart-badge").forEach(badge => badge.innerText = cart.length)
             const userName = `${user.firstName} ${user.lastName}`.trim() || "User";
-            if (User.getCurrentUser.role == 1) {
+            if (User.getCurrentUser.role != 2) {
                 document.querySelectorAll('[title="Cart"]').forEach(c => c.remove());
             }
 
@@ -112,11 +112,11 @@ export class Component {
                 createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
                 return;
             }
-            // Cart.addToCart(productCard.id)
+            
             Cart.cartUi(productCard.id)
         });
 
-        if (User.getCurrentUser() !== null && User.getCurrentUser().role === 1) {
+        if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
 
             productCard.querySelector("button").remove();
         }

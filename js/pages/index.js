@@ -6,6 +6,7 @@ import { LoadDB } from "../load_db.js";
 import { User } from "../modules/userModule.js";
 
    await LoadDB();
+   Auth.enforcePageAuthorization();
    await Component.renderNavbar();
    await Component.renderFooter();
 

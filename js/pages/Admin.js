@@ -4,15 +4,12 @@ import { Order } from "../modules/order.js";
 import { Component } from "../componentModules/components.js";
 import { LoadDB } from "../load_db.js";
 import { Inquiry } from "../modules/inquiryModule.js";
+import { Auth } from "../modules/authModule.js";
 
 await LoadDB();
 
+Auth.enforcePageAuthorization();
 let users = User.getAllUsers();
-
-
-
-
-
 
 async function handleSearch(keyword) {
     if (keyword.trim() === "") {

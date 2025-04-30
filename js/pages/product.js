@@ -6,8 +6,8 @@ import { Product } from "../modules/productModule.js";
 import { Auth } from "../modules/authModule.js";
 import { LoadDB } from "../load_db.js";
 
-
 await LoadDB();
+Auth.enforcePageAuthorization();
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
@@ -16,7 +16,10 @@ await Component.renderCartOffcanvas();
 
 function AddToCart(event){
     let user = User.getCurrentUser();
-    if(!user) redirect("../../login.html");    
+    if(!user){
+        createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
+        return;
+    }    
     let quantityElement = document.querySelector(".quantity");
     ChangeCartItemQuantity(user.id, product.id, Number(quantityElement.innerText.trim()));
     redirect("../../pages/cart.html");    
