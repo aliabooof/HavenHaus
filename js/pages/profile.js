@@ -3,6 +3,8 @@ import { Component } from "../componentModules/components.js";
 import { createAlert} from "../util.js";
 import {Validation} from "../modules/validation.js";
 import { Order } from "../modules/order.js";
+import { OrderItem } from "../modules/OrderItem.js";
+import { GetProductByID } from "../modules/db.js";
 
 
 console.log(User.getUserById("susan_james_005"));
@@ -40,9 +42,25 @@ const fields = {
 
 if (userOrders.length > 0){
     fields.noorders.style.setProperty("display", "none", "important");
-    userOrders.forEach(()=>{
-        fields.exorders.innerHTML = appendOrder();
-    });
+    for (let i = 0; i < userOrders.length; i++) {
+        let user_order = userOrders[i];
+        let order_items = OrderItem.getOrderItemsByOrderId(user_order.id);
+        console.log(order_items)
+        let divOrder = document.createElement("div");
+        divOrder.classList.add("order");
+        divOrder.innerHTML = "";
+        divOrder.innerHTML += appendOrderHeader(user_order.id, user_order.createdAt, getStatus(user_order.status));
+        for (let j = 0; j < order_items.length; j++) {
+
+            divOrder.innerHTML += appendOrderBody(GetProductByID(order_items[j].productID)[0].name, order_items[j].quantity, order_items[j].price);
+        }
+        // divOrder.innerHTML = appendOrder(user_order.id, "islam", order_items[i].quantity, order_items[i].price);
+        divOrder.innerHTML += appendOrderFooter(user_order.price, user_order.status)
+        fields.exorders.appendChild(divOrder);
+    }
+    // userOrders.forEach(()=>{
+    //     fields.exorders.innerHTML = appendOrder();
+    // });
     
     // fields.noorders.style.display = "none";
     // fields.noorders.classList.add("d-none");
@@ -170,38 +188,90 @@ function UpdateChanges(current_user){
     fields.phone.innerText = current_user.phone;
 }
 
-function appendOrder(){
-    return `<div class="order">
-                                <hr>
+function appendOrder(productName, quantity, price){
+    // return `<div class="order">
+                                // return `<hr>
+                                // <div class="order-header d-flex justify-content-between ">
+                                //     <div class="d-flex">
+                                //         <h4 class="" style="font-size: 17px;">Order #${orderID}</h4>
+                                //         <p class="ms-3">4/29/2025</p>
+                                //     </div>
+                                //     <div>
+                                //         <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #dbeafe; color: #1e5aca;">Processing</span>
+                                //         <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #fef9c3; color: #854d0e;">Shipping: Pending</span>
+                                //     </div>
+                                // </div>
+                            //    return `<hr> <div class="order-body">
+                            //         <div class="d-flex justify-content-between align-items-center">
+                            //             <div class="d-flex align-items-center">
+                            //                 <div style="width: 80px; height: 90px;">
+                            //                     <img src="../assets/images/1.jpg" alt="" width="100%" height="100%">
+                            //                 </div>
+                            //                 <div class="ms-2" style="line-height: 5px;">
+                            //                     <p>${productName} × ${quantity}</p>
+                            //                     <p style="font-size: 14px;">${productName}</p>
+                            //                 </div>
+                            //             </div>
+                            //             <h5 class="h6">$${price * quantity}</h5>
+                            //         </div>
+                                //  return   `<hr>
+                                //     <div class="d-flex align-items-center justify-content-between">
+                                //         <button id="viewOrder" class="btn">View Order Details</button>
+                                //         <button id="cancelOrder" class="btn">Cancel Order</button>
+                                //         <p>Total: <span style="font-weight: bold;">$4449.96</span></p>
+                                //     </div>`;
+                                // </div>`;
+                            // </div>`;
+}
+
+function appendOrderHeader(orderID, orderDate, status){
+    return `<hr>
                                 <div class="order-header d-flex justify-content-between ">
                                     <div class="d-flex">
-                                        <h4 class="" style="font-size: 17px;">Order #1745915902339</h4>
-                                        <p class="ms-3">4/29/2025</p>
+                                        <h4 class="" style="font-size: 17px;">Order #${orderID}</h4>
+                                        <p class="ms-3">${new Date(orderDate).toLocaleDateString()}</p>
                                     </div>
                                     <div>
                                         <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #dbeafe; color: #1e5aca;">Processing</span>
-                                        <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #fef9c3; color: #854d0e;">Shipping: Pending</span>
+                                        <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #fef9c3; color: #854d0e;">Shipping: ${status}</span>
                                     </div>
-                                </div>
-                                <div class="order-body">
+                                </div>`;
+}
+
+function appendOrderBody(productName, quantity, price){
+    return `<hr> <div class="order-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
                                             <div style="width: 80px; height: 90px;">
                                                 <img src="../assets/images/1.jpg" alt="" width="100%" height="100%">
                                             </div>
                                             <div class="ms-2" style="line-height: 5px;">
-                                                <p>Leather Cream Sofa × 1</p>
-                                                <p style="font-size: 14px;">Leather - Cream</p>
+                                                <p>${productName} × ${quantity}</p>
+                                                <p style="font-size: 14px;">${productName}</p>
                                             </div>
                                         </div>
-                                        <h5 class="h6">$1299.99</h5>
+                                        <h5 class="h6">$${price * quantity}</h5>
                                     </div>
-                                    <hr>
+                                    </div>`;
+}
+
+function appendOrderFooter(totalPrice, status){
+    return   `<hr>
                                     <div class="d-flex align-items-center justify-content-between">
                                         <button id="viewOrder" class="btn">View Order Details</button>
-                                        <button id="cancelOrder" class="btn">Cancel Order</button>
-                                        <p>Total: <span style="font-weight: bold;">$4449.96</span></p>
-                                    </div>
-                                </div>
-                            </div>`;
+                                        ${(status == 0)?`<button id="cancelOrder" class="btn">Cancel Order</button>`:``}
+                                        <p>Total: <span style="font-weight: bold;">$${totalPrice}</span></p>
+                                    </div>`;
+}
+
+function getStatus(status){
+    if (status == 0){
+        return "Pending";
+    }else if(status == 1){
+        return "Completed";
+    }else if(status == 2){
+        return "Rejected";
+    }else {
+        return "";
+    }
 }
