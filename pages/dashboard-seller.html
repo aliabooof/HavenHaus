@@ -16,6 +16,15 @@
     <!-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> -->
     <!-- Custom CSS -->
     <style>
+        .min-vh-25{
+            min-height: 25vh !important;
+        }
+        .min-vh-50{
+            min-height: 50vh !important;
+        }
+        .min-vh-75{
+            min-height: 75vh !important;
+        }
         .dashboard-container {
             display: flex;
             min-height: 100vh;
@@ -77,11 +86,11 @@
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <div class="sidebar text-black">
+        <div class="sidebar text-black ">
             <div class="sidebar-header p-3">
-                <h3><i class="fas fa-store me-2"></i>Seller Dashboard</h3>
+                <h3 class="fs-6"><i class="fas fa-store me-2"></i><span>Seller Dashboard</span></h3>
             </div>
-            <ul class="nav flex-column" id="dashboardTabs" role="tablist">
+            <ul class="nav flex-column gap-2" id="dashboardTabs" role="tablist">
                 <li class="nav-item" role="presentation">
                     <a class="nav-link active" id="dashboard-tab" data-bs-toggle="tab" href="#dashboard" role="tab">
                         <i class="fas fa-tachometer-alt me-2"></i>Dashboard
@@ -133,62 +142,138 @@
             <div class="tab-content" id="dashboardTabsContent">
                 <!-- Dashboard Tab -->
                 <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
-                    <h2 class="mb-4">Dashboard Overview</h2>
-                    <div class="row">
-                        <div class="col-md-3 mb-4">
+                    <h4 class="mb-4">Dashboard Overview</h4>
+                    <div class="row d-flex justify-content-between">
+
+                        <div class="col-12 col-sm-5 col-xl-3 mb-2">
+                            <div class="card card-stat bg-warning text-dark">
+                                <div class="card-body text-white">
+                                    <h5 class="card-title small">Total Revenue</h5>
+                                    <h4 class="text-white">$<span id="total-revenue"></span></h4>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class=" mb-2 col-12 col-sm-5 col-xl-3">
                             <div class="card card-stat bg-primary text-white">
                                 <div class="card-body">
-                                    <h5 class="card-title">Total Products</h5>
-                                    <h2 id="total-products">0</h2>
+                                    <h5 class="card-title small">Total Products</h5>
+                                    <h4 id="total-products">0</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-4">
+                        <div class="col-12 col-sm-5 col-xl-3 mb-2">
                             <div class="card card-stat bg-success text-white">
                                 <div class="card-body">
-                                    <h5 class="card-title">Total Orders</h5>
-                                    <h2 id="total-orders">0</h2>
+                                    <h5 class="card-title small">Total Orders</h5>
+                                    <h4 id="total-orders">0</h4>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-4">
+                        <div class="col-12 col-sm-5 col-xl-3 mb-2">
+                            <div class="card card-stat  bg-warning  ">
+                                <div class="card-body text-white">
+                                    <h5 class="card-title small">Total Sold Units</h5>
+                                    <h4 class="text-white"><span id="total-sold-units"></span></h4>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-sm-4 mb-2">
                             <div class="card card-stat bg-info text-white">
                                 <div class="card-body">
-                                    <h5 class="card-title">Pending Orders</h5>
+                                    <h5 class="card-title small">Pending Orders</h5>
                                     <h2 id="pending-orders">0</h2>
                                 </div>
                             </div>
-                        </div>
-                        <div class="col-md-3 mb-4">
-                            <div class="card card-stat bg-warning text-dark">
-                                <div class="card-body">
-                                    <h5 class="card-title">Total Revenue</h5>
-                                    <h2 id="total-revenue">$0</h2>
-                                </div>
-                            </div>
-                        </div>
+                        </div> -->
+                        
+                        
                     </div>
-                    <div class="row">
-                        <div class="col-md-8">
+                    <div class="row d-flex">
+                        <div class="col-sm-12 col-lg-8 fs-5  ">
                             <div class="card">
-                                <div class="card-header">
-                                    <h5>Sales Analytics</h5>
-                                </div>
-                                <div class="card-body">
-                                    <canvas id="salesChart" height="300"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h5>Recent Orders</h5>
-                                </div>
-                                <div class="card-body">
-                                    <div class="list-group" id="recent-orders">
-                                        <!-- Recent orders will be populated here -->
+                                <!-- <div class="card-header">
+                                </div> -->
+                                <div class="card-header nav nav-tabs d-flex flex-column flex-sm-row justify-content-center justify-content-lg-center">
+                                    <h6 class="col-12 text-center py-1 small text-secondary">Sales Analytics</h6>
+                                    <div class="nav-item text-center ">
+                                        <button id="daily-sales" class="nav-link col-12 col-sm-auto small" aria-selected="true"><span class="h3 small">Daily Sales</span></button>
+                                    </div>
+                                    <div class="nav-item text-center">
+                                        <button id="monthly-sales" class="nav-link col-12 col-sm-auto"  aria-selected="true"><span class="h3 small">Monthly Sales</span></button>
+                                    </div>
+                                    <div class="nav-item ">
+                                        <button id="yearly-sales" class="nav-link col-12 col-sm-auto " aria-selected="true"><span class="h3 small">Yearly Sales</span></button>
                                     </div>
                                 </div>
+                                <div class="card-body col-11 col-md-12 min-vh-50 ">
+                                    <canvas id="salesChart" ></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4  ">
+                            <div class="col-12 mb-2">
+                                <div class="card card-stat bg-info text-white">
+                                    <div class="card-body">
+                                        <h5 class="card-title small">Pending Orders</h5>
+                                        <h4 id="pending-orders">0</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card-header nav nav-tabs d-flex flex-column flex-sm-row justify-content-center justify-content-lg-center">
+                                <div class="nav-item text-center ">
+                                    <button id="recent-orders-btn" class="nav-link col-12 col-sm-auto small active" data-bs-toggle="tab" data-bs-target="#recent-orders" aria-selected="true" aria-controls="recent-orders" role="tab"><span class="h3 small">Recent orders</span></button>
+                                </div> 
+                                <div class="nav-item text-center"> 
+                                    <button id="best-selling-btn"  class="nav-link col-12 col-sm-auto small" data-bs-toggle="tab" data-bs-target="#best-selling"  aria-selected="false" aria-controls="best-selling" role="tab"><span class="h3 small">Best Selling</span></button>
+                                </div>
+                            </div>
+
+                            <div class="">
+                                <div class="tab-content">
+                                    <div id="recent-orders" class="card tab-pane active">
+                                        <div  class="card-header ">
+                                            <h5>Recent Orders</h5>
+                                        </div>
+                                        <div class="card-body p-1">
+                                            <div class="list-group p-0" >
+                                                <!-- Recent orders will be populated here -->
+                                                <a href="#recent-orders" class="list-group-item py-3 border rounded mb-2 shadow-sm">
+                                                    <div class="d-flex justify-content-between align-items-center  flex-lg-column flex-xl-row">
+                                                      <div class="align-self-start">
+                                                        <h6 class="mb-1 fw-bold ">Order #<span class="order-id">123456</span></h6>
+                                                        <p class="mb-1 text-muted small order-date"> April 25, 2025</p>
+                                                      </div>
+                                                      <span class="badge bg-success align-self-start order-status">Completed</span>
+                                                    </div>
+                                                    <div class="d-flex flex-lg-column flex-xl-row justify-content-between mt-2">
+                                                      <div class="text-muted small">
+                                                        <span class="order-item-count">3 </span>items
+                                                      </div>
+                                                      <div class="fw-semibold ">
+                                                        $<span class="order-cost">89.99</span> 
+                                                      </div>
+                                                    </div>
+                                                </a>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div id="best-selling" class="card tab-pane  col-12">
+                                        <div  class="card-header ">
+                                            <h5>Best Selling</h5>
+                                        </div>
+                                        <div class="card-body p-0">
+                                            <div class="list-group p-0" >
+                                                <!-- best selling will be populated here -->
+                                               
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -259,9 +344,17 @@
                     <div class="row">
                         <div class="col-md-8">
                             <div class="card">
-                                <div class="card-header">
-                                    <h5>Monthly Sales</h5>
-                                </div>
+                                <!-- <div class="card-header nav nav-tabs d-flex justify-content-between">
+                                    <div class="nav-item">
+                                        <button id="daily-sales" class="nav-link"><h5>Daily Sales</h5></button>
+                                    </div>
+                                    <div class="nav-item">
+                                        <button id="monthly-sales" class="nav-link"><h5>Monthly Sales</h5></button>
+                                    </div>
+                                    <div class="nav-item">
+                                        <button id="yearly-sales" class="nav-link"><h5>Yearly Sales</h5></button>
+                                    </div>
+                                </div> -->
                                 <div class="card-body">
                                     <canvas id="monthlySalesChart" height="300"></canvas>
                                 </div>
