@@ -66,7 +66,12 @@ if (userOrders.length > 0){
             divOrder.innerHTML += appendOrderBody(GetProductByID(order_items[j].productID)[0].name, order_items[j].quantity, order_items[j].price);
         }
         // divOrder.innerHTML = appendOrder(user_order.id, "islam", order_items[i].quantity, order_items[i].price);
-        divOrder.innerHTML += appendOrderFooter(user_order.price, user_order.status)
+        divOrder.innerHTML += appendOrderFooter(user_order.total, user_order.status)
+        divOrder.querySelector("#cancelOrder").addEventListener("click", ()=>{
+            OrderItem.removeOrderItemByOrderId(user_order.id);
+            Order.removeOrder(user_order.id);
+            divOrder.remove();
+        })
         fields.exorders.appendChild(divOrder);
     }
     // userOrders.forEach(()=>{
