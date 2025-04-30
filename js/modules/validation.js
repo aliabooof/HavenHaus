@@ -1,3 +1,5 @@
+import { getFormInputs } from "../util.js";
+
 export class Validation {
   static validateName(firstName) {
     const regex = /^[A-Za-z\s'-]{3,50}$/;
@@ -47,7 +49,7 @@ export class Validation {
   static luhnCheck(cardNumber) {
     let sum = 0;
     let shouldDouble = false;
-    
+
     for (let i = cardNumber.length - 1; i >= 0; i--) {
       let digit = parseInt(cardNumber.charAt(i), 10);
       if (shouldDouble) {
@@ -62,17 +64,15 @@ export class Validation {
 
   static validateExpiryDate(expiry) {
 
-    // works well with this html line 
-    // <label for="expiry">Expiry Date</label>
-{/* <input type="month" id="expiry" name="expiry" min="2025-04" required></input> */}
-    
-    const regex = /^(0[1-9]|1[0-2])\/(\d{2}|\d{4})$/;
+   
+
+    const regex = /^(0[1-9]|1[0-2])\/\d{2}$/;
     if (typeof expiry !== 'string' || !regex.test(expiry.trim())) return false;
 
     const [monthStr, yearStr] = expiry.split('/');
     const month = parseInt(monthStr, 10);
     let year = parseInt(yearStr, 10);
-    year = year < 100 ? 2000 + year : year; 
+    year = year < 100 ? 2000 + year : year;
 
     const now = new Date();
     const expiryDate = new Date(year, month);
@@ -83,6 +83,22 @@ export class Validation {
   static validateCVV(cvv) {
     const regex = /^\d{3,4}$/;
     return typeof cvv === 'string' && regex.test(cvv.trim());
+  }
+
+  // static validateImage(image) {
+  //   const regex = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+  //   return typeof image === 'string' && regex.test(image.trim());
+  // }
+  static validateImage(file) {
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
+    const maxSizeInBytes = 5 * 1024 * 1024;
+  
+    return (
+      file instanceof File &&
+      allowedTypes.includes(file.type) &&
+      file.size > 0 &&
+      file.size <= maxSizeInBytes
+    );
   }
 
   static showError(input, message) {
@@ -106,4 +122,85 @@ export class Validation {
       error.textContent = "";
     }
   }
+
+
+
+  static editUserRules(inputs) {
+    return [
+      { field: inputs.firstName, method: Validation.validateName, message: "Enter a valid first name." },
+      { field: inputs.lastName, method: Validation.validateName, message: "Enter a valid last name." },
+      { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+      { field: inputs.phone, method: Validation.validatePhone, message: "Enter a valid phone number." },
+      { field: inputs.password, method: Validation.validatePassword, message: "Enter a valid password." }
+    ];
+  }
+
+
+  static registerRules(inputs) {
+    return [
+      { field: inputs.firstName, method: Validation.validateName, message: "Enter a valid first name." },
+      { field: inputs.lastName, method: Validation.validateName, message: "Enter a valid last name." },
+      { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+      { field: inputs.phone, method: Validation.validatePhone, message: "Enter a valid phone number." },
+      { field: inputs.password, method: Validation.validatePassword, message: "Enter a valid password." }
+    ]
+  }
+
+  static loginRules(inputs) {
+
+    return [
+      { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+      { field: inputs.password, method: Validation.validatePassword, message: "Enter a valid password." }
+    ]
+  }
+
+
+static checkoutRuls(inputs){
+   return [
+      { field: inputs.firstName, method: Validation.validateName, message: "Enter a valid first name." },
+      { field: inputs.lastName, method: Validation.validateName, message: "Enter a valid last name." },
+      { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+      { field: inputs.phone, method: Validation.validatePhone, message: "Enter a valid phone number." },
+      { field: inputs.address, method: Validation.validateAddress, message: "Address is too short." },
+      { field: inputs.city, method: Validation.validateCity, message: "Enter a valid city." },
+      { field: inputs.country, method: Validation.validateCountry, message: "Enter a valid country." },
+      { field: inputs.zip, method: Validation.validateZipCode, message: "Enter a valid zip code." }
+    ]
 }
+
+static userInquiryForm(inputs){
+  return[
+    { field: inputs.title, method: Validation.validateName, message: "Enter a valid Title." },
+    { field: inputs.name, method: Validation.validateName, message: "Enter a valid name." },
+    { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+  ]
+}
+
+
+
+
+  static validateForm(form, validationRules) {
+    let isValid = true;
+    let firstInvalidField = null;
+
+    validationRules.forEach(({ field, method, message }) => {
+      if (!method(field.value)) {
+        Validation.showError(field, message);
+        isValid = false;
+        if (!firstInvalidField) firstInvalidField = field;
+      } else {
+        Validation.clearError(field);
+      }
+    });
+
+    if (!isValid && firstInvalidField) {
+      firstInvalidField.scrollIntoView({ behavior: "smooth", block: "center" });
+      firstInvalidField.focus();
+    }
+
+    return isValid;
+  }
+
+
+}
+

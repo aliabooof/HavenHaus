@@ -199,6 +199,6 @@ body{
 .show-animation {
   opacity: 1;
   transform: none;
-  transition: all 2s ease;
+  transition: all 1s ease;
 }
 /***** End animation styles *****/

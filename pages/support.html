@@ -6,214 +6,241 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inquiry Cards with Modal</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
-    <script src="../js/load_db.js"></script>
-    <style>
-        .card {
-            margin-bottom: 20px;
-            transition: transform 0.3s;
-        }
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/support.css">
 
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js" defer></script>
 
-        .inquiry-date {
-            font-size: 0.8rem;
-            color: #6c757d;
-        }
-
-        .message-bubble {
-            
-            padding: 1rem;
-            
-            position: relative;
-        }
-
-        .message-agent {
-            background-color: #f0f7ff;
-            border-top-left-radius: 0;
-        }
-
-
-        .message-name {
-            font-weight: bold;
-            margin-bottom: 0.3rem;
-        }
-
-  
-    </style>
 </head>
 
 <body>
-    <div  class="container py-5">
-        <h1 class="text-center mb-5">Customer Inquiries</h1>
 
-
-        <div id="inquiries-card-header-container" class="row">
-            
-            
-            
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center">
+            <h1 class="display-4 page-title">How Can We Help You?</h1>
+            <p class="lead page-subtitle">Get in touch with our customer support team for assistance</p>
+            <a href="#inquiry-section" class="btn btn-light btn-lg mt-3">Submit a Request</a>
         </div>
-    </div>
+    </section>
 
-
-
-    <!-- Modal for Inquiry 2 -->
-    <div class="modal fade" id="inquiryModal2" tabindex="-1" aria-labelledby="inquiryModalLabel2" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="inquiryModalLabel2">Shipping Question</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Customer:</strong> Maria Garcia</p>
-                            <p><strong>Email:</strong> maria.garcia@example.com</p>
-                            <p><strong>Date:</strong> April 20, 2025</p>
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="container">
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-6">
+                    <h2 class="mb-4">We're Here For You</h2>
+                    <p class="lead mb-4">Our dedicated support team is available to help solve your problems and answer
+                        your questions.</p>
+                    <p class="mb-4">Fill out the form below, and we'll get back to you as soon as possible. Most
+                        inquiries are answered within 24 hours.</p>
+                    <div class="d-flex align-items-center mb-4">
+                        <div class="bg-primary text-white rounded-circle p-3 me-3">
+                            <i class="fas fa-headset"></i>
                         </div>
-                        <div class="col-md-6">
-                            <p><strong>Status:</strong> <span class="badge bg-info">In Progress</span></p>
-                            <p><strong>Category:</strong> Shipping</p>
-                            <p><strong>Priority:</strong> High</p>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h6 class="mb-0">Inquiry Details</h6>
-                        </div>
-                        <div class="card-body">
-                            <p>Hello, I'm based in Germany and I'm interested in ordering several items from your store.
-                                Do you offer international shipping to the EU? If so, what are the shipping costs and
-                                estimated delivery times? Also, will there be any additional customs charges? Thank you
-                                in advance for your assistance.</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="mb-0">Response</h6>
-                        </div>
-                        <div class="card-body">
-                            <textarea class="form-control" rows="5" placeholder="Type your response here..."></textarea>
+                        <div>
+                            <h5 class="mb-0">24/7 Customer Support</h5>
+                            <p class="mb-0 text-muted">We're always here to help</p>
                         </div>
                     </div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Send Response</button>
+                <div class="col-lg-6">
+                    
+                    <div class="communication-container">
+                        
+                        <div class="server">
+                            <i class="fas fa-headset server-icon"></i>
+                        </div>
+                        <div class="client">
+                            <i class="fa-solid fa-users client-icon"></i>
+                        </div>
+
+                       
+                        <div class="label server-label">Server</div>
+                        <div class="label client-label">Client</div>
+
+                        
+                        <div class="connection-line"></div>
+
+                        
+                        <div class="status-dot dot-1"></div>
+                        <div class="status-dot dot-2"></div>
+                        <div class="status-dot dot-3"></div>
+                        <div class="status-dot dot-4"></div>
+                        <div class="status-dot dot-5"></div>
+                        <div class="status-dot dot-6"></div>
+
+                        
+                        <div class="form-data">
+                            <div class="form-data-line"></div>
+                            <div class="form-data-line"></div>
+                            <div class="form-data-line"></div>
+                        </div>
+                        <div class="response-data"></div>
+
+                        
+                        <div class="form-ui">
+                            <div class="form-input"></div>
+                            <div class="form-input"></div>
+                            <div class="form-input"></div>
+                            <div class="form-button"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-
-    <!-- Modal for Inquiry 3 -->
-    <div class="modal fade" id="inquiryModal3" tabindex="-1" aria-labelledby="inquiryModalLabel3" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="inquiryModalLabel3">Return Policy</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Customer:</strong> Alex Johnson</p>
-                            <p><strong>Email:</strong> alex.johnson@example.com</p>
-                            <p><strong>Date:</strong> April 18, 2025</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Status:</strong> <span class="badge bg-success">Resolved</span></p>
-                            <p><strong>Category:</strong> Returns</p>
-                            <p><strong>Priority:</strong> Medium</p>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h6 class="mb-0">Inquiry Details</h6>
-                        </div>
-                        <div class="card-body">
-                            <p>I recently received my order (Order #12345) but unfortunately one of the items arrived
-                                damaged. I would like to know what your return policy is for damaged items. Do I need to
-                                send it back, or can you send a replacement directly? I have attached photos of the
-                                damaged product for your reference.</p>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-header">
-                            <h6 class="mb-0">Response</h6>
-                        </div>
-                        <div class="card-body">
-                            <textarea class="form-control" rows="5" placeholder="Type your response here..."></textarea>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-success">Send Response</button>
-                </div>
-            </div>
-        </div>
-    </div>
 
 
 
-
-    <!-- Modal for Inquiry 1 -->
-    <div class="modal fade" id="inquiryModal1" tabindex="-1" aria-labelledby="inquiryModalLabel1" aria-hidden="true">
-        <div class="modal-dialog modal-lg">
-            <div class="modal-content">
-                <div class="modal-header bg-primary text-white">
-                    <h5 class="modal-title" id="inquiryModalLabel1">Product Availability Inquiry</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Customer:</strong> John Smith</p>
-                            <p><strong>Email:</strong> john.smith@example.com</p>
-                            <p><strong>Date:</strong> April 23, 2025</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Status:</strong> <span class="badge bg-warning">Pending</span></p>
-                            <p><strong>Category:</strong> Product Information</p>
-                            <p><strong>Priority:</strong> Medium</p>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="card-header">
-                            <h6 class="mb-0">Inquiry Details</h6>
-                        </div>
-                        <div class="card-body">
-                            <p>I'm interested in purchasing the latest XYZ Smartphone model. Could you please
-                                let me know if it's currently in stock? Also, do you offer any promotions for
-                                first-time customers? I would appreciate any information about color options
-                                available as well.</p>
-                        </div>
-                    </div>
-                    <div class="card mb-3">
-                        <div class="conversation-container">
-                            <!-- 👇 Support Team Reply Bubble -->
-                            <div class="message-bubble message-agent">
-                                <div class="message-name">Support Team</div>
-                                <div class="message-text">
-                                    Thank you for your inquiry about our XYZ Smartphone model. We currently have this
-                                    model in stock in Black, Blue, and Silver colors. For first-time customers, we offer
-                                    a 10% discount on your first purchase. Please use code <strong>WELCOME10</strong> at
-                                    checkout. Let me know if you have any other questions!
+            <div class="container py-5">
+                <h1 class="text-center mx-auto mb-5">Customer Inquiries</h1>
+                
+                <div id="inquiries-card-header-container" class="row">
+                    <div class="filter-container">
+                        <div class="filter-panel">
+                            <div class="filter-wrapper">
+                                <span class="filter-label">Filter by status:</span>
+                                <div class="filter-buttons" id="filterButtons">
+                                    <button class="filter-btn active" data-filter="all">All</button>
+                                    <button class="filter-btn" data-filter="resolved">Resolved</button>
+                                    <button class="filter-btn" data-filter="pending">Pending</button>
+                                    <button class="filter-btn" data-filter="in progress">In Progress</button>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="modal-footer">
+                    <div id = "inquireis-container"></div>
+                    
+                    <div id="not-found-element">
+    
+                    </div>
 
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+            <div id="inquiries-card-body-container">
+
+            </div>
+
+
+            
+            <div id="inquiry-section" class="text-center py-5 my-4">
+                <button id="new-inquiry-button" type="button" class="btn btn-primary btn-lg d-none"
+                    data-bs-toggle="modal" data-bs-target="#newInquiryModal">
+                    Submit New Inquiry
+                </button>
+                <button id="new-inquiry-button2" type="button" class="btn btn-primary btn-lg">
+                    Submit New Inquiry
+                </button>
+            </div>
+
+
+            <div class="modal fade" id="newInquiryModal" tabindex="-1" aria-labelledby="newInquiryModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content rounded-4 shadow">
+                        <div class="modal-header bg-primary text-white rounded-top-4">
+                            <h5 class="modal-title" id="newInquiryModalLabel">New Inquiry</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="form-container">
+                            <div class="form-title">Submit Your Inquiry</div>
+                            <span class="text-center fs-5 text-primary mx-auto">Must use English Language</span>
+                            <form id="submit-inquiry-form" >
+                                <div class="row g-4">
+                                    <div class="col-md-12">
+                                        <div class="mb-3">
+                                            <label for="title" class="form-label">Inquiry Title *</label>
+                                            <input type="text" name="title" class="form-control" id="title"
+                                                placeholder="e.g., Product Availability" required>
+                                        </div>
+                                    </div>
+
+
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="name" class="form-label">Your Name *</label>
+                                            <input type="text" name="name" class="form-control" id="name" placeholder="John Smith"
+                                                required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="mb-3">
+                                            <label for="email" class="form-label">Email Address *</label>
+                                            <input type="email" name="email" class="form-control" id="email"
+                                                placeholder="john@example.com" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12">
+                                        <div class="mb-3">
+                                            <label for="message" class="form-label">Your Message *</label>
+                                            <textarea class="form-control" name="message" id="message" rows="5"
+                                                placeholder="Tell us everything you have in mind..."
+                                                required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-12 d-grid">
+                                        <button type="submit" class="btn btn-custom">Submit Inquiry</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
                     </div>
                 </div>
             </div>
 
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+
+            <div class="benefits-section mb-5">
+                <div class="row">
+                    <div class="col-12 text-center mb-4">
+                        <h2>Why Choose Our Support</h2>
+                        <p class="lead">Experience support designed with you in mind</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-bolt feature-icon"></i>
+                            <h5>Fast Response</h5>
+                            <p>Typically under 24 hours</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-user-tie feature-icon"></i>
+                            <h5>Expert Team</h5>
+                            <p>Knowledgeable professionals</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-language feature-icon"></i>
+                            <h5>Multilingual</h5>
+                            <p>Support in 12+ languages</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3 mb-4">
+                        <div class="text-center">
+                            <i class="fas fa-shield-alt feature-icon"></i>
+                            <h5>Secure</h5>
+                            <p>Confidential communication</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <script src="../js/pages/supportView.js" type="module" ></script>
 </body>
 
 </html>

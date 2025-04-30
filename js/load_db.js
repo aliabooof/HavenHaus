@@ -1,4 +1,3 @@
-// console.log("hello")
 async function  LoadFile(url){
     let response = await fetch(url);
     let json = await response.json();
@@ -10,8 +9,9 @@ async function  LoadFile(url){
     }
 }
 
-async function LoadDB(){
+ export async function LoadDB(){
     if(!window.localStorage.getItem("IsDBLoaded")){
+
       await  LoadFile("../data/user.json")
       await  LoadFile("../data/order.json")
       await  LoadFile("../data/product.json")
@@ -19,6 +19,7 @@ async function LoadDB(){
       await  LoadFile("../data/cartItem.json")
       await  LoadFile("../data/category.json")
       await  LoadFile("../data/inquiry.json")
+
 
         localStorage.setItem("IsDBLoaded",true)    
     }

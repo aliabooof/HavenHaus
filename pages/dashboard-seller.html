@@ -2,12 +2,14 @@
 <html lang="en">
 <head>
     <script src="../js/load_db.js" type="module"></script>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seller Dashboard</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Chart.js -->
@@ -74,6 +76,9 @@
         .card-stat {
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .invalid {
+        border-color:  #dc3545 !important;
         }
     </style>
     <script src="../js/dashboard/seller-dashboad.js" type="module"></script>
@@ -278,7 +283,7 @@
                 <div class="tab-pane fade" id="products" role="tabpanel">
                     <div class="d-flex justify-content-between align-items-center mb-4">
                         <h2>Product Management</h2>
-                        <button class="btn btn-primary" id="addProductBtn">
+                        <button class="btn btn-primary" id="addProductBtn"> 
                             <i class="fas fa-plus me-2"></i>Add Product
                         </button>
                     </div>
@@ -286,9 +291,10 @@
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-hover">
-                                    <thead>
+                                    <thead id="products_id">  <!--add id-->
                                         <tr>
-                                            <th>ID</th>
+                                            <!-- <th>ID</th> -->
+                                            <th>#</th>
                                             <th>Image</th>
                                             <th>Name</th>
                                             <th>Price</th>
@@ -387,6 +393,7 @@
                             <div class="col-md-6">
                                 <label for="productName" class="form-label">Product Name</label>
                                 <input type="text" class="form-control" id="productName" required>
+                                <!-- <div class="invalid">Only text allowed (no numbers)</div> -->
                             </div>
                             <div class="col-md-6">
                                 <label for="productPrice" class="form-label">Price</label>
@@ -405,18 +412,34 @@
                                 <label for="productCategory" class="form-label">Category</label>
                                 <select class="form-select" id="productCategory" required>
                                     <option value="">Select Category</option>
-                                    <option value="1">Electronics</option>
-                                    <option value="2">Home & Garden</option>
-                                    <option value="3">Clothing</option>
-                                    <option value="4">Books</option>
-                                    <option value="5">Toys</option>
+                                    <option value="1">Chairs</option>
+                                    <option value="2">Sofas</option>
+                                    <option value="3">Tables</option>
+                                    <option value="4">Sectionals</option>
+                                    <option value="5">Beds</option>
+                                    <option value="6">Storage</option>
+                                    <option value="7">Office Furniture</option>
+                                    <option value="8">Outdoor Furniture</option>
+                                    <option value="9">Decor & Accessories</option>
+                                    
                                 </select>
                             </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="productDescription" class="form-label">Description</label>
-                            <textarea class="form-control" id="productDescription" rows="3" required></textarea>
-                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label for="highlights" class="form-label">Highlights</label>
+                                <input type="text" class="form-control" id="highlights" >
+                            </div>
+                            <div class="col-md-6">
+                                <label for="instructions" class="form-label">Instructions</label>
+                                <div class="input-group">
+                                    <input type="text"  class="form-control" id="instructions" >
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="productDescription" class="form-label">Description</label>
+                                <textarea class="form-control" id="productDescription" rows="3" maxlength="100" ></textarea>
+                            </div>
                         <div class="mb-3">
                             <label for="productImage" class="form-label">Product Image</label>
                             <input class="form-control" type="file" id="productImage" accept="image/*">
@@ -435,7 +458,7 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <!-- <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -451,28 +474,14 @@
                 </div>
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Bootstrap JS Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Custom js -->
-    <!-- <script src="script.js"></script> -->
-    <!-- <script  src="db.js"></script> -->
-    <!-- <script  src="sellerdashboard2.js"></script> -->
-    <script>
-        const sidebarToggle = document.getElementById('sidebarToggle');
-        const productModal = new bootstrap.Modal(document.getElementById('productModal'));
-        const productForm = document.getElementById('productForm');
-        const imagePreview = document.getElementById('imagePreview');
-        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
 
-        const addProductBtn = document.getElementById('addProductBtn');
-        addProductBtn.addEventListener('click', function() {
-            document.getElementById('productForm').reset(); 
-            document.getElementById('imagePreviewContainer').style.display = 'none'; 
-            productModal.show(); 
-    });
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/dashboard/seller-product.js"></script>
+
 </body>
+
 </html>
 
