@@ -4,6 +4,8 @@ import { Validation } from "../modules/validation.js";
 import { LoadDB } from "../load_db.js";
 
 await LoadDB();
+
+Auth.enforcePageAuthorization( "/")
 const form = document.getElementById('registerform');
 
 form.addEventListener('submit', (e) => {

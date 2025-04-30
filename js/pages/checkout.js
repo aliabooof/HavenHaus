@@ -5,7 +5,10 @@ import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
 import { Auth } from "../modules/authModule.js";
 import { Validation } from "../modules/validation.js";
+import { LoadDB } from "../load_db.js";
 
+await LoadDB()
+Auth.enforcePageAuthorization();
 // Render Layout Components
 await Component.renderNavbar();
 await Component.renderFooter();

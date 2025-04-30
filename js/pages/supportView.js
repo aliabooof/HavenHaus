@@ -7,6 +7,7 @@ import { LoadDB } from "../load_db.js";
 import { Validation } from "../modules/validation.js";
 
 await LoadDB();
+Auth.enforcePageAuthorization();
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
@@ -14,7 +15,13 @@ await Component.renderCartOffcanvas();
 const newInquiry1 = document.getElementById("new-inquiry-button");
 const newInquiry2 = document.getElementById("new-inquiry-button2");
 
-newInquiry2.addEventListener("click", () => redirect('../../login.html'));
+newInquiry2.addEventListener("click", () => {
+    createAlert(
+        "Please Log In",
+        "primary",
+        "You must be logged in to submit an inquiry. Please log in to continue."
+    );
+});
 
 
 async function loadInquires(filterStatus = "all") {
@@ -78,8 +85,8 @@ form.addEventListener('submit', async function (event) {
     const formInputs = getFormInputs(form);
     const validationRules = Validation.userInquiryForm(formInputs);
     if (!Validation.validateForm(form, validationRules)) return;
-
-    const userId = User.getCurrentUser().id;
+    const user = User.getCurrentUser()
+    const userId = user.id;
     const inquiryData = {
         id: userId,
         title: document.getElementById('title').value.trim(),
@@ -102,6 +109,11 @@ form.addEventListener('submit', async function (event) {
     const modalElement = document.getElementById('newInquiryModal');
     const modalInstance = bootstrap.Modal.getInstance(modalElement);
     modalInstance.hide();
+    createAlert(
+        `Thank you for your inquiry ${user.firstName} ${user.lastName}`,
+        "success",
+        "Your inquiry has been successfully submitted. We'll get back to you shortly!"
+    );
 });
 
 observeElements();
