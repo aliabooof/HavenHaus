@@ -15,6 +15,10 @@ await Component.renderFooter();
 
 await Component.renderCartOffcanvas();
 
+const modal = document.getElementById('confirmModal');
+const cancelBtn = document.getElementById('cancelDelete');
+const confirmBtn = document.getElementById('confirmDelete');
+
 let currentUser = User.getCurrentUser();
 let ususername = document.getElementById("username");
 
@@ -69,12 +73,20 @@ if (userOrders.length > 0){
         // divOrder.innerHTML = appendOrder(user_order.id, "islam", order_items[i].quantity, order_items[i].price);
         divOrder.innerHTML += appendOrderFooter(user_order.total, user_order.status)
         divOrder.querySelector("#cancelOrder").addEventListener("click", ()=>{
-            OrderItem.removeOrderItemByOrderId(user_order.id);
-            Order.removeOrder(user_order.id);
-            divOrder.remove();
-            if(userOrders.length == 0){
-                fields.noorders.style.setProperty("display", "block", "important");
-            }
+            modal.style.display = "block";
+            confirmBtn.onclick = () => {
+                modal.style.display = 'none';
+                createAlert("Order deleted successfully!", "success");
+                // alert('Item deleted successfully!');
+                OrderItem.removeOrderItemByOrderId(user_order.id);
+                Order.removeOrder(user_order.id);
+                divOrder.remove();
+                
+              };
+           
+            // if(userOrders.length == 0){
+            //     fields.noorders.style.setProperty("display", "block", "important");
+            // }
         })
         fields.exorders.appendChild(divOrder);
     }
@@ -295,3 +307,13 @@ function getStatus(status){
         return "";
     }
 }
+  
+cancelBtn.onclick = () => {
+    modal.style.display = 'none';
+};
+
+window.onclick = (event) => {
+    if (event.target === modal) {
+        modal.style.display = 'none';
+    }
+};
