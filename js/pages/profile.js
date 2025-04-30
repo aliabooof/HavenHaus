@@ -81,12 +81,11 @@ if (userOrders.length > 0){
                 OrderItem.removeOrderItemByOrderId(user_order.id);
                 Order.removeOrder(user_order.id);
                 divOrder.remove();
-                
+                userOrders = Order.getOrdersByUser(currentUser.id);
+                if(userOrders.length == 0){
+                    fields.noorders.style.setProperty("display", "flex", "important");
+                } 
               };
-           
-            // if(userOrders.length == 0){
-            //     fields.noorders.style.setProperty("display", "block", "important");
-            // }
         })
         fields.exorders.appendChild(divOrder);
     }
