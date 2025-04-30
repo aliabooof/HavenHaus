@@ -14,23 +14,23 @@ let users = User.getAllUsers();
 
 
 
- async function handleSearch(keyword) {
+async function handleSearch(keyword) {
     if (keyword.trim() === "") {
-        
+
         Component.renderPage(1);
         Component.renderPaginationControls();
         document.getElementById("paginationControls").style.display = "block";
     } else {
-        const filteredUsers = users.filter(user => 
+        const filteredUsers = users.filter(user =>
             user.firstName.toLowerCase().includes(keyword.toLowerCase()) ||
             user.lastName.toLowerCase().includes(keyword.toLowerCase()) ||
-            user.email.toLowerCase().includes(keyword.toLowerCase())||
-            user.id.toLowerCase().includes(keyword.toLowerCase())||
+            user.email.toLowerCase().includes(keyword.toLowerCase()) ||
+            user.id.toLowerCase().includes(keyword.toLowerCase()) ||
             (user.firstName + user.lastName).toLowerCase().includes(keyword.toLowerCase)
-            
+
         );
 
-        
+
         const userTableBody = document.getElementById("userTableBody");
         userTableBody.innerHTML = "";
 
@@ -38,7 +38,7 @@ let users = User.getAllUsers();
             await Component.renderUserRow(user);
         }
 
-        
+
         document.getElementById("paginationControls").style.display = "none";
     }
 }
@@ -46,18 +46,18 @@ let users = User.getAllUsers();
 
 
 
-function animateCount(id, endValue, duration = 1000){
+function animateCount(id, endValue, duration = 1000) {
     const element = document.getElementById(id);
     let startValue = 0;
     const stepTime = Math.abs(Math.floor(duration / endValue));
 
-    const counter = setInterval ( () => {
+    const counter = setInterval(() => {
         startValue++;
         element.textContent = startValue;
-        if (startValue >= endValue){
+        if (startValue >= endValue) {
             clearInterval(counter);
         }
-   },stepTime);
+    }, stepTime);
 }
 
 async function loadContent(x) {
@@ -66,17 +66,17 @@ async function loadContent(x) {
             await Component.renderCharts();
             await loadDashboardCharts();
             break;
-            case 2:
-                const users = User.getAllUsers();
-                animateCount("totalUsers",users.length);
-                await Component.renderTable();
-                console.log(document.querySelectorAll('tr').length)
-               
-                document.getElementById("searchInput").addEventListener('input',(e)=>{
-                    handleSearch(e.target.value);
-                });
+        case 2:
+            const users = User.getAllUsers();
+            animateCount("totalUsers", users.length);
+            await Component.renderTable();
+            console.log(document.querySelectorAll('tr').length)
 
-                break;
+            document.getElementById("searchInput").addEventListener('input', (e) => {
+                handleSearch(e.target.value);
+            });
+
+            break;
         case 3:
             await Component.renderProducts();
             await loadProductDashboardChart();
@@ -86,7 +86,41 @@ async function loadContent(x) {
             await loadOrderDashboardChart();
             break;
         case 5:
+            const filter = `
+    <div class="filter-container">
+        <div class="filter-panel">
+            <div class="filter-wrapper">
+                <span class="filter-label">Filter by status:</span>
+                <div class="filter-buttons" id="filterButtons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="resolved">Resolved</button>
+                    <button class="filter-btn" data-filter="pending">Pending</button>
+                    <button class="filter-btn" data-filter="in progress">In Progress</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id = "inquireis-container"></div>
+`;
+
+            document.getElementById("content").innerHTML = filter;
+
+            let buttons = document.querySelectorAll(".filter-btn");
+            buttons.forEach(button => {
+                button.addEventListener("click", async () => {
+                    const status = button.getAttribute("data-filter").toLowerCase();
+                    const filtered = Inquiry.getInquiriesByStatus(status);
+                    await Component.renderSupport(filtered);
+
+                    
+                    buttons.forEach(btn => btn.classList.remove("active"));
+                    button.classList.add("active");
+                });
+            });
+
+            
             await Component.renderSupport(Inquiry.getAllInquiries());
+
             break;
     }
 }
@@ -181,20 +215,20 @@ function loadProductDashboardChart() {
     const dashProduct = document.getElementById('productsChart').getContext('2d');
     const sellersData = User.getUserByRole(1); // Get all sellers
     const sellers = sellersData.map(user => `${user.firstName} ${user.lastName}`);
-    
+
     const productCounts = sellersData.map(seller => {
         const products = Product.getProductsBySeller(seller.id);
         return products.length; // number of products for this seller
     });
     new Chart(dashProduct, {
-        type: 'bar', 
+        type: 'bar',
         data: {
-            labels: sellers, 
+            labels: sellers,
             datasets: [{
                 label: 'Number of Products',
-                data: productCounts, 
-                backgroundColor: 'rgba(54, 162, 235, 0.5)', 
-                borderColor: 'rgba(54, 162, 235, 1)', 
+                data: productCounts,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 1
             }]
         },
@@ -221,7 +255,7 @@ function loadProductDashboardChart() {
                     }
                 }
             }
-            }
+        }
     });
 }
 
@@ -235,14 +269,14 @@ function loadOrderDashboardChart() {
         return orders.length; // number of orders for this seller
     });
     new Chart(dashOrder, {
-        type: 'bar', 
+        type: 'bar',
         data: {
-            labels: sellers, 
+            labels: sellers,
             datasets: [{
                 label: 'Number of Orders',
-                data: ordersCount, 
-                backgroundColor: 'rgba(54, 162, 235, 0.5)', 
-                borderColor: 'rgba(54, 162, 235, 1)', 
+                data: ordersCount,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
                 borderWidth: 2
             }]
         },
@@ -269,15 +303,15 @@ function loadOrderDashboardChart() {
                     }
                 }
             }
-            }
-        });
-       
-    }
+        }
+    });
+
+}
 
 
 
-    
-    // console.log(ordersCount);
+
+// console.log(ordersCount);
 
 
 
