@@ -150,6 +150,23 @@ export class Validation {
       { field: inputs.password, method: Validation.validatePassword, message: "Enter a valid password." }
     ]
   }
+  
+    static validatePrice(price) {
+      const regex = /^\d+(\.\d{1,2})?$/; // Matches whole numbers or decimal numbers with up to two decimal places
+      return typeof price === 'string' && regex.test(price);
+  }
+  static validateNumber(number) {
+    const regex = /^-?\d+(\.\d+)?$/;  // Matches integers or decimal numbers, including optional negative sign
+    return typeof number === 'string' && regex.test(number);
+  }
+  static productRules(inputs) {
+
+    return [
+      { field: inputs.productName, method: Validation.validateName, message: "Enter a valid Name." },
+      { field: inputs.productPrice, method: Validation.validatePrice, message: "Enter a valid price." },
+      { field: inputs.stockQuantity, method: Validation.validateNumber, message: "Enter a valid price." }
+    ]
+  }
 
 
 static checkoutRuls(inputs,paymentCC){

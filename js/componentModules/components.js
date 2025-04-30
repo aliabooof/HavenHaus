@@ -100,7 +100,8 @@ export class Component {
         const classArr = ["from-left-animation", "from-right-animation", "from-z-animation", "from-top-animation", "from-bottom-animation"];
         let productCard = await fetchComponent("../../components/product-card.html");
         productCard = convertToHtmlElement(productCard);
-
+        const seller = User.getUserById(product.sellerID);
+        
         productCard.id = product.id;
 
         const prodductName = productCard.querySelector("h5");
@@ -108,8 +109,9 @@ export class Component {
         prodductName.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
 
         const productImg = productCard.querySelector("img");
+        productImg.src=`../../assets/images/Products/${product.name}.png`
         productImg.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
-
+        productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
         productCard.querySelector("p").innerText = product.desc;
         productCard.querySelector("span").innerText = "$ " + product.price;
 
@@ -123,7 +125,7 @@ export class Component {
             Cart.cartUi(productCard.id)
         });
 
-        if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
+        if (User.getCurrentUser() !== null &&( User.getCurrentUser().role == 0 ||User.getCurrentUser().role == 1)) {
 
             productCard.querySelector("button").remove();
         }

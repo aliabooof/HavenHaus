@@ -36,7 +36,7 @@ let productId = GetUrlField("prod-id")
 if(!productId) redirect("../../pages/not-found.html")   
     
 let product = Product.getProductById(productId);
-
+let seller = User.getUserById(product.sellerID)
 // redirect if product not found (id is wrong)
 if(!product) redirect("../../pages/not-found.html")
 
@@ -47,8 +47,8 @@ document.querySelector("#product-price").innerText = product.price
 document.querySelector("#product-description").innerText = product.desc
 document.querySelector("#stock-count").innerText = product.stock
 document.querySelector(".stock").innerText = product.stock
-
-
+document.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
+document.querySelector("img").src=`../../assets/images/Products/${product.name}.png`;
 if(product.stock < 1){
     document.querySelector("#stock-label").classList.remove("text-success")
     document.querySelector("#stock-label").classList.add("text-danger")
