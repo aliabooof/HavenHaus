@@ -18,6 +18,9 @@ export class OrderItem {
     static getOrderItemsBySellerId(sellerId) {
         return this.getAllOrderItems().filter(item => item.sellerID == sellerId );
     }
+    static getOrderItemsByOrderId(orderId) {
+        return this.getAllOrderItems().filter(item => item.orderID == orderId );
+    }
     static getOrderItemsByProductId(productId) {
         this.getAllOrderItems().filter(item => item.productID == productId )
         return this.getAllOrderItems().filter(item => item.productID == productId );

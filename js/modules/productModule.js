@@ -46,7 +46,8 @@ export class Product {
 
     // Get product by ID
     static getProductById(id) {
-        return this.getAllProducts().find(product => product.id === id);
+        // console.log(`from getProductById ${id}`,this.getAllProducts().find(product => product.id == id))
+        return this.getAllProducts().find(product => product.id == id);
     }
 
     // Get all products by a specific seller
