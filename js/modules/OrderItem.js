@@ -1,14 +1,18 @@
-import { GetProductByID, getTable } from "./db.js";
+import { GetProductByID, getTable, add } from "./db.js";
 import {Product } from "./productModule.js";
 
 export class OrderItem {
-    constructor({ productId, quantity, price }) {
-        this.productId = productId;
+    constructor({orderID, productID, quantity, price, status = 0 }) {
+        this.orderID = orderID;
+        this.productID = productID;
         this.quantity = quantity;
-        this.price = price; 
-        this.id = this.#generateId();
+        this.price = price;
+        this.status = status;
     }
 
+    static addOrderItem(orderItem) {
+        add("orderItem", orderItem);
+    }
     #generateId() {
         return 'item_' + Math.random().toString(36).substring(2, 10);
     }

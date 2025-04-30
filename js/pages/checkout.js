@@ -6,6 +6,10 @@ import { Component } from "../componentModules/components.js";
 import { Auth } from "../modules/authModule.js";
 import { Validation } from "../modules/validation.js";
 import { LoadDB } from "../load_db.js";
+import { Order } from "../modules/order.js";
+import { Product } from "../modules/productModule.js";
+import { OrderItem } from "../modules/OrderItem.js";
+import { Cart } from "../modules/cartModule.js";
 
 await LoadDB()
 Auth.enforcePageAuthorization();
@@ -19,6 +23,17 @@ await Component.renderFooter();
 
 const currentUser = User.getCurrentUser();
 const cart = GetCartByID(currentUser.id);
+
+const cart_ = cart.map(item =>{
+  item.price = Product.getProductById(item.productID).price;
+  return item;
+});
+
+const placeOrder = document.getElementById("placeOrder");
+
+
+
+
 
 
 
@@ -83,10 +98,16 @@ cashRadio.addEventListener('change', toggleCreditCardDetails);
 const checkoutForm = document.getElementById("checkoutform");
 checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
+  e.target.querySelector("input[type='submit']").disabled = true;
   let formInputs = getFormInputs(checkoutForm);
   const validationRules = Validation.checkoutRuls(formInputs,creditCardRadio.checked)
-  if (!(Validation.validateForm(checkoutForm, validationRules))) return;
-  
+  if (!(Validation.validateForm(checkoutForm, validationRules))){
+    e.target.querySelector("input[type='submit']").disabled = false;
+    return;
+  };
+
+   placeOrder();
+   Cart.emptyCartByUserID(currentUser.id)
   
     createAlert("Successfully ordered", "success");
     checkoutForm.submit();
@@ -100,3 +121,16 @@ await renderCartSummary();
 toggleCreditCardDetails();
 
 
+function PlaceOrder(){
+  let orderData = {};
+  orderData.userId = currentUser.id;
+  orderData.items = cart_;
+  let order = new Order(orderData);
+   delete order.items;
+   Order.addOrder(order);
+   console.log(cart_)
+   cart_.forEach(item =>{
+      let orderItem = new OrderItem({orderID:o.id, productID:item.productID, quantity:item.quantity,price:item.price});
+      OrderItem.addOrderItem(x);
+   })
+}
