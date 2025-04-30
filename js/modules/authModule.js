@@ -17,6 +17,7 @@ const accessControlList = [
     { path: '/login.html',              allowedRoles: [Roles.GUEST] },
     { path: '/register.html',           allowedRoles: [Roles.GUEST] },
     { path: '/pages/catalog.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
+    { path: '/pages/category.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/pages/product.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/',                        allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/index.html',                        allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },

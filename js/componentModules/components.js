@@ -60,6 +60,11 @@ export class Component {
             if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
                 document.querySelectorAll('[title="Cart"]').forEach(c => c.remove());
             }
+            if (User.getCurrentUser() !== null && User.getCurrentUser().role == 0) {
+                document.getElementById('admin-dash').classList.remove('d-none');
+                document.querySelectorAll('#support-link').forEach(elem=>elem.classList.add('d-none'))
+                body.querySelectorAll(".profile-link").forEach(elem=>elem.classList.add('d-none'))
+            }
 
             body.querySelectorAll(".username-placeholder").forEach(el => {
                 el.textContent = userName;

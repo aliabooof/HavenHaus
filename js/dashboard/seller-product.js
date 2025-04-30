@@ -24,6 +24,18 @@ import { Validation } from "../modules/validation.js";
 
         let deleteBtns = document.querySelectorAll('.delete-btn');
 
+        function updateSellerNameInNavbar() {
+            const currentUser = User.getCurrentUser();
+            const sellerNameElement = document.getElementById('selllerName');
+            if (currentUser && sellerNameElement) {
+                sellerNameElement.textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+            } else {
+                sellerNameElement.textContent = "Guest";
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', updateSellerNameInNavbar);
+
 
     function confirmDelete(e){
         console.log(confirmDeleteBtn)
