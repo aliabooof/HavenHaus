@@ -96,13 +96,26 @@
 
             <div class="container py-5">
                 <h1 class="text-center mx-auto mb-5">Customer Inquiries</h1>
-                <div id="not-found-element">
-
-                </div>
-
+                
                 <div id="inquiries-card-header-container" class="row">
-
-
+                    <div class="filter-container">
+                        <div class="filter-panel">
+                            <div class="filter-wrapper">
+                                <span class="filter-label">Filter by status:</span>
+                                <div class="filter-buttons" id="filterButtons">
+                                    <button class="filter-btn active" data-filter="all">All</button>
+                                    <button class="filter-btn" data-filter="resolved">Resolved</button>
+                                    <button class="filter-btn" data-filter="pending">Pending</button>
+                                    <button class="filter-btn" data-filter="in progress">In Progress</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id = "inquireis-container"></div>
+                    
+                    <div id="not-found-element">
+    
+                    </div>
 
                 </div>
             </div>

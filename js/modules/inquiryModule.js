@@ -73,4 +73,33 @@ export class Inquiry {
     static getInquiryById(id) {
         return this.getAllInquiries().find(i => i.id == id);
     }
+
+    static updateinquiry(updatedInquiry){
+        const inquiries = this.getAllInquiries();
+        const index = inquiries.findIndex(i => i.id == updatedInquiry.id);
+    
+        if (index === -1) {
+            throw new Error(`Product with ID ${updatedUser.id} not found.`);
+        }
+        
+        const cleanUpdates = {};
+        for (const [key, value] of Object.entries(updatedInquiry)) {
+            if (value !== undefined && value !== null && key !== 'id') {
+                cleanUpdates[key] = value;
+            }
+        }
+
+        
+        inquiries[index] = { ...inquiries[index], ...updatedInquiry };
+    
+        setTable("inquiry", inquiries);
+    }
+
+    static getInquiriesByStatus(status) {
+        if (status.toLowerCase() === 'all') {
+            return this.getAllInquiries();
+        }
+    
+        return this.getAllInquiries().filter(i => i.details.status.toLowerCase() === status.toLowerCase());
+    }
 }
