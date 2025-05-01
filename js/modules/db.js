@@ -1,7 +1,8 @@
 export function getTable(tableName){
     // return JSON.parse(window.localStorage.getItem(tableName));
     const data = JSON.parse(localStorage.getItem(tableName));
-    return Array.isArray(data) ? data : [];
+    console.log(data)
+    return data ? data : [];
 }
 export function setTable(tableName, table){
     localStorage.setItem(tableName,JSON.stringify(table));
