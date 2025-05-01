@@ -83,7 +83,7 @@ function prepareBestSelling(){
                                         ,0)
 
                                         product.totalQuantity = productQuanity;
-                                        console.log(product.totalQuantity)
+                                        // console.log(product.totalQuantity)
                     return product
                 }
             )
@@ -186,24 +186,25 @@ var sellerId =  2
 // ____________________________ End Global Variabls Section ____________________________\\
 
 
+// ____________________________ Starting ____________________________\\
 
 
-// Total products
+    // Total products
 document.getElementById("total-products").innerText = 
                                         Product.getProductsBySeller(2).length 
-// getSellerOrders
+    // getSellerOrders
 let sellerOrders = Seller.getSellerOrdersById(2);
-// Get shipped orders Orders Only
+    // Get shipped orders Orders Only
 let shippedOrders = sellerOrders.filter(order=> order.status == 1);
-
-// seller orders 
+// console.log(sellerOrders.filter(order=> order.status == 0))
+    // seller orders 
 let sellerOrderItems = Seller.getSellerOrderItemsById(2)
 
-// Total orders, Pending Orders, Total Revenue
+    // Total orders, Pending Orders, Total Revenue
 document.getElementById("total-orders").innerText = sellerOrders.length 
 document.getElementById("pending-orders").innerText = 
                                         sellerOrders.filter(order=> order.status == 0).length 
-// calculate the total revenue
+    // calculate the total revenue
 document.getElementById("total-revenue").innerText =
                             shippedOrders.reduce((ordersAcc,order)=> {
                             return ordersAcc + OrderItem.getOrderItemsByOrderId(order.id)
@@ -219,7 +220,7 @@ document.getElementById("total-revenue").innerText =
 
 
 
-// Total Sold Units
+    // Total Sold Units
 let shippedOrderIds = shippedOrders.map(order=> order.id)
 document.getElementById("total-sold-units").innerText = 
 sellerOrderItems.filter(  
@@ -227,7 +228,7 @@ sellerOrderItems.filter(
                         )
                         .reduce((acc,orderItem)=> acc+orderItem.quantity,0)
 
-// prepare sales                                                    
+    // prepare sales                                                    
 let allSales = Seller.calculateSales(2);  
 let dailySales = sortData(allSales.dailySales);
 let monthlySales = sortData(allSales.monthlySales);
@@ -236,6 +237,7 @@ let yearlySales = sortData(allSales.yearlySales);
 const labels = Object.keys(dailySales)
 const salaries = Object.values(dailySales)
 
+    // Creating the Chart  
 let chart = new Chart(document.getElementById('salesChart'), {
         type: 'line',
         data: {
@@ -277,11 +279,13 @@ let chart = new Chart(document.getElementById('salesChart'), {
         }
     });
 
+
+// Listening To Chart Buttons
 document.getElementById("yearly-sales").addEventListener("click",showYearlySales);
 document.getElementById("monthly-sales").addEventListener("click",showMonthlySales);
 document.getElementById("daily-sales").addEventListener("click",showDailySales);
     
 
-
+// Loading Recent orders & Best selling
 prepareRecentOrders()
 prepareBestSelling()

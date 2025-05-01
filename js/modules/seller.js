@@ -28,7 +28,16 @@ export class Seller{
     }
     static getSortedSellerOrdersById(sellerId)
     {   
-        return this.getSellerOrdersById(sellerId).sort((order1,order2)=> new Date(order1.date) < new Date(order2.date) )
+        return this.getSellerOrdersById(sellerId)
+                                    .sort(
+                                        (order1,order2)=> {
+                                            if(new Date(order1.date) < new Date(order2.date))
+                                                return 1;
+                                            else if(new Date(order1.date) > new Date(order2.date))
+                                                return -1;
+                                            else 
+                                                return 0
+                                        } )         
     
     }
     static calculateSales(sellerID) {

@@ -23,9 +23,19 @@ function createSummaryItem(cartItem){
 if(!Auth.isLoggedIn())
     redirect("../login.html");
 
+<<<<<<< Updated upstream
 let currUser = User.getCurrentUser();
 let userID = currUser.id;
 
+=======
+// Utility Functions
+function GoToCart(event){
+  redirect("../../pages/cart.html")
+}
+function validateCheckout() {
+  let isValid = true;
+  let firstInvalidField = null;
+>>>>>>> Stashed changes
 
 let summaryItemHtmlString = await fetchComponent("../components/checkout-summary-item.html");
 let cart = GetCartByID(userID);
@@ -67,4 +77,25 @@ else
 }
 
 
+<<<<<<< Updated upstream
 // console.log(cart)
+=======
+fields.creditCardRadio.addEventListener('change', toggleCreditCardDetails);
+fields.cashRadio.addEventListener('change', toggleCreditCardDetails);
+
+const backToCartBtn= document.getElementById("back-to-cart");
+backToCartBtn.addEventListener('click', GoToCart);
+
+const checkoutForm = document.getElementById("checkoutform");
+checkoutForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (validateCheckout()) {
+    createAlert("Successfully ordered", "success");
+    checkoutForm.submit();
+  }
+});
+
+
+await renderCartSummary();
+toggleCreditCardDetails();
+>>>>>>> Stashed changes
