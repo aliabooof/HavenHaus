@@ -10,31 +10,34 @@
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="../css/admin.css">
+    
    
 
 
 </head>
 <body>
+    <button class="btn btn-dark d-md-none m-2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebar" id="sidebarToggle">☰</button>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row ">
             <!-- Sidebar -->
-            <nav class="col-md-2 d-none d-md-block bg-dark sidebar text-white p-3 sticky-top" id="sidebar">
-                <h4>Admin</h4>
+
+            <nav class="col-md-2 collapse d-md-block bg-dark sidebar text-white p-3 position-fixed" id="sidebar">
+                <h4 class="mb-3"><i class="bi bi-person-dash"></i> Admin</h4>
                 <hr>
                 <ul class="nav flex-column">
-                    <li class="nav-item"><a href="#" class="nav-link text-white"  id="dashboard_button" >Dashboard</a></text-white></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white" id="user_button">Users</a></text-white></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white" id="product_button">Products</a></text-white></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white" id="order_button">Orders</a></text-white></li>
-                    <li class="nav-item"><a href="#" class="nav-link text-white" id="support_button"><i class="bx bxs-log-out"></i>Support</a></text-white></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white"  id="dashboard_button" ><i class="bi bi-speedometer2 me-2"></i> Dashboard</a></text-white></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white" id="user_button"><i class="bi bi-people-fill me-2"></i> Users</a></text-white></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white" id="product_button"><i class="bi bi-box-seam me-2"></i> Products</a></text-white></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white" id="order_button"><i class="bi bi-cart-check me-2"></i> Orders</a></text-white></li>
+                    <li class="nav-item"><a href="#" class="nav-link text-white" id="support_button"><i class="bi bi-chat-dots me-2"></i> Support</a></text-white></li>
 
                 </ul>
             </nav>
 
             <!-- Main Content -->
-            <main class="col-md-10 ms-sm-auto p-4" id="main-content">
+            <main class="offset-md-2 col-md-10 p-4" id="main-content" style="min-height: 100vh; overflow-y: auto;">
                 
-                <h2 class="mb-4">Dashboard Overview</h2>
+                <h2 class="mb-4"><i class="bi bi-speedometer"></i> Dashboard Overview</h2>
 
                 <div class="row g-4">
                     <!-- Total Users Card  -->
@@ -91,13 +94,16 @@
 
                     <!-- Users -->
                     <!-- Charts Section -->
-                    <div id="content">
+
+
+                    <div id="content" class="mt-4">
 
 
 
                         <!-- inquiries -->
                          
                     </div>
+
                     
                 </div>
 
