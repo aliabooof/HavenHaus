@@ -46,7 +46,8 @@ export class Product {
 
     // Get product by ID
     static getProductById(id) {
-        return this.getAllProducts().find(product => product.id === id);
+        // console.log(`from getProductById ${id}`,this.getAllProducts().find(product => product.id == id))
+        return this.getAllProducts().find(product => product.id == id);
     }
 
     // Get all products by a specific seller
@@ -71,7 +72,7 @@ export class Product {
         }
     }
 
-    //Update product
+    
     static updateProduct(updatedProduct) {
         const products = this.getAllProducts();
         const index = products.findIndex(product => product.id === updatedProduct.id);
@@ -87,7 +88,7 @@ export class Product {
             }
         }
 
-        // Merge the updated fields
+        
         products[index] = { ...products[index], ...updatedProduct };
     
         setTable("product", products);

@@ -1,4 +1,4 @@
-<div class="modal fade" id="" tabindex="-1" aria-labelledby="inquiryModalLabel1" aria-hidden="true">
+<div class="modal fade" id="inquiryModal1" tabindex="-1" aria-labelledby="inquiryModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header bg-primary text-white">
@@ -28,7 +28,7 @@
                 </div>
                 <div class="card mb-3 conversation-container-parent">
                     <div class="conversation-container">
-                     
+
                         <div class="message-bubble message-agent">
                             <div class="message-name">Support Team</div>
                             <div class="message-text">
@@ -41,9 +41,28 @@
                     </div>
                 </div>
             </div>
+
+
+            <form id="inquiry-form-id" class="reply-form d-none">
+                <div class="mb-3">
+                    <label for="reply" class="form-label">Reply Message</label>
+                    <textarea class="form-control" name="reply" id="reply" rows="4" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="form-label">Update Status</label>
+                    <select class="form-select" name="status" id="status">
+
+                        <option value="in progress">In Progress</option>
+                        <option value="resolved">Resolved</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-success">Send Reply</button>
+            </form>
+
+
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                
+
             </div>
         </div>
     </div>

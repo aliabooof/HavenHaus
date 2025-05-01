@@ -28,9 +28,54 @@ export class Seller{
     }
     static getSortedSellerOrdersById(sellerId)
     {   
-        let sellerOrderItems = this.getSellerOrderItemsById(sellerId);
-        let sellerOrdersIds = sellerOrderItems.map(orderItem=> orderItem.orderID)
-        let orders = Order.getAllOrders()
-        // .filter(orderItem=> )
+        return this.getSellerOrdersById(sellerId)
+                                    .sort(
+                                        (order1,order2)=> {
+                                            if(new Date(order1.date) < new Date(order2.date))
+                                                return 1;
+                                            else if(new Date(order1.date) > new Date(order2.date))
+                                                return -1;
+                                            else 
+                                                return 0
+                                        } )         
+    
     }
+    static calculateSales(sellerID) {
+        // Step 1: Filter only seller's order items
+        const sellerOrderItems = this.getSellerOrderItemsById(sellerID)
+      
+        // Step 2: Map each orderItem to its matching order
+        const salesData = sellerOrderItems.map(item => {
+          // Find matching order
+          const order = this.getSortedSellerOrdersById(sellerID)
+                            .filter(order=> order.status == 1 && new Date(order.date) > new Date(`${new Date().getFullYear()-1}`))
+                            .find(order =>  order.id == item.orderID);
+          
+          if (!order) return null; // If no matching order, skip
+      
+          const date = new Date(order.date);
+          const dailyKey = date.toISOString().split('T')[0]; // e.g. '2025-04-28'
+          const monthlyKey = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0'); // e.g. '2025-04'
+          const yearlyKey = date.getFullYear().toString(); // e.g. '2025'
+      
+          const totalCost = item.quantity * Product.getProductById(item.productID).price; // quantity from orderItem, cost from order
+      
+          return { dailyKey, monthlyKey, yearlyKey, totalCost };
+        }).filter(x => x !== null);
+      
+        // Step 3: Group sales
+        const dailySales = {};
+        const monthlySales = {};
+        const yearlySales = {};
+      
+        for (const sale of salesData) {
+          dailySales[sale.dailyKey] = (dailySales[sale.dailyKey] || 0) + sale.totalCost;
+          monthlySales[sale.monthlyKey] = (monthlySales[sale.monthlyKey] || 0) + sale.totalCost;
+          yearlySales[sale.yearlyKey] = (yearlySales[sale.yearlyKey] || 0) + sale.totalCost;
+        }
+      
+        return { dailySales, monthlySales, yearlySales };
+      }
+
+      
 }

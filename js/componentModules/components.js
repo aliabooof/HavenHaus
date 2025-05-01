@@ -1,10 +1,15 @@
 import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
-import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields } from "../util.js";
+import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields, getFormInputs } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
+
 import {Order} from "../../js/modules/order.js";
+
+import { Validation } from "../modules/validation.js";
+import { Inquiry } from "../modules/inquiryModule.js";
+
 
 export class Component {
 
@@ -53,7 +58,7 @@ export class Component {
 
             document.querySelectorAll("#cart-badge").forEach(badge => badge.innerText = cart.length)
             const userName = `${user.firstName} ${user.lastName}`.trim() || "User";
-            if (User.getCurrentUser.role == 1) {
+            if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
                 document.querySelectorAll('[title="Cart"]').forEach(c => c.remove());
             }
 
@@ -63,8 +68,13 @@ export class Component {
             const logoutLinks = body.querySelectorAll(".logout-link");
             logoutLinks.forEach(link => {
                 link.addEventListener('click', () => {
-
                     Auth.logout();
+                });
+            });
+            const profileLinks = body.querySelectorAll(".profile-link");
+            profileLinks.forEach(link => {
+                link.addEventListener('click', (e) =>{
+                    e.target.href = "../../pages/profile.html";
                 });
             });
         } else {
@@ -109,11 +119,11 @@ export class Component {
                 createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
                 return;
             }
-            // Cart.addToCart(productCard.id)
+            
             Cart.cartUi(productCard.id)
         });
 
-        if (User.getCurrentUser() !== null && User.getCurrentUser().role === 1) {
+        if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
 
             productCard.querySelector("button").remove();
         }
@@ -137,14 +147,18 @@ export class Component {
     }
 
     static async renderInquiryCard(inquiry) {
-        const inquiryContainer = document.getElementById("inquiries-card-header-container");
+        const inquiryContainer = document.getElementById("inquireis-container");
         const inquirybodyContainer = document.getElementById('inquiries-card-body-container');
 
         const inquiryHeader = await fetchComponent("../../components/inquiry-card.html");
         const inquiryHeaderElement = convertToHtmlElement(inquiryHeader);
         inquiryHeaderElement.querySelector("h5").innerText = inquiry.title;
-        inquiryHeaderElement.querySelectorAll("p")[0].innerText = inquiry.date;
-        inquiryHeaderElement.querySelectorAll("p")[1].innerText = inquiry.summary;
+        inquiryHeaderElement.querySelectorAll("p")[1].innerText = inquiry.date;
+        inquiryHeaderElement.querySelectorAll("p")[2].innerText = inquiry.summary;
+        
+        inquiryHeaderElement.querySelector("span").className = `badge ${inquiry.details.statusClass}`
+        inquiryHeaderElement.querySelector("span").innerText = inquiry.details.status;
+
         inquiryHeaderElement.querySelector("button").setAttribute('data-bs-target', `#inquiryModal${inquiry.id}`);
 
         const inquiryBody = await fetchComponent("../../components/inquiry-information-popup.html");
@@ -195,92 +209,7 @@ export class Component {
         reviewContainer.insertAdjacentElement("beforeend", reviewCardElemnt);
     }
 
-    // static async renderUserTable(user) {
 
-    //     const userrow = await fetchComponent("../../components/userRows.html");
-    //     const userrowElemnt = convertToHtmlElement(userrow);
-    //     const cols = userrowElemnt.querySelectorAll("td");
-    //     cols[0].innerText = user.id;
-    //     cols[1].innerText = user.firstName + " " + user.lastName;
-    //     cols[2].innerText = user.email;
-    //     cols[3].innerText = user.role==1?"Seller":"Customer";
-    //     userrowElemnt.querySelector(".delete-button").addEventListener("click", (e) => {
-    //         User.removeUser(user.id);
-    //         e.target.closest("tr").remove();
-    //     })
-    //     const editButton = userrowElemnt.querySelector(".edit-button");
-    //     editButton.setAttribute('data-bs-toggle', `#editUserModal${user.id}`);
-    //     editButton.addEventListener('click', async () => {
-    //         let modalElement = document.getElementById(`editUserModal${user.id}`);
-
-    //         if (!modalElement) {
-    //             // Render the form content if the modal doesn't exist
-    //             await this.renderEditUserForm(user.id);
-    //             modalElement = document.getElementById(`editUserModal${user.id}`);
-
-    //             // Attach event listeners only ONCE after the modal is created
-    //             modalElement.addEventListener('hide.bs.modal', () => {
-    //                 if (document.activeElement && modalElement.contains(document.activeElement)) {
-    //                     document.activeElement.blur();
-    //                 }
-    //             });
-
-    //             // Listen for modal hide event and dispose of the modal
-    //             modalElement.addEventListener('hidden.bs.modal', () => {
-    //                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    //                 if (modalInstance) {
-    //                     modalInstance.dispose();
-    //                 }
-    //                 modalElement.remove();
-    //             }, { once: true });
-
-    //             // Attach form submit listener to handle form data
-    //             const form = modalElement.querySelector("form");  // Assuming the modal contains a form element
-    //             this.#setFormInputs(form, user);
-    //             form.addEventListener('submit', async (e) => {
-    //                 e.preventDefault();
-    //                 const formData = getFormFields('editUserForm');
-    //                 formData.id = user.id;
-    //                 User.updateUser(formData);
-    //                 formData.id = user.id;
-    //                 User.updateUser(formData);
-    //                 cols[1].innerText = formData.firstName + " " + formData.lastName;
-    //                 cols[2].innerText = formData.email;
-    //                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
-    //                 if (modalInstance) {
-    //                     modalInstance.hide();
-    //                 }
-
-    //             });
-    //         }
-
-    //         // Show the modal when ready
-    //         let modalInstance = bootstrap.Modal.getInstance(modalElement);
-    //         if (!modalInstance) {
-    //             modalInstance = new bootstrap.Modal(modalElement);
-    //         }
-    //         modalInstance.show();
-    //     });
-
-    //     document.getElementById("userTableBody").insertAdjacentElement("beforeend", userrowElemnt);
-
-    // }
-
-    // static async renderTable() {
-
-    //     const usertable = await fetchComponent("../../components/userTable.html");
-    //     const userTable = convertToHtmlElement(usertable);
-    //     const container = document.getElementById("content");
-    //     container.innerHTML = "";
-    //     container.appendChild(userTable);
-
-
-    //     for (let child of userTable.children) {
-    //         container.appendChild(child);
-    //     }
-
-
-    // }
 
     static users = [];
     static pageSize = 5;
@@ -327,6 +256,9 @@ export class Component {
         userrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
             User.removeUser(user.id);
             e.target.closest("tr").remove();
+            this.users = User.getAllUsers();
+            this.renderPage(1);
+            this.renderPaginationControls();
         });
 
         const editButton = userrowElement.querySelector(".edit-button");
@@ -340,17 +272,17 @@ export class Component {
 
     static async handleEditUser(user, userrowElement) {
         let modalElement = document.getElementById(`editUserModal${user.id}`);
-    
+
         if (!modalElement) {
             await this.renderEditUserForm(user.id);
             modalElement = document.getElementById(`editUserModal${user.id}`);
-    
+
             modalElement.addEventListener('hide.bs.modal', () => {
                 if (document.activeElement && modalElement.contains(document.activeElement)) {
                     document.activeElement.blur();
                 }
             });
-    
+
             modalElement.addEventListener('hidden.bs.modal', () => {
                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
                 if (modalInstance) {
@@ -358,90 +290,253 @@ export class Component {
                 }
                 modalElement.remove();
             }, { once: true });
-    
+
             const form = modalElement.querySelector("form");
-            this.#setFormInputs(form, user);
-    
-            form.addEventListener('submit', async (e) => {
+            this.#setEditFormInputs(form, user);
+
+            form.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const formData = getFormFields('editUserForm');
+                const formInputs = getFormInputs(form);
+                const validationRules = Validation.editUserRules(formInputs);
+                if (!(Validation.validateForm(form, validationRules))) {
+                    return;
+                }
+
+                if (User.isEmailUsedByAnotherUser(formData.email, user.id)) {
+                    createAlert("Email Already Exists.", "warning", "This email is already used by another user.");
+                    return;
+                }
+
                 formData.id = user.id;
-                await User.updateUser(formData);
-    
+                User.updateUser(formData);
+
                 const cols = userrowElement.querySelectorAll("td");
                 cols[1].innerText = `${formData.firstName} ${formData.lastName}`;
                 cols[2].innerText = formData.email;
-    
+
                 const modalInstance = bootstrap.Modal.getInstance(modalElement);
                 if (modalInstance) {
                     modalInstance.hide();
                 }
             });
         }
-    
+
         let modalInstance = bootstrap.Modal.getInstance(modalElement);
         if (!modalInstance) {
             modalInstance = new bootstrap.Modal(modalElement);
         }
         modalInstance.show();
     }
+
+    static renderPaginationControls() {
+
+
+        let paginationContainer = document.getElementById("paginationControls");
+
+        if (!paginationContainer) {
+            paginationContainer = document.createElement("div");
+            paginationContainer.id = "paginationControls";
+            paginationContainer.classList.add("pagination-controls");
+            document.getElementById("content").appendChild(paginationContainer);
+        }
+
+        paginationContainer.innerHTML = "";
+
+        const totalPages = Math.ceil(this.users.length / this.pageSize);
+
+        const prevButton = document.createElement("button");
+        prevButton.innerText = "Previous";
+        prevButton.disabled = this.currentPage === 1;
+        prevButton.addEventListener("click", () => {
+            if (this.currentPage > 1) {
+                this.currentPage -= 1;
+                this.renderPage(this.currentPage);
+                this.renderPaginationControls();
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement("button");
+            pageButton.innerText = i;
+            if (i === this.currentPage) {
+                pageButton.classList.add("active");
+            }
+            pageButton.addEventListener("click", () => {
+                this.currentPage = i;
+                this.renderPage(this.currentPage);
+                this.renderPaginationControls();
+            });
+            paginationContainer.appendChild(pageButton);
+        }
+
+        const nextButton = document.createElement("button");
+        nextButton.innerText = "Next";
+        nextButton.disabled = this.currentPage === totalPages;
+        nextButton.addEventListener("click", () => {
+            if (this.currentPage < totalPages) {
+                this.currentPage += 1;
+                this.renderPage(this.currentPage);
+                this.renderPaginationControls();
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+
+    }
+
+    static async renderEditUserForm(userId) {
+        const editForm = await fetchComponent("../../components/edit-user-form.html");
+        const editFormElement = convertToHtmlElement(editForm);
+        editFormElement.setAttribute('id', `editUserModal${userId}`);
+        document.getElementById("FormModal").appendChild(editFormElement);
+
+    }
+
+    updateTableRow(userId, updatedData) {
+        const userRow = document.querySelector(`#userRow${userId}`);
+
+        if (userRow) {
+
+            userRow.querySelector(".user-name").innerText = `${updatedData.firstName} ${updatedData.lastName}`;
+            userRow.querySelector(".user-email").innerText = updatedData.email;
+            userRow.querySelector(".user-role").innerText = updatedData.role;
+        }
+
+    }
+
+    static async renderCharts() {
+
+        const dashboard = await fetchComponent("../../components/dashboard.html");
+        const chart = convertToHtmlElement(dashboard);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(chart);
+    }
+
+    static async renderProducts() {
+
+        const product = await fetchComponent("../../components/products-dashboard.html");
+        const product_chart = convertToHtmlElement(product);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(product_chart);
+    }
+
+    static async renderOrders() {
+        const order = await fetchComponent("../../components/order-dashboard.html");
+        const orders_content = convertToHtmlElement(order);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(orders_content);
+    }
+
+    static #setEditFormInputs(form, user) {
+        const formInputs = getFormInputs(form)
+        
+        formInputs.firstName.value = user.firstName;
+        formInputs.lastName.value = user.lastName;
+        formInputs.email.value = user.email;
+        formInputs.phone.value = user.phone;
+        formInputs.password.value = user.password;
+
+    }
+
+    static renderPaginationControls() {
+
+
+        let paginationContainer = document.getElementById("paginationControls");
+
+        if (!paginationContainer) {
+            paginationContainer = document.createElement("div");
+            paginationContainer.id = "paginationControls";
+            paginationContainer.classList.add("pagination-controls");
+            document.getElementById("content").appendChild(paginationContainer);
+        }
+
+        paginationContainer.innerHTML = "";
+
+        const totalPages = Math.ceil(this.users.length / this.pageSize);
+
+        const prevButton = document.createElement("button");
+        prevButton.innerText = "Previous";
+        prevButton.disabled = this.currentPage === 1;
+        prevButton.addEventListener("click", () => {
+            if (this.currentPage > 1) {
+                this.currentPage -= 1;
+                this.renderPage(this.currentPage);
+                this.renderPaginationControls();
+            }
+        });
+        paginationContainer.appendChild(prevButton);
+
+        for (let i = 1; i <= totalPages; i++) {
+            const pageButton = document.createElement("button");
+            pageButton.innerText = i;
+            if (i === this.currentPage) {
+                pageButton.classList.add("active");
+            }
+            pageButton.addEventListener("click", () => {
+                this.currentPage = i;
+                this.renderPage(this.currentPage);
+                this.renderPaginationControls();
+            });
+            paginationContainer.appendChild(pageButton);
+        }
+
+        const nextButton = document.createElement("button");
+        nextButton.innerText = "Next";
+        nextButton.disabled = this.currentPage === totalPages;
+        nextButton.addEventListener("click", () => {
+            if (this.currentPage < totalPages) {
+                this.currentPage += 1;
+                this.renderPage(this.currentPage);
+                this.renderPaginationControls();
+            }
+        });
+        paginationContainer.appendChild(nextButton);
+
+    }
+
     
 
-static renderPaginationControls() {
-
-
-    let paginationContainer = document.getElementById("paginationControls");
-
-    if (!paginationContainer) {
-        paginationContainer = document.createElement("div");
-        paginationContainer.id = "paginationControls";
-        paginationContainer.classList.add("pagination-controls");
-        document.getElementById("content").appendChild(paginationContainer);
+    static async renderSupport(inquiries) {
+        document.getElementById("inquireis-container").innerHTML=""
+   
+        for (const inquiry of inquiries) {
+            await this.renderAdminInquires(inquiry)
+        }
     }
 
-    paginationContainer.innerHTML = "";
 
-    const totalPages = Math.ceil(this.users.length / this.pageSize);
+    static async renderAdminInquires(inquiry) {
 
-    const prevButton = document.createElement("button");
-    prevButton.innerText = "Previous";
-    prevButton.disabled = this.currentPage === 1;
-    prevButton.addEventListener("click", () => {
-        if (this.currentPage > 1) {
-            this.currentPage -= 1; // ⭐ Update currentPage immediately
-            this.renderPage(this.currentPage);
-            this.renderPaginationControls();
+        const container = document.getElementById("inquireis-container");
+
+        const inquiryCard = await fetchComponent("../../components/inquiry-card.html");
+        const inquiryCardElement = convertToHtmlElement(inquiryCard);
+        inquiryCardElement.querySelector("h5").innerText = inquiry.title;
+        inquiryCardElement.querySelectorAll("p")[1].innerText = inquiry.date;
+        inquiryCardElement.querySelectorAll("p")[2].innerText = inquiry.summary;
+        
+        inquiryCardElement.querySelector("span").className = `badge ${inquiry.details.statusClass}`
+        inquiryCardElement.querySelector("span").innerText = inquiry.details.status;
+        const buttonView = inquiryCardElement.querySelector("button");
+        buttonView.setAttribute('data-bs-target', `#inquiryModal${inquiry.id}`);
+        const buttonResolve = inquiryCardElement.querySelector("#mark-resolved");
+        buttonResolve.addEventListener('click',async()=>{
+            inquiry.details.status='resolved';
+            inquiry.details.statusClass='bg-success'
+            Inquiry.updateinquiry(inquiry);
+            inquiryCardElement.querySelector("span").className = `badge ${inquiry.details.statusClass}`
+            inquiryCardElement.querySelector("span").innerText = inquiry.details.status;
+            buttonResolve.classList.add('d-none');
+            
+        })
+        if(inquiry.details.status == 'in progress'){
+            console.log('hey')
+            buttonResolve.classList.remove('d-none');
         }
-    });
-    paginationContainer.appendChild(prevButton);
-
-    for (let i = 1; i <= totalPages; i++) {
-        const pageButton = document.createElement("button");
-        pageButton.innerText = i;
-        if (i === this.currentPage) {
-            pageButton.classList.add("active");
-        }
-        pageButton.addEventListener("click", () => {
-            this.currentPage = i; // ⭐ Set currentPage immediately
-            this.renderPage(this.currentPage);
-            this.renderPaginationControls();
-        });
-        paginationContainer.appendChild(pageButton);
-    }
-
-    const nextButton = document.createElement("button");
-    nextButton.innerText = "Next";
-    nextButton.disabled = this.currentPage === totalPages;
-    nextButton.addEventListener("click", () => {
-        if (this.currentPage < totalPages) {
-            this.currentPage += 1; // ⭐ Update currentPage immediately
-            this.renderPage(this.currentPage);
-            this.renderPaginationControls();
-        }
-    });
-    paginationContainer.appendChild(nextButton);
-
-}
 
 
 static async renderEditUserForm(userId) {
@@ -450,47 +545,107 @@ static async renderEditUserForm(userId) {
     editFormElement.setAttribute('id', `editUserModal${userId}`);
     document.getElementById("editFormModal").appendChild(editFormElement);
 
-}
+
+        buttonView.addEventListener("click", async () => {
+            let modalElement = document.getElementById(`inquiryModal${inquiry.id}`);
+
+            if (!modalElement) {
+                await this.renderInquiryModal(inquiry.id);
+                modalElement = document.getElementById(`inquiryModal${inquiry.id}`);
+                
+                // Populate modal with inquiry data
+                modalElement.querySelector("h5").innerText = inquiry.title;
+                const pArr = modalElement.querySelectorAll("p");
+                pArr[0].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.name}`;
+                pArr[1].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.email}`;
+                pArr[2].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.date}`;
+
+                const statusSpan = pArr[3].querySelector("span");
+                statusSpan.textContent = inquiry.details.status;
+                statusSpan.className = `badge ${inquiry.details.statusClass}`;
+                pArr[4].innerText = inquiry.message;
+                const replyMessageCard = document.querySelector(".conversation-container-parent");
 
 
-    static #setFormInputs(form, user) {
-    const formInputs = this.getFormInputs(form)
-    console.log(formInputs);
-    formInputs.firstName.value = user.firstName;
-    formInputs.lastName.value = user.lastName;
-    formInputs.email.value = user.email;
-    formInputs.phone.value = user.phone;
-    formInputs.password.value = user.password;
+               
+                
+                if (!inquiry.reply.trim()) {
+                    replyMessageCard.classList.add("d-none")
+                    const form = modalElement.querySelector("form");
+                    form.classList.remove("d-none");
+                    form.addEventListener("submit", async (e) => {
+                        e.preventDefault();
+                        const formData = getFormFields("inquiry-form-id");
+                        const data = {
+                            id: inquiry.id,
+                            reply: formData.reply,
+                            details: {
+                                status: formData.status,
+                                statusClass: formData.status == "pending" ? "bg-warning" :
+                                    formData.status == "in progress" ? "bg-primary" :
+                                    formData.status == "resolved" ? "bg-success" : "bg-secondary"
+                            }
+                        }
 
-}
+                        Inquiry.replyToInquiry(data);
+                        if(data.details.status !='pending'||data.details.status !='resolved')
+                        {
+                            statusSpan.textContent = data.details.status;
+                            statusSpan.className = `badge ${data.details.statusClass}`;
+                            buttonResolve.classList.remove('d-none');
 
-    static getFormInputs(form) {
-    const firstName = form.querySelector("#firstName");
-    const lastName = form.querySelector("#lastName");
-    const email = form.querySelector("#email");
-    const phone = form.querySelector("#phone");
-    const password = form.querySelector("#password");
-
-
-    return {
-        firstName,
-        lastName,
-        email,
-        phone,
-        password
-    };
-}
+                        }
 
 
-updateTableRow(userId, updatedData) {
-    const userRow = document.querySelector(`#userRow${userId}`);
+                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                        modalInstance.hide();
 
-    if (userRow) {
 
-        userRow.querySelector(".user-name").innerText = `${updatedData.firstName} ${updatedData.lastName}`;
-        userRow.querySelector(".user-email").innerText = updatedData.email;
-        userRow.querySelector(".user-role").innerText = updatedData.role;
+                    });
+                } else {
+                    replyMessageCard.classList.remove("d-none");
+                    replyMessageCard.querySelector('.message-text').innerText = inquiry.reply;
+
+                }
+
+
+                // Blur fix
+                modalElement.addEventListener("hide.bs.modal", () => {
+                    if (document.activeElement && modalElement.contains(document.activeElement)) {
+                        document.activeElement.blur();
+                    }
+                });
+
+                // Handle form submission
+
+
+                // Cleanup modal on hide
+                modalElement.addEventListener("hidden.bs.modal", () => {
+                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
+                    if (modalInstance) modalInstance.dispose();
+                    modalElement.remove();
+                }, { once: true });
+            }
+
+            // Always open modal here (guaranteed it's in DOM)
+            const modal = new bootstrap.Modal(modalElement);
+            modal.show();
+        });
+
+
+        container.insertAdjacentElement("beforeend", inquiryCardElement);
     }
+
+
+
+    static async renderInquiryModal(inquiryId) {
+        const inquiryForm = await fetchComponent("../../components/inquiry-information-popup.html");
+        const inquiryFormElement = convertToHtmlElement(inquiryForm);
+        inquiryFormElement.setAttribute('id', `inquiryModal${inquiryId}`);
+        document.getElementById("inquireis-container").insertAdjacentElement("beforeend", inquiryFormElement);
+
+    }
+
 
 }
 
@@ -533,6 +688,7 @@ static async renderCharts(){
     container.appendChild(orders_content);
 
 }
+
 
 static async renderOrderTable() {
     const ordertable = await fetchComponent("../../components/orderTable.html");

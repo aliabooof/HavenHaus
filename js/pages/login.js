@@ -1,6 +1,9 @@
 import { redirect , createAlert, getFormFields } from "../util.js";
 import { Auth } from "../modules/authModule.js";
+import { LoadDB } from "../load_db.js";
 
+await LoadDB();
+Auth.enforcePageAuthorization( "/")
 document.addEventListener('DOMContentLoaded',()=>{
     const form = document.getElementById('loginform');
 
