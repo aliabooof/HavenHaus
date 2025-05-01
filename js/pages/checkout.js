@@ -43,9 +43,10 @@ const cart = GetCartByID(currentUser.id);
 
 // Utility Functions
 
-function validateCheckout() {
-  let isValid = true;
-  let firstInvalidField = null;
+// function validateCheckout() {
+//   let isValid = true;
+//   let firstInvalidField = null;
+// }
 
 
 let currUser = User.getCurrentUser();
@@ -157,23 +158,8 @@ checkoutForm.addEventListener("submit", (e) => {
   }
 });
 
-
-
-fields.creditCardRadio.addEventListener('change', toggleCreditCardDetails);
-fields.cashRadio.addEventListener('change', toggleCreditCardDetails);
-
 const backToCartBtn= document.getElementById("back-to-cart");
 backToCartBtn.addEventListener('click', GoToCart);
-
-const checkoutForm = document.getElementById("checkoutform");
-checkoutForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  if (validateCheckout()) {
-    createAlert("Successfully ordered", "success");
-    checkoutForm.submit();
-  }
-});
-
 
 await renderCartSummary();
 toggleCreditCardDetails();

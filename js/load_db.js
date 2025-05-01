@@ -1,3 +1,4 @@
+import { GetUrlField } from "./util.js";
 async function  LoadFile(url){
     let response = await fetch(url);
     let json = await response.json();
@@ -9,7 +10,7 @@ async function  LoadFile(url){
     }
 }
 
- export async function LoadDB(){
+export async function LoadDB(){
     if(!window.localStorage.getItem("IsDBLoaded")){
 
       await  LoadFile("../data/user.json")
