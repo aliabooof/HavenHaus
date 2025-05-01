@@ -74,8 +74,10 @@ export class Product {
     
     static updateProduct(updatedProduct) {
         const products = this.getAllProducts();
-        const index = products.findIndex(product => product.id === updatedProduct.id);
-    
+        const index = products.findIndex(product => product.id == updatedProduct.id);
+
+        console.log(" print edit product id"+updatedProduct.id);
+        
         if (index === -1) {
             throw new Error(`Product with ID ${updatedProduct.id} not found.`);
         }
@@ -92,6 +94,7 @@ export class Product {
     
         setTable("product", products);
     }
+    
 
 
     static removeProduct(productId) {
