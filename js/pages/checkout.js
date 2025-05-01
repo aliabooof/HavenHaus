@@ -13,23 +13,67 @@ Auth.enforcePageAuthorization();
 
 await Component.renderNavbar();
 await Component.renderFooter();
-await Component.renderCartOffcanvas();
+// await Component.renderCartOffcanvas();
 
 
 
 const currentUser = User.getCurrentUser();
 const cart = GetCartByID(currentUser.id);
 
+// Utility Functions
+
+// function validateCheckout() {
+//   let isValid = true;
+//   let firstInvalidField = null;
+// }
 
 
+let currUser = User.getCurrentUser();
+let userID = currUser.id;
 
 
 // Utility Functions
 function GoToCart(event){
   redirect("../../pages/cart.html")
 }
+function validateCheckout() {
+  let isValid = true;
+  let firstInvalidField = null;
+
+  const validations = [
+    { field: fields.firstName, method: Validation.validateName, message: "Enter a valid first name." },
+    { field: fields.lastName, method: Validation.validateName, message: "Enter a valid last name." },
+    { field: fields.email, method: Validation.validateEmail, message: "Enter a valid email address." },
+    { field: fields.phone, method: Validation.validatePhone, message: "Enter a valid phone number." },
+    { field: fields.address, method: Validation.validateAddress, message: "Address is too short." },
+    { field: fields.city, method: Validation.validateCity, message: "Enter a valid city." },
+    { field: fields.country, method: Validation.validateCountry, message: "Enter a valid country." },
+    { field: fields.zip, method: Validation.validateZipCode, message: "Enter a valid zip code." }
+  ];
+
+  // Credit Card Validations (if selected)
+  if (fields.creditCardRadio.checked) {
+    validations.push(
+      { field: fields.cnumber, method: Validation.validateCreditCard, message: "Enter a valid credit card number." },
+      { field: fields.cname, method: Validation.validateName, message: "Enter a valid cardholder name." },
+      { field: fields.expiryDate, method: Validation.validateExpiryDate, message: "Enter a valid expiry date." },
+      { field: fields.ccv, method: Validation.validateCVV, message: "Enter a valid CVV." }
+    );
+  }
 
 
+  // Run validations
+  validations.forEach(({ field, method, message }) => {
+    if (!method(field.value)) {
+      Validation.showError(field, message);
+      isValid = false;
+      if (!firstInvalidField) firstInvalidField = field;
+    } else {
+      Validation.clearError(field);
+    }
+  });
+
+}
 let creditCardRadio = document.getElementById('pmethod-ccard');
 let cashRadio = document.getElementById('cash');
 let creditCardDetails = document.getElementById('credit-card-fields');
