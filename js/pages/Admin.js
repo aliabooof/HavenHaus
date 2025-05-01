@@ -6,13 +6,15 @@ import { LoadDB } from "../load_db.js";
 import {OrderItem} from "../modules/OrderItem.js";
 
 
+
 await LoadDB();
 
 let users = User.getAllUsers();
-animateCount("totalUsers",users.length);
 
-
-
+animateCount("totalUsers",User.getAllUsers().length);
+animateCount("totalProducts",Product.getAllProducts().length);
+animateCount("totalOrders",Order.getAllOrders().length);
+animateCount("pendingSellers",User.getUserByRole(1).length);
 
 
 // function filterTable() {
@@ -29,7 +31,11 @@ animateCount("totalUsers",users.length);
 //     });
 // }
 
-
+// document.getElementById("sidebarToggle").addEventListener("click", () => {
+//     const sidebar = document.getElementById("sidebar");
+//     sidebar.classList.toggle("show");
+//     document.body.classList.toggle("sidebar-open");
+// });
 
 async function handleSearch(keyword) {
     if (keyword.trim() === "") {
@@ -61,8 +67,6 @@ async function handleSearch(keyword) {
 }
 
 
-
-
 function animateCount(id, endValue, duration = 1000){
     const element = document.getElementById(id);
     let startValue = 0;
@@ -77,6 +81,11 @@ function animateCount(id, endValue, duration = 1000){
 },stepTime);
 }
 
+// window.addEventListener("DOMContentLoaded", async () => {
+//     await Component.renderCharts();
+//     await loadDashboardCharts();
+// });
+
 async function loadContent(x) {
     switch (x) {
         case 1:
@@ -84,12 +93,10 @@ async function loadContent(x) {
             await loadDashboardCharts();
             break;
         case 2:
-            const users = User.getAllUsers();
-            animateCount("totalUsers",users.length);
             await Component.renderTable();
             document.getElementById("searchInput").addEventListener('input',(e)=>{
                 handleSearch(e.target.value);
-            })
+            });
             break;
         case 3:
             await Component.renderProducts();
@@ -98,6 +105,8 @@ async function loadContent(x) {
         case 4:
             await Component.renderOrders();
             await loadOrderDashboardChart();
+            await Component.renderOrderTable();
+            await Component.renderOrderRow();
             break;
         case 5:
             await Component.renderSupport();
@@ -288,13 +297,6 @@ function loadOrderDashboardChart() {
         });
        
     }
-
-
-
-    
-    // console.log(ordersCount);
-
-
 
 
 
