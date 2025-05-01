@@ -4,6 +4,8 @@ import { createAlert} from "../util.js";
 import {Validation} from "../modules/validation.js";
 
 
+console.log(User.getUserById("susan_james_005"));
+
 await Component.renderNavbar();
 await Component.renderFooter();
 

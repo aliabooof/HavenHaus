@@ -49,8 +49,9 @@ export class User{
     }
     
     static getUserById(id){
+
         const users =this.getAllUsers()|| [];
-        // console.log(users);
+
         return users.find(user => user.id == id);
     }
 
