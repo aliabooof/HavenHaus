@@ -4,6 +4,8 @@ import {Product } from '/js/modules/productModule.js';
 
 window.addEventListener('DOMContentLoaded', function(){
 
+    loadProductsTable();
+
     const sidebarToggle = document.getElementById('sidebarToggle');
     const productModal = new bootstrap.Modal(document.getElementById('productModal'));
     const saveProductBtn = document.getElementById('saveProductBtn');
@@ -22,31 +24,83 @@ window.addEventListener('DOMContentLoaded', function(){
     const priceInput = document.getElementById('productPrice');
     const categorySelect = document.getElementById('productCategory');
 
+    let isEditMode = true;
+
     //to show pop up to Add Product
-        addProductBtn.addEventListener('click', function() {
-        document.getElementById('productForm').reset(); 
-        document.getElementById('imagePreviewContainer').style.display = 'none'; 
-        productModal.show(); 
+    addProductBtn.addEventListener('click', function() {
+        isEditMode=false;
+        console.log(isEditMode);
+        document.getElementById('productForm').reset();
+        // document.getElementById('imagePreviewContainer').style.display = 'none';
+        productModal.show();
+
     });
 
-
+    const productName =document.getElementById("productName");
+    productName.addEventListener('input', nameValidation);
+    document.getElementById('productPrice').addEventListener('input', priceValidation);
+    document.getElementById('productStock').addEventListener('input', stockValidation);
     productTab.addEventListener('click',loadProductsTable);
 
-    saveProductBtn.addEventListener('click',addNewProduct );
 
-    // load images 
+    // document.getElementById('saveProductBtn').id = 'editProductBtn';
+    // const editSaveBtn = document.getElementById('editProductBtn');
+
+    // editSaveBtn.addEventListener('click', editProduct);
+
+    saveBtn.click('click', addNewProduct);
+
+    productForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // if (nameInput =="" ||priceInput==""|| stockInput=="" ) {
+        //     alert("required inputs can not be null");
+        // }
+        let product = getFormData();
+
+        
+        if (isEditMode) {
+            console.log(isEditMode);
+            let productID= document.getElementById("saveProductBtn").dataset.id;
+            product.id=productID;
+
+            Product.updateProduct(product);
+            // e.validateForm();
+            // editProduct();
+        }
+        console.log(!isEditMode);
+        e.validateForm();
+        console.log(isEditMode);
+        // addNewProduct(e);
+        // saveBtn.addEventListener('click',editProduct);
+        editSaveBtn.addEventListener('click',editProduct);
+
+    });
+
+    // document.getElementById("saveProductBtn").addEventListener('click',function(e){
+
+    // });
+    
+
+    // saveBtn.addEventListener('click',addNewProduct);
+
+
+
+        // deleteModal.addEventListener('click',attachDeleteHandlers);
+
+    // load images
 
     // async function uploadProductImage(productId, imageFile) {
     //     const formData = new FormData();
     //     formData.append('image', imageFile);
     //     formData.append('productId', productId);
-        
+
     //     try {
     //         const response = await fetch('/api/upload-product-image', {
     //             method: 'POST',
     //             body: formData
     //         });
-            
+
     //         if (!response.ok) throw new Error('Upload failed');
     //         return await response.json();
     //     } catch (error) {
@@ -55,127 +109,158 @@ window.addEventListener('DOMContentLoaded', function(){
     //     }
     // }
 
-    // const productName =this.document.getElementById("productName");
+    const fileInput = document.getElementById('fileInput');
+    // if (!file) return alert("Please choose a file first.");
 
-    // function nameValidation()
-    // document.getElementById('productName').addEventListener('input', function(e) {
-    //     this.value = this.value.replace(/\d/g, '');
-    //     if (/\d/.test(e.data)) { 
-    //         showWarning(this, "Numbers are not allowed in product names");
-    //     }
+
+    // a.href = url;
+    // a.download = file.name;
+    // a.click();
+    // URL.revokeObjectURL(url); // Clean up
+
+    // function clickOnSaveButton(){
+    //     isEditMode=false;
+    //     productModal.show();
+
+    // }
+
+    function addNewProduct(e) {
+        isEditMode = false;
+        e.preventDefault();
+        let isValid = true;
+
+        const name = document.getElementById('productName').value.trim();
+        const price = parseFloat(document.getElementById('productPrice').value);
+        const stock = parseInt(document.getElementById('productStock').value);
+        const image =document.getElementById("productImage").value;
+        const categorySelect = document.getElementById('productCategory');
+        let imageUrl = '';
+        // Validate fields
+            if (name == "") {
+                console.log("Product name cannot be empty");
+                isValid =false;
+            }
+            if (price =="") {
+                showWarning(price, "Product price cannot be empty");
+                isValid =false;
+            }
+            if ( stock =="") {
+                showWarning(stock, "Product stock cannot be empty");
+                isValid =false;
+
+            }
+            if (image =="") {
+                showWarning(image, "Product image cannot be empty");
+                isValid =false;
+            }
+            if (categorySelect.value =="") {
+                console.log(categorySelect.value);
+                showWarning(categorySelect, "Please select a category");
+                isValid = false;
+            }
+            alert("fill required field");
+
+        if ( price <= 0) {
+            console.log("Price must be a positive number greater than 0");
+            showWarning(document.getElementById('productPrice'), "Price must be greater than 0");
+            isValid =false;
+        }
+
+        if (isNaN(stock) || stock < 0) {
+            console.log("Stock quantity must be 0 or positive number");
+            showWarning(document.getElementById('productStock'), "Invalid stock quantity");
+            isValid =false;
+        }
+
+        if (!validateForm()) {
+            // showWarning(e,message);
+            console.log("Please fix validation errors before submitting");
+            isValid =false;
+        }
+        if (!isValid) {
+            console.log("Form has validation errors - submission prevented");
+            return; // This return is CRUCIAL - it stops the function
+        }
+
+            const productData = {
+                // id: isEditMode ? document.getElementById('productId').value : generateUniqueId(),
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value),
+                category: document.getElementById('productCategory').value,
+                desc: document.getElementById('productDescription').value,
+                imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
+                sellerID: '3' //  dynamic seller ID
+            };
+
+            // const productId = document.getElementById('productId')?.value;
+            // if (productId) {
+            //     Product.updateProduct(productData);
+            //     alert("Product updated successfully!");
+            // } else {
+
+                Product.addProduct(productData); // You need to implement this if not yet done
+                alert("Product added successfully!");
+
+            // const newProduct = new Product(productData);
+            // // const file = image.files[0];
+            // // const url = URL.createObjectURL(file);
+            // // const a = document.createElement('a');
+            // // a.href = url;
+            // // a.download = newProduct.id;
+            // // a.click();
+            // // URL.revokeObjectURL(url); // Clean up
+            // console.log(newProduct.id);
+            // Product.addProduct(newProduct);
+            // alert("Product added successfully!");
+            // }
+            // 3. Refresh the table and clean up
+            loadProductsTable();
+            productForm.reset();
+            productModal.hide();
+
+    }
+
+    // this.document.querySelectorAll('.edit-btn').addEventListener('clik',function(){
+
     // });
 
-    // document.getElementById('productPrice').addEventListener('input', function(e) {
-    //     // Convert to number (allow decimals)
-    //     const price = parseFloat(this.value);
-        
-    //     // Check if valid number and > 0
-    //     if (isNaN(price)) {
-    //         // Handle empty input (optional)
-    //         this.classList.remove('is-invalid');
-    //     } else if (price <= 0) {
-    //         // Invalid: Negative or zero
-    //         this.value = ''; // Clear invalid input
-    //         this.classList.add('invalid');
-    //         showWarning(this, "Price must be greater than 0");
-    //     } else {
-    //         // Valid
-    //         this.classList.remove('invalid');
-    //     }
-    // });
-
-    // stockInput.addEventListener('input', function() {
-    //     // Convert to number (allow decimals)
-    //     const stockValue = stockInput.value;
-    //     const hasDecimal = /[.,]/.test(stockValue);
-    //     if( hasDecimal){
-    //         showWarning(this,"stock can not be decimal");
-    //     }
-    //     // Check if valid number and > 0
-    //     else if (isNaN(price)) {
-    //         // Handle empty input (optional)
-    //         this.classList.remove('is-invalid');
-    //     } else if (price <= 0) {
-    //         // Invalid: Negative or zero
-    //         this.value = ''; // Clear invalid input
-    //         this.classList.add('invalid');
-    //         showWarning(this, "Price must be greater than 0");
-    //     } else {
-    //         // Valid
-    //         this.classList.remove('invalid');
-    //     }
-    // });
-
-    function addNewProduct() {
-        if (validateForm()) {
-        // 1. Get form data
-        const productData = {
+    function editProduct(e){
+        // const productId = document.getElementById('productId').value;
+    
+        const editProductData = {
+            
             name: document.getElementById('productName').value,
             price: parseFloat(document.getElementById('productPrice').value),
             stock: parseInt(document.getElementById('productStock').value),
             category: document.getElementById('productCategory').value,
+            highlights: document.getElementById('highlights').value,
+            instructions: document.getElementById('instructions').value,
             desc: document.getElementById('productDescription').value,
             imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
-            sellerID: '3' //  dynamic seller ID 
+            sellerID: '3' // dynamic seller ID
         };
-        console.log(productData);
-        
-        var nameInput =document.getElementById('productName').value;
-        console.log(nameInput);
-        if (validateProducproductData) {
-            if (!productData.name || productData.price <= 0 || productData.stock <= 0) {
-                alert("Please fill all fields correctly!");
-                return;
-            }
-        }
-        // nameInput.classList.remove('invalid');
-        // return true;
-         // 3. Create and save the product
-        const newProduct = new Product(productData);
-        Product.addProduct(newProduct); // This saves to localStorage via db.js
-        console.log(newProduct);
 
-        // 4. Refresh the table
-        loadProductsTable();
-        // const imageFile = document.getElementById('productImage').files[0];
-        // if (imageFile) {
-        //      uploadProductImage(productId, imageFile);
-        // }
-        
-        // 4. Refresh UI
-        loadProductsTable();
-        this.reset();
+        if (validateForm() ) {
 
-        // 5. Close modal and show feedback
+        Product.updateProduct(editProductData);
+        alert("Product updated successfully!");
+
+        loadProductsTable();
+        productForm.reset();
         productModal.hide();
-        alert("Product added successfully!");
     }
-    else{
-        console.log("Please fix the errors before submitting");
+    // else{
+    //     alert("fill inputs correctly")
+    // }
     }
-        }
-
-        function showWarning(input, message) {
-            const warning = document.createElement('div');
-            warning.className = 'input-warning';
-            warning.textContent = message;
-            warning.style.color = 'red';
-            warning.style.fontSize = '0.8rem';
-            
-            // Add warning if not already there
-            if (!input.nextElementSibling?.classList.contains('input-warning')) {
-                input.insertAdjacentElement('afterend', warning);
-                setTimeout(() => warning.remove(), 2000);
-            }
-        }
-    
 
     function loadProductsTable() {
         const sellerID = '3'; // Your seller ID
         const products = Product.getProductsBySeller(sellerID);
         const tbody = document.querySelector('#products-table');
         tbody.innerHTML = ''; // Clear existing rows
-    
+
         products.forEach((product, index) => {
             tbody.innerHTML += `
                 <tr>
@@ -196,62 +281,269 @@ window.addEventListener('DOMContentLoaded', function(){
                 </tr>
             `;
         });
-    
-        // Add event listeners for edit/delete buttons
-        // attachEditDeleteHandlers();
+
+        //call edit after render table
+        // attachEditHandlers();
+        document.querySelectorAll('.edit-btn').forEach(button =>{
+            button.addEventListener('click', function (e) {
+                isEditMode=true;
+                let productId = button.getAttribute('data-id');
+                console.log(productId);
+                document.getElementById('productModalLabel').textContent = "Edit Product";
+                console.log(document.getElementById('productModal'));
+                console.log(document.getElementById("saveProductBtn"));
+
+                
+                document.getElementById("saveProductBtn").dataset.id=productId;
+                console.log("product id aapear "+productId);
+                
+
+                let product=Product.getProductById(productId)[0];
+                console.log("product  object"+product);
+
+                fillProductForm(product);
+                    productModal.show();
+
+
+                // if (productId ==product.id) {
+                //     console.log(isEditMode);
+                //     console.log(sellerID);
+                //     editProduct(e);
+                // }
+
+
+                // Show the modal (assumes you're using Bootstrap modal)
+        })
+
+    });
+
+
+                // editProduct();
+
+}
+
+
+    function getFormData(){
+        
+        return {
+                // id:document.getElementById('productId').value = product.id,
+                // name:document.getElementById('productName').value = product.name,
+                price:document.getElementById('productPrice').value = product.price,
+                stock:getElementById('productStock').value = product.stock,
+                category:document.getElementById('productCategory').value = product.category,
+                highlights:document.getElementById('highlights').value =product.highlights,
+                instructions:document.getElementById('instructions').value =product.instructions,
+                desc:document.getElementById('productDescription').value = product.desc,
+                imageurl:document.getElementById('imagePreview').src = product.imageUrl,
+        }
     }
 
-    
+    // function attachDeleteHandlers() {
+    //     document.querySelectorAll('.delete-btn').forEach(button => {
+    //         button.addEventListener('click', function(e) {
+    //             // productToDelete = e.target.dataset.id;
+    //             document.getElementById("deleteModal");
+    //             deleteModal.show();
+    //         });
+    //     });
+    // }
+
+    // function attachEditHandlers() {
+    //     document.querySelectorAll('.edit-btn').forEach(button =>{
+    //         button.addEventListener('click',function(e){
+
+    //             const productId = e.target.dataset.id;
+    //             console.log(productId);
+    //             const product = Product.getProductById(productId);
+    //             console.log(product);
+    //             if (product) {
+    //                 fillProductForm(product);
+    //                 document.getElementById('productModalLabel').textContent = "Edit Product";
+    //                 document.getElementById('productId').value = product.id;
+
+    //                 productModal.show();
+    //             }
+
+    //         const editProductData = {
+    //         name: document.getElementById('productName').value,
+    //         price: parseFloat(document.getElementById('productPrice').value),
+    //         stock: parseInt(document.getElementById('productStock').value),
+    //         category: document.getElementById('productCategory').value,
+    //         desc: document.getElementById('productDescription').value,
+    //         imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
+    //         sellerID: '3' // dynamic seller ID
+    //         };
+    //         // const productId_ = document.getElementById('productId').value;
+    //         Product.updateProduct(editProductData);
+    //         console.log(editProductData);
+    //         alert("Product updated successfully!");
+
+    //         loadProductsTable();
+    //         productForm.reset();
+    //         productModal.hide();
 
 
-    // try combine validation 
+    //         })
+    //     });
+
+    // }
+    // function attachEditHandlers() {
+    //     document.querySelectorAll('.edit-btn').forEach(button => {
+    //         button.addEventListener('click', function (e) {
+    //             const productId = e.target.dataset.id;
+    //             console.log(productId);
+    //             const product = Product.getProductById(productId);
+
+    //             if (product) {
+    //             Product.updateProduct(editProductData);
+
+    //                 // fillProductForm(product); // fills the modal form inputs
+    //                 document.getElementById('productModalLabel').textContent = "Edit Product";
+    //                 document.getElementById('productId').value = product.id;
+    //                 productModal.show();
+    //             }
+    //         });
+    //     });
+    // }
+    // document.getElementById('productForm').addEventListener('submit', function (e) {
+        function EditProductTry50_Cry(){
+            // e.preventDefault();
+            const productId = document.getElementById('productId').value;
+            document.getElementById('productModalLabel').textContent = "Edit Product";
+            productModal.show();
+            const editProductData = {
+                id: productId, // very important for updateProduct
+                name: document.getElementById('productName').value,
+                price: parseFloat(document.getElementById('productPrice').value),
+                stock: parseInt(document.getElementById('productStock').value),
+                category: document.getElementById('productCategory').value,
+                desc: document.getElementById('productDescription').value,
+                imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
+                sellerID: '3' // or get dynamically
+            };
+
+            try {
+                Product.updateProduct(editProductData);
+                alert("Product updated successfully!");
+                loadProductsTable();
+                productForm.reset();
+                productModal.hide();
+            } catch (error) {
+                alert(error.message);
+            }
+    }
+    // });
+
+
+
+    function attachDeleteHandlers() {
+        document.querySelectorAll('.delete-btn').forEach(button =>{
+            button.addEventListener('click',function(e){
+                const productId = e.target.dataset.id;
+                console.log(productId);
+                const product = Product.getProductById(productId);
+                console.log(product);
+                if (product) {
+                    fillProductForm(product);
+                    document.getElementById('deleteModalLabel').textContent = "Delete Product";
+                    document.getElementById('deleteModal').value = product.id;
+
+                    productModal.show();
+                }
+
+
+                Product.removeProduct(productId);
+            }
+            )
+        });
+    }
+
+    function fillProductForm(product) {
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productDescription').value = product.desc || '';
+        document.getElementById('highlights').value = product.highlights || '';
+        document.getElementById('instructions').value = product.instructions || '';
+
+        // Image preview
+        if (product.imageUrl) {
+            document.getElementById('imagePreview').src = product.imageUrl;
+            document.getElementById('imagePreviewContainer').style.display = 'block';
+        }else {
+            document.getElementById('imagePreviewContainer').style.display = 'none';
+        }
+    }
+
+    // updateProduct()
+
+    // try combine validation
+    var nameProductValidation = false;
+    var priceProductValidation =false;
+    var stockQuantityValidation =false;
 
     function validateForm() {
         let isValid = true;
-        
-        // Validate Product Name
-        const nameInput = document.getElementById('productName');
-        nameInput.value = nameInput.value.replace(/\d/g, ''); // Remove numbers
-        if (nameInput.value.length < 3) {
-            showWarning(nameInput, "Name must be at least 3 characters");
-            isValid = false;
+
+        if(nameProductValidation == true && priceProductValidation == true && stockQuantityValidation ==true){
+            return isValid;
         }
-        
-        // Validate Price
-        const priceInput = document.getElementById('productPrice');
-        const price = parseFloat(priceInput.value);
-        if (isNaN(price) ){
-            showWarning(priceInput, "Please enter a valid price");
-            isValid = false;
-        } else if (price <= 0) {
-            showWarning(priceInput, "Price must be greater than 0");
-            isValid = false;
+        isValid =false;
+    }
+
+    function nameValidation(nameInput){
+        nameInput.value = nameInput.value.replace(/\d/g, '');
+            if (/\d/.test(nameInput.value)) {
+                showWarning(this, "Numbers are not allowed in product names");
+                console.log(nameInput.value);
+                nameProductValidation=false;
+                return false;
+            }if (nameInput.value < 3 || nameInput.value == "") {
+                showWarning(this, "Name must be at least 3 characters ,can not be null");
+                nameProductValidation=false;
+
+                return false;
+            }else{
+                nameProductValidation =true;
+                return true;
+            }
+    }
+
+    function priceValidation(e){
+        if( e.target.value <=0  && e.target.value=="" )
+        {
+            priceInput.classList.add('.invalid');
+        showWarning(this, "price must be greater than zero ");
+        priceProductValidation=false;
+        return false;
+        }else{
+            priceProductValidation=true;
+            return true;
         }
-        
-        // Validate Stock
-        const stockInput = document.getElementById('productStock');
-        const stockValue = stockInput.value;
-        const stock = parseInt(stockValue);
-        
-        if (/[.,]/.test(stockValue)) {
-            showWarning(stockInput, "Stock cannot be decimal");
-            isValid = false;
-        } else if (isNaN(stock)) {
-            showWarning(stockInput, "Please enter a valid stock quantity");
-            isValid = false;
-        } else if (stock < 0) {
-            showWarning(stockInput, "Stock cannot be negative");
-            isValid = false;
+    }
+
+    function stockValidation(e){
+
+        if (e.target.value == "") {
+            showWarning(this, "Stock cannot be decimal");
+            stockQuantityValidation = false;
+            return false;
+        }  if (isNaN(e.target.value)) {
+            showWarning(this, "Please enter a valid stock quantity");
+            stockQuantityValidation = false;
+            return false;
+
+        }  if (e.target.value <= 0) {
+            showWarning(this, "Stock cannot be negative");
+            stockQuantityValidation = false;
+            return false;
+
+        }else{
+            stockQuantityValidation=true;
+            return true;
+
         }
-        
-        // Validate Category
-        const categorySelect = document.getElementById('productCategory');
-        if (!categorySelect.value) {
-            showWarning(categorySelect, "Please select a category");
-            isValid = false;
-        }
-        
-        return isValid;
     }
 
 
@@ -262,40 +554,30 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 
-    
-
-
-
-}); //End of DOMContentLoaded Event to Window 
 
 
 
 
 
-//     const products = Product.getProductsBySeller(sellerID);
-//     // Add each product as a row
-//     products.forEach((product ,index) => {
-//         const row = document.createElement('tr');
-//         row.innerHTML = `
-//             <td>${index + 1}</td>
-//             <td><img src="${product.imageUrl || 'default-image.jpg'}" alt="${product.name}" class="product-image" style="max-width: 80px;"></td>
-//             <td>${product.name}</td>
-//             <td>$${product.price.toFixed(2)}</td>
-//             <td>${product.stock}</td>
-//             <td>
-//                 <span class="badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
-//                 ${product.stock > 0 ? 'In Stock' : 'Out of Stock'}
-//                 </span>
-//             </td>
-//             <td>
-//                 <button class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Edit</button>
-//                 <button class="btn btn-sm btn-danger ms-2">Delete</button>
-//             </td>
-//         `;
-//         tbody.appendChild(row);
-//     });
-// }
 
-// loadProductsTable(); 
+
+
+}); //End of DOMContentLoaded Event to Window
+
+
+
+    function showWarning(input, message) {
+        const warning = document.createElement('div');
+        warning.className = 'input-warning';
+        warning.textContent = message;
+        warning.style.color = 'red';
+        warning.style.fontSize = '0.8rem';
+
+        // Add warning if not already there
+        // if (!input.nextElementSibling?.classList.contains('input-warning')) {
+        //     input.insertAdjacentElement('afterend', warning);
+        //     setTimeout(() => warning.remove(), 2000);
+        // }
+    }
 
 
