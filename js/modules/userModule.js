@@ -49,7 +49,9 @@ export class User{
     }
     
     static getUserById(id){
-        const users =getTable("user") || [];
+
+        const users =this.getAllUsers()|| [];
+
         return users.find(user => user.id == id);
     }
 
