@@ -80,6 +80,10 @@ function IsDataChanged(fn, ln, em, ph){
 }
 
 function UpdateUser(fn, ln, em, ph){
+    if (User.isEmailUsedByAnotherUser(em,currentUser.id )) {
+        createAlert("Email Already Exists.", "warning", "This email is already used by another user.");
+        return;
+    }
     let user = Object.assign({}, currentUser);
     user.firstName = fn;
     user.lastName = ln;
@@ -132,6 +136,7 @@ function DisplayEdit(target){
 }
 
 function UpdateChanges(current_user){
+   
     fields.fullName.innerText = current_user.firstName + " " + currentUser.lastName;
     fields.profileEmail.innerText = current_user.email;
     fields.fName.innerText = current_user.firstName;
