@@ -1,6 +1,6 @@
 // Import Modules
 import { add, GetCartByID, GetProductByID } from "../modules/db.js";
-import { createAlert, getFormFields, GetUrlField, redirect, fetchComponent, convertToHtmlElement } from "../util.js";
+import { createAlert, getFormFields, GetUrlField, redirect, fetchComponent, convertToHtmlElement, getFormInputs } from "../util.js";
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
 import { Auth } from "../modules/authModule.js";
@@ -9,34 +9,13 @@ import { LoadDB } from "../load_db.js";
 
 await LoadDB()
 Auth.enforcePageAuthorization();
-// Render Layout Components
+
+
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
 
-// DOM Elements
-const fields = {
-  firstName: document.getElementById("firstName"),
-  lastName: document.getElementById("lastName"),
-  email: document.getElementById("email"),
-  phone: document.getElementById("phone"),
-  address: document.getElementById("address"),
-  city: document.getElementById("city"),
-  country: document.getElementById("country"),
-  zip: document.getElementById("zip"),
-  cnumber: document.getElementById("cnumber"),
-  cname: document.getElementById("cname"),
-  expiryDate: document.getElementById("expiryDate"),
-  ccv: document.getElementById("ccv"),
-  creditCardRadio: document.getElementById('pmethod-ccard'),
-  cashRadio: document.getElementById('cash'),
-  creditCardDetails: document.getElementById('credit-card-fields')
-};
 
-// Authentication Check
-if (!Auth.isLoggedIn()) {
-  redirect("../login.html");
-}
 
 const currentUser = User.getCurrentUser();
 const cart = GetCartByID(currentUser.id);
@@ -94,16 +73,14 @@ function validateCheckout() {
     }
   });
 
-  if (!isValid && firstInvalidField) {
-    firstInvalidField.scrollIntoView({ behavior: "smooth", block: "center" });
-    firstInvalidField.focus();
-  }
 
-  return isValid;
-}
+let creditCardRadio = document.getElementById('pmethod-ccard');
+let cashRadio = document.getElementById('cash');
+let creditCardDetails = document.getElementById('credit-card-fields');
+
 
 function toggleCreditCardDetails() {
-  fields.creditCardDetails.style.display = fields.creditCardRadio.checked ? 'block' : 'none';
+  creditCardDetails.style.display = creditCardRadio.checked ? 'block' : 'none';
 }
 
 function createSummaryItem(cartItem, summaryItemTemplate) {
@@ -146,16 +123,20 @@ async function renderCartSummary() {
 }
 
 
-fields.creditCardRadio.addEventListener('change', toggleCreditCardDetails);
-fields.cashRadio.addEventListener('change', toggleCreditCardDetails);
+creditCardRadio.addEventListener('change', toggleCreditCardDetails);
+cashRadio.addEventListener('change', toggleCreditCardDetails);
 
 const checkoutForm = document.getElementById("checkoutform");
 checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  if (validateCheckout()) {
+  let formInputs = getFormInputs(checkoutForm);
+  const validationRules = Validation.checkoutRuls(formInputs,creditCardRadio.checked)
+  if (!(Validation.validateForm(checkoutForm, validationRules))) return;
+  
+  
     createAlert("Successfully ordered", "success");
     checkoutForm.submit();
-  }
+
 });
 
 const backToCartBtn= document.getElementById("back-to-cart");

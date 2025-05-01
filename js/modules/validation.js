@@ -155,8 +155,8 @@ export class Validation {
   }
 
 
-static checkoutRuls(inputs){
-   return [
+static checkoutRuls(inputs,paymentCC){
+   let rules = [
       { field: inputs.firstName, method: Validation.validateName, message: "Enter a valid first name." },
       { field: inputs.lastName, method: Validation.validateName, message: "Enter a valid last name." },
       { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
@@ -166,6 +166,16 @@ static checkoutRuls(inputs){
       { field: inputs.country, method: Validation.validateCountry, message: "Enter a valid country." },
       { field: inputs.zip, method: Validation.validateZipCode, message: "Enter a valid zip code." }
     ]
+    if(paymentCC){
+      rules.push( 
+            { field: inputs.cnumber, method: Validation.validateCreditCard, message: "Enter a valid credit card number." },
+            { field: inputs.cname, method: Validation.validateName, message: "Enter a valid cardholder name." },
+            { field: inputs.expiryDate, method: Validation.validateExpiryDate, message: "Enter a valid expiry date." },
+            { field: inputs.ccv, method: Validation.validateCVV, message: "Enter a valid CVV." })
+    }
+
+    return rules;
+
 }
 
 static userInquiryForm(inputs){
