@@ -9,7 +9,7 @@ import { Auth } from "../modules/authModule.js";
 
 await LoadDB();
 
-Auth.enforcePageAuthorization();
+// Auth.enforcePageAuthorization();
 let users = User.getAllUsers();
 
 
