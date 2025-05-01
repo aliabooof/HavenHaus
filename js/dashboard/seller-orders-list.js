@@ -1,0 +1,82 @@
+import { Order } from "../modules/order.js";
+import { Product } from "../modules/productModule.js";
+import { Seller } from "../modules/seller.js";
+import { fetchComponent ,convertToHtmlElement } from "../util.js";
+
+
+
+//___________________________ Functions Section ___________________________\\
+
+function alternateRowColors() {
+    const rows = document.querySelectorAll("#myTable tbody tr");
+    rows.forEach((row, index) => {
+      row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#ffffff";
+    });
+  }
+
+function mapOrderStatus(status){
+    let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status">Completed</span>')
+
+    if(status ==0){
+        statusElement.classList.add("bg-info")
+        statusElement.innerText = "Pending"
+    }
+    else if(status == 1){
+        statusElement.classList.add("bg-success")
+        statusElement.innerText = "Completed"
+    }
+    else if(status == 2){
+        statusElement.classList.add("bg-danger")
+        statusElement.innerText = "Rejected"
+    }
+    return statusElement
+}
+function createOrderTableRow(orderItem,order){
+    let orderTableRow = convertToHtmlElement(orderTableRowString);
+        let product = Product.getProductById(orderItem.productID)
+        // orderTableRow.querySelector(".order-id").innerText = order.id
+        orderTableRow.querySelector(".order-product-name").textContent = product.name
+        orderTableRow.querySelector(".order-product-id").textContent = product.id
+        orderTableRow.querySelector(".order-date").textContent = new Date(order.date).toLocaleString()
+        orderTableRow.querySelector(".order-product-amount").textContent = orderItem.quantity
+        orderTableRow.querySelector(".order-status").appendChild( mapOrderStatus(order.status));
+        orderTableRow.dataset.orderId = order.id
+    return orderTableRow;
+}
+
+function showOrders(){
+    sellerOrders.forEach((order,index) => {
+        let rowColor = index % 2 === 0 ? "#ffffff" : "#f2f2f2";
+        let tableBreakElement = convertToHtmlElement(orderTableBreakString)
+        
+        tableBreakElement.style.backgroundColor= rowColor
+        tableBreakElement.querySelector(".order-id").innerText = order.id
+        orderTableBody.insertAdjacentElement("beforeend",tableBreakElement)
+        
+        let orderItems = sellerOrderItems.filter((orderItem=> orderItem.orderID == order.id))
+
+        orderItems.forEach((orderItem)=>{
+            let orderTableRow = createOrderTableRow(orderItem,order)
+            orderTableRow.style.backgroundColor = rowColor;
+            orderTableBody.insertAdjacentElement("beforeend",orderTableRow)
+        })
+    });
+    Array.from(orderTableBody.querySelectorAll("td")).forEach(td => {
+        td.style.backgroundColor = "transparent";
+      });
+}
+//___________________________ End Functions Section ___________________________\\
+
+    // Call initially
+//alternateRowColors();
+//___________________________ Gloabal Variables ___________________________\\
+let orderTableRowString = await fetchComponent("../../components/seller-order-row.html");
+let orderTableBreakString = await fetchComponent("../../components/seller-order-table-break.html");
+let sellerId = 2;
+let sellerOrders = Seller.getSortedSellerOrdersById(sellerId)
+let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId);
+let orderTableBody = document.getElementById("orders-table-body");
+//___________________________ End Of Gloabal Variables ___________________________\\
+
+
+showOrders()
