@@ -6,10 +6,19 @@ import { LoadDB } from "../load_db.js";
 import { Inquiry } from "../modules/inquiryModule.js";
 import { Auth } from "../modules/authModule.js";
 
+
 await LoadDB();
 
 Auth.enforcePageAuthorization();
 let users = User.getAllUsers();
+
+
+animateCount("totalUsers",User.getAllUsers().length);
+animateCount("totalProducts",Product.getAllProducts().length);
+animateCount("totalOrders",Order.getAllOrders().length);
+animateCount("pendingSellers",User.getUserByRole(1).length);
+
+
 
 async function handleSearch(keyword) {
     if (keyword.trim() === "") {
@@ -43,6 +52,7 @@ async function handleSearch(keyword) {
 
 
 
+
 function animateCount(id, endValue, duration = 1000) {
     const element = document.getElementById(id);
     let startValue = 0;
@@ -57,6 +67,11 @@ function animateCount(id, endValue, duration = 1000) {
     }, stepTime);
 }
 
+// window.addEventListener("DOMContentLoaded", async () => {
+//     await Component.renderCharts();
+//     await loadDashboardCharts();
+// });
+
 async function loadContent(x) {
     switch (x) {
         case 1:
@@ -64,6 +79,8 @@ async function loadContent(x) {
             await loadDashboardCharts();
             break;
         case 2:
+
+
             const users = User.getAllUsers();
             animateCount("totalUsers", users.length);
             await Component.renderTable();
@@ -73,6 +90,8 @@ async function loadContent(x) {
                 handleSearch(e.target.value);
             });
 
+
+
             break;
         case 3:
             await Component.renderProducts();
@@ -81,6 +100,8 @@ async function loadContent(x) {
         case 4:
             await Component.renderOrders();
             await loadOrderDashboardChart();
+            await Component.renderOrderTable();
+            await Component.renderOrderRow();
             break;
         case 5:
             const filter = `
@@ -304,11 +325,6 @@ function loadOrderDashboardChart() {
     });
 
 }
-
-
-
-
-// console.log(ordersCount);
 
 
 
