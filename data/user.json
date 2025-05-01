@@ -1,7 +1,7 @@
 {
   "user": [
     { "id": "aliouf_3532", "firstName": "ali", "lastName":"ouf", "email": "admin@example.com", "password": "pass123", "role": "0","phone":"201207751489"},
-    { "id": "aliouf_3532", "firstName": "Ali", "lastName": "Ouf", "email": "ali@example.com", "password": "pass123", "role": "1", "phone": "201207751489" },
+    { "id": "aliouf_35322", "firstName": "Ali", "lastName": "Ouf", "email": "ali@example.com", "password": "pass123", "role": "1", "phone": "201207751489" },
     { "id": "john_doe_001", "firstName": "John", "lastName": "Doe", "email": "john@example.com", "password": "password01", "role": "2", "phone": "201234567890" },
     { "id": "mary_smith_002", "firstName": "Mary", "lastName": "Smith", "email": "mary@example.com", "password": "password02", "role": "1", "phone": "201234567891" },
     { "id": "jane_doe_003", "firstName": "Jane", "lastName": "Doe", "email": "jane@example.com", "password": "password03", "role": "2", "phone": "201234567892" },
@@ -17,7 +17,9 @@
     { "id": "sophia_davis_013", "firstName": "Sophia", "lastName": "Davis", "email": "sophia@example.com", "password": "password13", "role": "2", "phone": "201234567902" },
     { "id": "william_garcia_014", "firstName": "William", "lastName": "Garcia", "email": "william@example.com", "password": "password14", "role": "1", "phone": "201234567903" },
     { "id": "charlotte_moore_015", "firstName": "Charlotte", "lastName": "Moore", "email": "charlotte@example.com", "password": "password15", "role": "2", "phone": "201234567904" },
-    { "id": "3ssam", "firstName": "Ahmed", "lastName": "Essam", "email": "3ssam@gmail.com", "password": "123123", "role": "0", "phone": "201234567904" }
+    { "id": "3ssam", "firstName": "Admin", "lastName": "Essam", "email": "3ssam@admin.com", "password": "123123", "role": "0", "phone": "201234567904" },
+    { "id": "seller", "firstName": "Seller", "lastName": "Essam", "email": "3ssam@seller.com", "password": "123123", "role": "1", "phone": "201234567904" },
+    { "id": "user", "firstName": "User", "lastName": "Essam", "email": "3ssam@user.com", "password": "123123", "role": "2", "phone": "201234567904" }
 
   ]
 
