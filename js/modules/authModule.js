@@ -10,6 +10,9 @@ export class Roles {
     static SELLER = '1';
     static CUSTOMER = '2';
     static GUEST = 'guest';
+    static admin = 0;
+    static seller = 1;
+    static customer = 2;
 }
 
 const accessControlList = [
