@@ -77,11 +77,13 @@
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
+
         .invalid {
         border-color:  #dc3545 !important;
         }
+
     </style>
-    <script src="../js/dashboard/seller-dashboad.js" type="module"></script>
+    
 </head>
 <body>
     <div class="dashboard-container">
@@ -211,7 +213,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-4  ">
+                        <div class="col-lg-4  mt-3">
                             <div class="col-12 mb-2">
                                 <div class="card card-stat bg-info text-white">
                                     <div class="card-body">
@@ -222,11 +224,11 @@
                             </div>
 
                             <div class="card-header nav nav-tabs d-flex flex-column flex-sm-row justify-content-center justify-content-lg-center">
-                                <div class="nav-item text-center ">
-                                    <button id="recent-orders-btn" class="nav-link col-12 col-sm-auto small active" data-bs-toggle="tab" data-bs-target="#recent-orders" aria-selected="true" aria-controls="recent-orders" role="tab"><span class="h3 small">Recent orders</span></button>
+                                <div class="nav-item text-center col-11 col-md-6">
+                                    <button id="recent-orders-btn" class="nav-link col-12  small active" data-bs-toggle="tab" data-bs-target="#recent-orders" aria-selected="true" aria-controls="recent-orders" role="tab"><span class="h3 small">Recent orders</span></button>
                                 </div> 
-                                <div class="nav-item text-center"> 
-                                    <button id="best-selling-btn"  class="nav-link col-12 col-sm-auto small" data-bs-toggle="tab" data-bs-target="#best-selling"  aria-selected="false" aria-controls="best-selling" role="tab"><span class="h3 small">Best Selling</span></button>
+                                <div class="nav-item text-center col-11 col-md-6"> 
+                                    <button id="best-selling-btn"  class="nav-link col-12  small" data-bs-toggle="tab" data-bs-target="#best-selling"  aria-selected="false" aria-controls="best-selling" role="tab"><span class="h3 small">Best Selling</span></button>
                                 </div>
                             </div>
 
@@ -318,19 +320,31 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover">
+                                <table class="table  table-hover"> 
+                                    <!-- class="table-striped" -->
                                     <thead>
                                         <tr>
-                                            <th>Order ID</th>
-                                            <th>Customer</th>
+                                            <!-- <th>Order ID</th> -->
+                                            <th>Product name</th>
+                                            <th>Product ID</th>
                                             <th>Date</th>
                                             <th>Amount</th>
                                             <th>Status</th>
                                             <th>Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody id="orders-table">
+                                    <tbody id="orders-table-body">
                                         <!-- Orders will be populated here -->
+                                        <!-- <tr>
+                                            <td class="order-id">#</td>
+                                            <td class="order-product-name">Product Name</td>
+                                            <td class="order-product-id">Product ID</td>
+                                            <td class="order-date">Date</td>
+                                            <td class="order-product-amount">Amount</td>
+                                            <td class="order-status">Status</td>
+                                            <td class="order-actions">Actions</td>
+                                        </tr> -->
+                                       
                                     </tbody>
                                 </table>
                             </div>
@@ -478,8 +492,15 @@
 
     <!-- Bootstrap JS Bundle with Popper -->
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script src="../js/dashboard/seller-dashboad.js" type="module"></script>
+    <script src="../js/dashboard/seller-orders-list.js" type="module"></script>
+
+    
     <script type="module" src="/js/dashboard/seller-product.js"></script>
+
 
 </body>
 

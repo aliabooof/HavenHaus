@@ -47,6 +47,19 @@ function validateCheckout() {
   let isValid = true;
   let firstInvalidField = null;
 
+
+let currUser = User.getCurrentUser();
+let userID = currUser.id;
+
+
+// Utility Functions
+function GoToCart(event){
+  redirect("../../pages/cart.html")
+}
+function validateCheckout() {
+  let isValid = true;
+  let firstInvalidField = null;
+
   const validations = [
     { field: fields.firstName, method: Validation.validateName, message: "Enter a valid first name." },
     { field: fields.lastName, method: Validation.validateName, message: "Enter a valid last name." },
@@ -67,6 +80,7 @@ function validateCheckout() {
       { field: fields.ccv, method: Validation.validateCVV, message: "Enter a valid CVV." }
     );
   }
+
 
   // Run validations
   validations.forEach(({ field, method, message }) => {
@@ -144,5 +158,24 @@ checkoutForm.addEventListener("submit", (e) => {
 });
 
 
+
+fields.creditCardRadio.addEventListener('change', toggleCreditCardDetails);
+fields.cashRadio.addEventListener('change', toggleCreditCardDetails);
+
+const backToCartBtn= document.getElementById("back-to-cart");
+backToCartBtn.addEventListener('click', GoToCart);
+
+const checkoutForm = document.getElementById("checkoutform");
+checkoutForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  if (validateCheckout()) {
+    createAlert("Successfully ordered", "success");
+    checkoutForm.submit();
+  }
+});
+
+
 await renderCartSummary();
 toggleCreditCardDetails();
+
+
