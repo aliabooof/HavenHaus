@@ -49,7 +49,7 @@ import { User } from "../modules/userModule.js";
 
 
 
-if(User.getCurrentUser().role==2){
+if(User.getCurrentUser() && User.getCurrentUser().role==2){
 
     const adContainer = document.getElementById('ad-container') || document.createElement('div');
 if (!adContainer.id) {
