@@ -420,14 +420,7 @@ export class Component {
         container.appendChild(chart);
     }
 
-    // static async renderProducts() {
-
-    //     const product = await fetchComponent("../../components/products-dashboard.html");
-    //     const product_chart = convertToHtmlElement(product);
-    //     const container = document.getElementById("content");
-    //     container.innerHTML = "";
-    //     container.appendChild(product_chart);
-    // }
+    
 
     static async renderOrders() {
         const order = await fetchComponent("../../components/order-dashboard.html");
@@ -448,61 +441,7 @@ export class Component {
 
     }
 
-    static renderPaginationControls() {
-
-
-        let paginationContainer = document.getElementById("paginationControls");
-
-        if (!paginationContainer) {
-            paginationContainer = document.createElement("div");
-            paginationContainer.id = "paginationControls";
-            paginationContainer.classList.add("pagination-controls");
-            document.getElementById("content").appendChild(paginationContainer);
-        }
-
-        paginationContainer.innerHTML = "";
-
-        const totalPages = Math.ceil(this.users.length / this.pageSize);
-
-        const prevButton = document.createElement("button");
-        prevButton.innerText = "Previous";
-        prevButton.disabled = this.currentPage === 1;
-        prevButton.addEventListener("click", () => {
-            if (this.currentPage > 1) {
-                this.currentPage -= 1;
-                this.renderPage(this.currentPage);
-                this.renderPaginationControls();
-            }
-        });
-        paginationContainer.appendChild(prevButton);
-
-        for (let i = 1; i <= totalPages; i++) {
-            const pageButton = document.createElement("button");
-            pageButton.innerText = i;
-            if (i === this.currentPage) {
-                pageButton.classList.add("active");
-            }
-            pageButton.addEventListener("click", () => {
-                this.currentPage = i;
-                this.renderPage(this.currentPage);
-                this.renderPaginationControls();
-            });
-            paginationContainer.appendChild(pageButton);
-        }
-
-        const nextButton = document.createElement("button");
-        nextButton.innerText = "Next";
-        nextButton.disabled = this.currentPage === totalPages;
-        nextButton.addEventListener("click", () => {
-            if (this.currentPage < totalPages) {
-                this.currentPage += 1;
-                this.renderPage(this.currentPage);
-                this.renderPaginationControls();
-            }
-        });
-        paginationContainer.appendChild(nextButton);
-
-    }
+   
 
 
 
@@ -539,16 +478,9 @@ export class Component {
             
         })
         if(inquiry.details.status == 'in progress'){
-            
+            console.log('hey')
             buttonResolve.classList.remove('d-none');
-        }}
-
-
-    static async renderEditUserForm(userId) {
-    const editForm = await fetchComponent("../../components/edit-user-form.html");
-    const editFormElement = convertToHtmlElement(editForm);
-    editFormElement.setAttribute('id', `editUserModal${userId}`);
-    document.getElementById("editFormModal").appendChild(editFormElement);
+        }
 
 
         buttonView.addEventListener("click", async () => {
@@ -557,8 +489,6 @@ export class Component {
             if (!modalElement) {
                 await this.renderInquiryModal(inquiry.id);
                 modalElement = document.getElementById(`inquiryModal${inquiry.id}`);
-
-                // Populate modal with inquiry data
                 modalElement.querySelector("h5").innerText = inquiry.title;
                 const pArr = modalElement.querySelectorAll("p");
                 pArr[0].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.name}`;
@@ -570,9 +500,6 @@ export class Component {
                 statusSpan.className = `badge ${inquiry.details.statusClass}`;
                 pArr[4].innerText = inquiry.message;
                 const replyMessageCard = document.querySelector(".conversation-container-parent");
-
-
-                
                 if (!inquiry.reply.trim()) {
                     replyMessageCard.classList.add("d-none")
                     const form = modalElement.querySelector("form");
@@ -587,12 +514,13 @@ export class Component {
                                 status: formData.status,
                                 statusClass: formData.status == "pending" ? "bg-warning" :
                                     formData.status == "in progress" ? "bg-primary" :
-                                        formData.status == "resolved" ? "bg-success" : "bg-secondary"
+                                    formData.status == "resolved" ? "bg-success" : "bg-secondary"
                             }
                         }
 
                         Inquiry.replyToInquiry(data);
-                        if (data.details.status != 'pending' || data.details.status != 'resolved') {
+                        if(data.details.status !='pending'||data.details.status !='resolved')
+                        {
                             statusSpan.textContent = data.details.status;
                             statusSpan.className = `badge ${data.details.statusClass}`;
                             buttonResolve.classList.remove('d-none');
@@ -612,17 +540,17 @@ export class Component {
                 }
 
 
-                // Blur fix
+                
                 modalElement.addEventListener("hide.bs.modal", () => {
                     if (document.activeElement && modalElement.contains(document.activeElement)) {
                         document.activeElement.blur();
                     }
                 });
 
-                // Handle form submission
+                
 
 
-                // Cleanup modal on hide
+                
                 modalElement.addEventListener("hidden.bs.modal", () => {
                     const modalInstance = bootstrap.Modal.getInstance(modalElement);
                     if (modalInstance) modalInstance.dispose();
@@ -630,13 +558,17 @@ export class Component {
                 }, { once: true });
             }
 
-            // Always open modal here (guaranteed it's in DOM)
+            
             const modal = new bootstrap.Modal(modalElement);
             modal.show();
         });
 
+
+        container.insertAdjacentElement("beforeend", inquiryCardElement);
     }
 
+
+   
     static async renderInquiryModal(inquiryId) {
     const inquiryForm = await fetchComponent("../../components/inquiry-information-popup.html");
     const inquiryFormElement = convertToHtmlElement(inquiryForm);
