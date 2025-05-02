@@ -11,6 +11,9 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="../js/dashboard/seller-dashboad.js" type="module"></script>
@@ -24,7 +27,7 @@
     <!-- Custom CSS -->
     <style>
         * {
-            font-size: 0.8rem !important;
+            font-size: 20px!important;
         }
 
         table,
@@ -55,7 +58,7 @@
             width: 250px;
             min-height: 100vh;
             transition: all 0.3s;
-            background-color: #b8b8b9;
+            background-color: #444459;
         }
 
         .main-content {
@@ -78,11 +81,11 @@
             }
         }
 
-        /* .product-img-thumbnail {
+        .product-img-thumbnail {
             width: 50px;
             height: 50px;
             object-fit: cover;
-        } */
+        }
 
         .status-badge {
             min-width: 80px;
@@ -92,7 +95,7 @@
             padding: 20px;
             background-color: #fff;
             border-left: 1px solid #dee2e6;
-            border-right: 1px solid #dee2e6;
+            border-right: 1px solid #aaadb1;
             border-bottom: 1px solid #dee2e6;
         }
 
@@ -104,6 +107,12 @@
         .invalid {
             border-color: #dc3545 !important;
         }
+
+        /* .icons{
+            margin-left: 10px;
+            width: 10px;
+            height: 20px;
+        } */
     </style>
 
 </head>
@@ -131,11 +140,11 @@
                         <i class="fas fa-shopping-cart me-2"></i>Orders
                     </a>
                 </li>
-                <li class="nav-item" role="presentation">
+                <!-- <li class="nav-item" role="presentation">
                     <a class="nav-link" id="analytics-tab" data-bs-toggle="tab" href="#analytics" role="tab">
                         <i class="fas fa-chart-line me-2"></i>Analytics
                     </a>
-                </li>
+                </li> -->
             </ul>
         </div>
 
@@ -172,7 +181,7 @@
             <div class="tab-content" id="dashboardTabsContent">
                 <!-- Dashboard Tab -->
                 <div class="tab-pane fade show active" id="dashboard" role="tabpanel">
-                    <h4 class="mb-4">Dashboard Overview</h4>
+                    <h1 class="mb-4"> <i class="bi bi-speedometer"></i> Dashboard Overview</h1>
                     <div class="row d-flex justify-content-between">
 
                         <div class="col-12 col-sm-5 col-xl-3 mb-2">
@@ -184,9 +193,9 @@
                             </div>
                         </div>
 
-                        <div class=" mb-2 col-12 col-sm-5 col-xl-3">
+                        <div class=" mb-2 col-sm-5 col-xl-3 w-25">
                             <div class="card card-stat bg-primary text-white">
-                                <div class="card-body">
+                                <div class="card-body" class="stats-box">
                                     <h5 class="card-title small">Total Products</h5>
                                     <h4 id="total-products">0</h4>
                                 </div>
@@ -342,7 +351,6 @@
                                         <tr>
                                             <!-- <th>ID</th> -->
                                             <th>#</th>
-                                            <th>Image</th>
                                             <th>Name</th>
                                             <th>Price</th>
                                             <th>Stock</th>
@@ -361,7 +369,7 @@
 
                 <!-- Orders Tab -->
                 <div class="tab-pane fade" id="orders" role="tabpanel">
-                    <h2 class="mb-4">Order Management</h2>
+                    <h2 class="mb-4"> <i class="bi bi-check2-square"></i> Order Management</h2>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
@@ -497,7 +505,7 @@
                             <div class="col-md-6">
                                 <label for="productName" class="form-label">Product Name <span
                                         style="color: #dc3545;">*</span></label>
-                                <input type="text" class="form-control" id="productName" required>
+                                <input type="text" class="form-control" id="productName" name="productName" required>
                                 <!-- <div class="invalid">Only text allowed (no numbers)</div> -->
                             </div>
                             <div class="col-md-6">
@@ -506,7 +514,7 @@
                                 <div class="input-group">
                                     <span class="input-group-text">$</span>
                                     <!-- <input type="number" step="0.0"  required> -->
-                                    <input type="number" min="1" step="0.1" oninput="validity.valid||(value='');"
+                                    <input name="productPrice" type="number" min="1" step="0.1" oninput="validity.valid||(value='');"
                                         class="form-control" id="productPrice" required>
                                 </div>
                             </div>
@@ -516,15 +524,15 @@
                                 <label for="productStock" class="form-label">Stock Quantity<span
                                         style="color: #dc3545;">*</span></label>
                                 <!-- <input type="number" class="form-control" id="productStock" required> -->
-                                <input type="number" min="1" step="1" oninput="validity.valid||(value='');"
+                                <input name="stockQuantity" type="number" min="0" step="1" oninput="validity.valid||(value='');"
                                     class="form-control" id="productStock" required>
 
                             </div>
                             <div class="col-md-6">
                                 <label for="productCategory" class="form-label">Category<span
                                         style="color: #dc3545;">*</span></label>
-                                <select class="form-select" id="productCategory" required>
-                                    <option disabled selected>Select Category</option>
+                                <select class="form-select" id="productCategory" aria-placeholder="selectCategory" required>
+                                    <option disabled >Select Category</option>
                                     <option value="1">Chairs</option>
                                     <option value="2">Sofas</option>
                                     <option value="3">Tables</option>
@@ -554,15 +562,6 @@
                                 <textarea class="form-control" id="productDescription" rows="3"
                                     maxlength="100"></textarea>
                             </div>
-                            <div class="mb-3">
-                                <label for="productImage" class="form-label">Product Image<span
-                                        style="color: #dc3545;">*</span></label>
-                                <input class="form-control" type="file" id="productImage" accept="image/*">
-                                <div class="mt-2" id="imagePreviewContainer" style="display: none;">
-                                    <img id="imagePreview" alt="Preview" class="img-thumbnail"
-                                        style="max-height: 150px;">
-                                </div>
-                            </div>
                     </form>
                 </div>
                 <div class="modal-footer">
@@ -575,6 +574,7 @@
     </div>
 
 
+    <!-- <script src="../js/dashboard/seller-dashboad.js" type="module"></script> -->
 
 
 
