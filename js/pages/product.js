@@ -48,7 +48,7 @@ document.querySelector("#product-description").innerText = product.desc
 document.querySelector("#stock-count").innerText = product.stock
 document.querySelector(".stock").innerText = product.stock
 document.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
-
+document.querySelector("img").src=`../../assets/images/Products/${product.name}.png`;
 if(product.stock < 1){
     document.querySelector("#stock-label").classList.remove("text-success")
     document.querySelector("#stock-label").classList.add("text-danger")
