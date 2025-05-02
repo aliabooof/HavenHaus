@@ -1,11 +1,36 @@
-import { getTable } from "/js/modules/db.js";
-import {Product } from '/js/modules/productModule.js';
+import { getTable } from "../modules/db.js";
+import {  Product } from "../modules/productModule.js";
+import {Auth} from "../modules/authModule.js"
+import {User} from "../modules/userModule.js"
+import { OrderItem } from "../modules/OrderItem.js";
 // import { Product } from "../modules/productModule";
+import {Order} from "../modules/order.js"
 
 window.addEventListener('DOMContentLoaded', function(){
 
-    loadProductsTable();
+    function confirmDelete(e){
+        Product.removeProduct(e.target.dataset.id)
+        e.target.closest("tr").remove()
+        
+        // let prodcutOrderItems =OrderItem.getOrderItemsByProductId(productId);
+        // let prodcutOrderIds = prodcutOrderItems.map(orderItem=>orderItem.orderID);
+        // let orderToBeRejected = Order.getAllOrders().filter(order=> prodcutOrderIds.filter((orderId)=> orderId == order.id).length && order.status == 0)
+        
+        // orderToBeRejected.forEach(order=>{
+        //     Order.updateOrderStatus(order.id,2)
+        //     let orderItems = OrderItem.getOrderItemsByOrderId(order.id)
+        //     let orderItemStatus = 3;
+        //     orderItems.forEach(orderItem => {
+        //         if(productId == orderItem.productID){orderItemStatus = 2}
+        //         else{orderItemStatus = 3}
+                
+        //         OrderItem.setOrderItemStatus(order.id,orderItem.productID,orderItemStatus)
+        //     });
+        // })
+    }
 
+    var seller = User.getCurrentUser()
+    var sellerID = 2 //seller.id
     const sidebarToggle = document.getElementById('sidebarToggle');
     const productModal = new bootstrap.Modal(document.getElementById('productModal'));
     const saveProductBtn = document.getElementById('saveProductBtn');
@@ -40,7 +65,7 @@ window.addEventListener('DOMContentLoaded', function(){
     productName.addEventListener('input', nameValidation);
     document.getElementById('productPrice').addEventListener('input', priceValidation);
     document.getElementById('productStock').addEventListener('input', stockValidation);
-    productTab.addEventListener('click',loadProductsTable);
+    // productTab.addEventListener('click',loadProductsTable);
 
 
     // document.getElementById('saveProductBtn').id = 'editProductBtn';
@@ -48,34 +73,59 @@ window.addEventListener('DOMContentLoaded', function(){
 
     // editSaveBtn.addEventListener('click', editProduct);
 
-    saveBtn.click('click', addNewProduct);
-
-    productForm.addEventListener('submit', function(e) {
-        e.preventDefault();
+    saveProductBtn.addEventListener("click",save)
+    function save(e){
 
         // if (nameInput =="" ||priceInput==""|| stockInput=="" ) {
         //     alert("required inputs can not be null");
         // }
-        let product = getFormData();
-
-        
+        let product = getFormData();        
         if (isEditMode) {
             console.log(isEditMode);
-            let productID= document.getElementById("saveProductBtn").dataset.id;
+            let productID = document.getElementById("saveProductBtn").dataset.id;
+            console.log("saveProductBtn dateset.id: ", productID)
             product.id=productID;
-
             Product.updateProduct(product);
             // e.validateForm();
             // editProduct();
+        }else{
+            product.sellerID = sellerID
+            product = new Product(product)
+            Product.addProduct(product)
         }
-        console.log(!isEditMode);
-        e.validateForm();
-        console.log(isEditMode);
+        productModal.hide();
+        // console.log(!isEditMode);
+        // e.validateForm();
+        // console.log(isEditMode);
         // addNewProduct(e);
         // saveBtn.addEventListener('click',editProduct);
-        editSaveBtn.addEventListener('click',editProduct);
+        // editSaveBtn.addEventListener('click',editProduct);
+    }
+    // productForm.addEventListener('submit', function(e) {
+    //     e.preventDefault();
 
-    });
+    //     // if (nameInput =="" ||priceInput==""|| stockInput=="" ) {
+    //     //     alert("required inputs can not be null");
+    //     // }
+    //     let product = getFormData();
+
+        
+    //     if (isEditMode) {
+    //         console.log(isEditMode);
+    //         let productID= document.getElementById("saveProductBtn").dataset.id;
+    //         product.id=productID;
+    //         Product.updateProduct(product);
+    //         // e.validateForm();
+    //         // editProduct();
+    //     }
+    //     // console.log(!isEditMode);
+    //     e.validateForm();
+    //     // console.log(isEditMode);
+    //     // addNewProduct(e);
+    //     // saveBtn.addEventListener('click',editProduct);
+    //     editSaveBtn.addEventListener('click',editProduct);
+
+    // });
 
     // document.getElementById("saveProductBtn").addEventListener('click',function(e){
 
@@ -125,6 +175,7 @@ window.addEventListener('DOMContentLoaded', function(){
     // }
 
     function addNewProduct(e) {
+        console.log("hello")
         isEditMode = false;
         e.preventDefault();
         let isValid = true;
@@ -190,7 +241,7 @@ window.addEventListener('DOMContentLoaded', function(){
                 category: document.getElementById('productCategory').value,
                 desc: document.getElementById('productDescription').value,
                 imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
-                sellerID: '3' //  dynamic seller ID
+                sellerID: sellerID//  dynamic seller ID
             };
 
             // const productId = document.getElementById('productId')?.value;
@@ -215,7 +266,7 @@ window.addEventListener('DOMContentLoaded', function(){
             // alert("Product added successfully!");
             // }
             // 3. Refresh the table and clean up
-            loadProductsTable();
+            // loadProductsTable();
             productForm.reset();
             productModal.hide();
 
@@ -238,7 +289,7 @@ window.addEventListener('DOMContentLoaded', function(){
             instructions: document.getElementById('instructions').value,
             desc: document.getElementById('productDescription').value,
             imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
-            sellerID: '3' // dynamic seller ID
+            sellerID: sellerID // dynamic seller ID
         };
 
         if (validateForm() ) {
@@ -246,7 +297,7 @@ window.addEventListener('DOMContentLoaded', function(){
         Product.updateProduct(editProductData);
         alert("Product updated successfully!");
 
-        loadProductsTable();
+        // loadProductsTable();
         productForm.reset();
         productModal.hide();
     }
@@ -256,14 +307,15 @@ window.addEventListener('DOMContentLoaded', function(){
     }
 
     function loadProductsTable() {
-        const sellerID = '3'; // Your seller ID
+        console.log("From load Product Table")
+        // Your seller ID
         const products = Product.getProductsBySeller(sellerID);
         const tbody = document.querySelector('#products-table');
         tbody.innerHTML = ''; // Clear existing rows
 
         products.forEach((product, index) => {
             tbody.innerHTML += `
-                <tr>
+                <tr data-id="${product.id}">
                     <td>${index + 1}</td>
                     <td><img src="${product.imageUrl}" width="50"></td>
                     <td>${product.name}</td>
@@ -288,22 +340,21 @@ window.addEventListener('DOMContentLoaded', function(){
             button.addEventListener('click', function (e) {
                 isEditMode=true;
                 let productId = button.getAttribute('data-id');
-                console.log(productId);
+                // console.log(productId);
                 document.getElementById('productModalLabel').textContent = "Edit Product";
-                console.log(document.getElementById('productModal'));
-                console.log(document.getElementById("saveProductBtn"));
+                // console.log(document.getElementById('productModal'));
+                // console.log(document.getElementById("saveProductBtn"));
 
                 
                 document.getElementById("saveProductBtn").dataset.id=productId;
-                console.log("product id aapear "+productId);
+                // console.log("product id aapear "+productId);
                 
 
-                let product=Product.getProductById(productId)[0];
-                console.log("product  object"+product);
-
+                let product= Product.getProductById(productId);
+                // console.log(product);
+                
                 fillProductForm(product);
-                    productModal.show();
-
+                productModal.show();
 
                 // if (productId ==product.id) {
                 //     console.log(isEditMode);
@@ -321,20 +372,21 @@ window.addEventListener('DOMContentLoaded', function(){
                 // editProduct();
 
 }
-
+loadProductsTable();
+confirmDeleteBtn.addEventListener("click",confirmDelete)
 
     function getFormData(){
         
         return {
                 // id:document.getElementById('productId').value = product.id,
-                // name:document.getElementById('productName').value = product.name,
-                price:document.getElementById('productPrice').value = product.price,
-                stock:getElementById('productStock').value = product.stock,
-                category:document.getElementById('productCategory').value = product.category,
-                highlights:document.getElementById('highlights').value =product.highlights,
-                instructions:document.getElementById('instructions').value =product.instructions,
-                desc:document.getElementById('productDescription').value = product.desc,
-                imageurl:document.getElementById('imagePreview').src = product.imageUrl,
+                name:document.getElementById('productName').value,
+                category:document.getElementById('productCategory').value,
+                price:document.getElementById('productPrice').value,
+                desc:document.getElementById('productDescription').value ,
+                imageUrl:document.getElementById('imagePreview').src,
+                stock:document.getElementById('productStock').value,
+                highlights:document.getElementById('highlights').value,
+                instructions:document.getElementById('instructions').value,
         }
     }
 
@@ -419,13 +471,13 @@ window.addEventListener('DOMContentLoaded', function(){
                 category: document.getElementById('productCategory').value,
                 desc: document.getElementById('productDescription').value,
                 imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
-                sellerID: '3' // or get dynamically
+                sellerID: sellerID // or get dynamically
             };
 
             try {
                 Product.updateProduct(editProductData);
                 alert("Product updated successfully!");
-                loadProductsTable();
+                // loadProductsTable();
                 productForm.reset();
                 productModal.hide();
             } catch (error) {
@@ -434,30 +486,24 @@ window.addEventListener('DOMContentLoaded', function(){
     }
     // });
 
+    function DeleteProduct(e){
+        
+        console.log("from Delete");
+        const parentTr= e.target.closest("tr");
+        let productId = parentTr.dataset.id
+        confirmDeleteBtn.dataset.id = productId;
+        deleteModal.show()
 
 
-    function attachDeleteHandlers() {
-        document.querySelectorAll('.delete-btn').forEach(button =>{
-            button.addEventListener('click',function(e){
-                const productId = e.target.dataset.id;
-                console.log(productId);
-                const product = Product.getProductById(productId);
-                console.log(product);
-                if (product) {
-                    fillProductForm(product);
-                    document.getElementById('deleteModalLabel').textContent = "Delete Product";
-                    document.getElementById('deleteModal').value = product.id;
-
-                    productModal.show();
-                }
-
-
-                Product.removeProduct(productId);
-            }
-            )
-        });
     }
 
+    function attachDeleteHandlers() {
+        let deleteBtns = document.querySelectorAll('.delete-btn');
+        // console.log(deleteBtns)
+        deleteBtns.forEach(button =>{
+            button.addEventListener('click',DeleteProduct)
+        });
+    }
     function fillProductForm(product) {
         document.getElementById('productName').value = product.name;
         document.getElementById('productPrice').value = product.price;
@@ -559,7 +605,9 @@ window.addEventListener('DOMContentLoaded', function(){
 
 
 
+    attachDeleteHandlers()
 
+    console.log(sellerID)
 
 
 }); //End of DOMContentLoaded Event to Window
@@ -580,4 +628,10 @@ window.addEventListener('DOMContentLoaded', function(){
         // }
     }
 
+const productModal = document.getElementById('productModal');
 
+productModal.addEventListener('hidden.bs.modal', () => {
+    if (document.activeElement && productModal.contains(document.activeElement)) {
+    document.activeElement.blur();
+    }
+});
