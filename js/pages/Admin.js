@@ -9,7 +9,7 @@ import { Auth } from "../modules/authModule.js";
 
 await LoadDB();
 
-Auth.enforcePageAuthorization();
+// Auth.enforcePageAuthorization();
 let users = User.getAllUsers();
 
 
@@ -36,7 +36,6 @@ async function handleSearch(keyword) {
 
         );
 
-
         const userTableBody = document.getElementById("userTableBody");
         userTableBody.innerHTML = "";
 
@@ -44,14 +43,9 @@ async function handleSearch(keyword) {
             await Component.renderUserRow(user);
         }
 
-
         document.getElementById("paginationControls").style.display = "none";
     }
 }
-
-
-
-
 
 function animateCount(id, endValue, duration = 1000) {
     const element = document.getElementById(id);
@@ -67,11 +61,6 @@ function animateCount(id, endValue, duration = 1000) {
     }, stepTime);
 }
 
-// window.addEventListener("DOMContentLoaded", async () => {
-//     await Component.renderCharts();
-//     await loadDashboardCharts();
-// });
-
 async function loadContent(x) {
     switch (x) {
         case 1:
@@ -79,8 +68,6 @@ async function loadContent(x) {
             await loadDashboardCharts();
             break;
         case 2:
-
-
             const users = User.getAllUsers();
             animateCount("totalUsers", users.length);
             await Component.renderTable();
@@ -89,13 +76,12 @@ async function loadContent(x) {
             document.getElementById("searchInput").addEventListener('input', (e) => {
                 handleSearch(e.target.value);
             });
-
-
-
             break;
         case 3:
             await Component.renderProducts();
             await loadProductDashboardChart();
+            await Component.renderProductsTable();
+            await Component.renderProductRow();
             break;
         case 4:
             await Component.renderOrders();

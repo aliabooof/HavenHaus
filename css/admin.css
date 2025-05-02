@@ -4,8 +4,6 @@ body{
 .sidebar{
     height: 100vh;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    /* transition: all 0.3s ease-in-out; */
-
 }
 .sidebar .nav-link{
     font-weight: 500;

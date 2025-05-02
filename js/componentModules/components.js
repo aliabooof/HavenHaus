@@ -4,12 +4,10 @@ import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFie
 import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
-
 import {Order} from "../../js/modules/order.js";
-
 import { Validation } from "../modules/validation.js";
 import { Inquiry } from "../modules/inquiryModule.js";
-
+import { Product } from "../../js/modules/productModule.js";
 
 export class Component {
 
@@ -414,14 +412,14 @@ export class Component {
         container.appendChild(chart);
     }
 
-    static async renderProducts() {
+    // static async renderProducts() {
 
-        const product = await fetchComponent("../../components/products-dashboard.html");
-        const product_chart = convertToHtmlElement(product);
-        const container = document.getElementById("content");
-        container.innerHTML = "";
-        container.appendChild(product_chart);
-    }
+    //     const product = await fetchComponent("../../components/products-dashboard.html");
+    //     const product_chart = convertToHtmlElement(product);
+    //     const container = document.getElementById("content");
+    //     container.innerHTML = "";
+    //     container.appendChild(product_chart);
+    // }
 
     static async renderOrders() {
         const order = await fetchComponent("../../components/order-dashboard.html");
@@ -498,8 +496,6 @@ export class Component {
 
     }
 
-    
-
     static async renderSupport(inquiries) {
         document.getElementById("inquireis-container").innerHTML=""
    
@@ -507,7 +503,6 @@ export class Component {
             await this.renderAdminInquires(inquiry)
         }
     }
-
 
     static async renderAdminInquires(inquiry) {
 
@@ -537,9 +532,9 @@ export class Component {
             console.log('hey')
             buttonResolve.classList.remove('d-none');
         }
+    }
 
-
-static async renderEditUserForm(userId) {
+    static async renderEditUserForm(userId) {
     const editForm = await fetchComponent("../../components/edit-user-form.html");
     const editFormElement = convertToHtmlElement(editForm);
     editFormElement.setAttribute('id', `editUserModal${userId}`);
@@ -566,7 +561,7 @@ static async renderEditUserForm(userId) {
                 pArr[4].innerText = inquiry.message;
                 const replyMessageCard = document.querySelector(".conversation-container-parent");
 
-
+            
                
                 
                 if (!inquiry.reply.trim()) {
@@ -636,16 +631,11 @@ static async renderEditUserForm(userId) {
         container.insertAdjacentElement("beforeend", inquiryCardElement);
     }
 
-
-
     static async renderInquiryModal(inquiryId) {
-        const inquiryForm = await fetchComponent("../../components/inquiry-information-popup.html");
-        const inquiryFormElement = convertToHtmlElement(inquiryForm);
-        inquiryFormElement.setAttribute('id', `inquiryModal${inquiryId}`);
-        document.getElementById("inquireis-container").insertAdjacentElement("beforeend", inquiryFormElement);
-
-    }
-
+    const inquiryForm = await fetchComponent("../../components/inquiry-information-popup.html");
+    const inquiryFormElement = convertToHtmlElement(inquiryForm);
+    inquiryFormElement.setAttribute('id', `inquiryModal${inquiryId}`);
+    document.getElementById("inquireis-container").insertAdjacentElement("beforeend", inquiryFormElement);
 
 }
 
@@ -667,13 +657,41 @@ static async renderCharts(){
     container.appendChild(product_chart);
 }
 
-    static async renderSupport(){
-
-    const support = await fetchComponent("../../components/support-dashboard.html");
-    const support_content = convertToHtmlElement(support);
+static async renderProductsTable(){
+    const producttable = await fetchComponent("../../components/productTable.html");
+    const productTable = convertToHtmlElement(producttable);
     const container = document.getElementById("content");
-    container.innerHTML = "";
-    container.appendChild(support_content);
+    // container.innerHTML = "";
+    container.appendChild(productTable);
+}
+
+static async renderProductRow(){
+    const products = Product.getAllProducts();
+    for (const product of products){
+        const productrow = await fetchComponent("../../components/productTableRows.html");
+        const productrowElement = convertToHtmlElement(productrow);
+        const cols = productrowElement.querySelectorAll("td");
+        const seller = User.getUserById(product.sellerID);
+        if(!seller) {continue;}
+        const sellerName = `${seller.firstName} ${seller.lastName}`;
+        // cols[0].innerText = product.imageUrl;
+        // cols[0].innerHTML = `<img src="${product.imageUrl}" width="50" height="50" style="object-fit: cover; border-radius: 4px;">`;
+        cols[1].innerText = product.name;
+        cols[2].innerText = `$${product.price.toFixed(2)}`;
+        cols[3].innerText = sellerName;
+        cols[4].innerText = product.stock;
+        cols[5].innerHTML = `
+        <span class="badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
+            ${product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+        </span>
+    `;
+    productrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
+        Product.removeProduct(product.id);
+        e.target.closest("tr").remove();
+    });
+        document.getElementById("productsTableBody").appendChild(productrowElement);    
+
+    }
 }
 
     static async renderOrders(){
@@ -688,7 +706,6 @@ static async renderCharts(){
     container.appendChild(orders_content);
 
 }
-
 
 static async renderOrderTable() {
     const ordertable = await fetchComponent("../../components/orderTable.html");
@@ -705,10 +722,9 @@ static async renderOrderRow() {
         const orderrowElement = convertToHtmlElement(orderrow);
         const cols = orderrowElement.querySelectorAll("td");
         const customer = User.getUserById(order.userID);
-        console.log(customer);
         if(!customer) {continue;}
         const customerName = `${customer.firstName} ${customer.lastName}`;
-        console.log(order.userID);
+        // console.log(order.userID);
         cols[0].innerText = customerName;
         cols[1].innerText = order.date;
         cols[2].innerText = getStatusLabel(order.status);
