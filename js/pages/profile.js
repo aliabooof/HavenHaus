@@ -72,6 +72,9 @@ if (userOrders.length > 0){
             OrderItem.removeOrderItemByOrderId(user_order.id);
             Order.removeOrder(user_order.id);
             divOrder.remove();
+            if(userOrders.length == 0){
+                fields.noorders.style.setProperty("display", "block", "important");
+            }
         })
         fields.exorders.appendChild(divOrder);
     }
@@ -256,7 +259,7 @@ function appendOrderHeader(orderID, orderDate, status){
 }
 
 function appendOrderBody(productName, quantity, price){
-    return `<hr> <div class="order-body">
+    return `<div class="order-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
                                             <div style="width: 80px; height: 90px;">
