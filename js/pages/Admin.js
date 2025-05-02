@@ -8,8 +8,13 @@ import { Auth } from "../modules/authModule.js";
 
 
 await LoadDB();
+if(Auth.isLoggedIn()){
 
-// Auth.enforcePageAuthorization();
+    Auth.enforcePageAuthorization("../../pages/not-allowed.html");
+}else{
+    Auth.enforcePageAuthorization();
+}
+
 let users = User.getAllUsers();
 
 
