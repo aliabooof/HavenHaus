@@ -534,7 +534,7 @@ export class Component {
             
         })
         if(inquiry.details.status == 'in progress'){
-            console.log('hey')
+            
             buttonResolve.classList.remove('d-none');
         }
 
@@ -575,15 +575,16 @@ export class Component {
                         }
 
                         Inquiry.replyToInquiry(data);
-                        if(data.details.status !='pending'||data.details.status !='resolved')
+                        if(data.details.status !='pending'&& data.details.status !='resolved')
                         {
-                            statusSpan.textContent = data.details.status;
-                            statusSpan.className = `badge ${data.details.statusClass}`;
+                            inquiryCardElement.querySelector("span").className = `badge ${data.details.statusClass}`
+                            inquiryCardElement.querySelector("span").innerText = data.details.status;
                             buttonResolve.classList.remove('d-none');
 
                         }
 
-
+                        statusSpan.textContent = data.details.status;
+                        statusSpan.className = `badge ${data.details.statusClass}`;
                         const modalInstance = bootstrap.Modal.getInstance(modalElement);
                         modalInstance.hide();
 

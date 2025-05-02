@@ -107,12 +107,12 @@ export class Auth {
 
     static isLoggedIn() {
         const isLoggedInStatus = getTable("loggedin");
-        const currentUser = getTable("currentUser");
+        const currentUser = User.getCurrentUser();
         return isLoggedInStatus === true && currentUser !== null && currentUser !== undefined;
     }
 
     static getCurrentUserRole() {
-        const currentUser = getTable("currentUser");
+        const currentUser = User.getCurrentUser();
         if (currentUser && currentUser.role && Object.values(Roles).includes(currentUser.role)) {
             return currentUser.role;
         }
