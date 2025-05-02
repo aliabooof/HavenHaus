@@ -190,6 +190,9 @@ import { Validation } from "../modules/validation.js";
     // updateProduct()
 
 
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        Auth.logout();
+    });
 
 
 
@@ -200,6 +203,14 @@ import { Validation } from "../modules/validation.js";
 
 // }); //End of DOMContentLoaded Event to Window
 
+//    static logout() {
+//         deleteTable("currentUser");
+//         deleteTable("loggedin");
+//         console.log("User logged out.");
+//         redirect("/");
+//     }
+
+    // document.getElementById('logout').addEventListener('click',Auth.logout());
 
 
 
