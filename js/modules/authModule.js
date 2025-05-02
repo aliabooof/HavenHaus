@@ -10,9 +10,7 @@ export class Roles {
     static SELLER = '1';
     static CUSTOMER = '2';
     static GUEST = 'guest';
-    static admin = 0;
-    static seller = 1;
-    static customer = 2;
+
 }
 
 const accessControlList = [
@@ -21,6 +19,7 @@ const accessControlList = [
     { path: '/pages/catalog.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/pages/product.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/',                        allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
+    { path: '/index.html',                        allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/pages/profile.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER] },
     { path: '/pages/cart.html',         allowedRoles: [Roles.CUSTOMER] },
     { path: '/checkout.html',           allowedRoles: [Roles.CUSTOMER] },
