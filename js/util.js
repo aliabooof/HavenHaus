@@ -204,3 +204,28 @@ export function getFormInputs(form) {
   
     return inputs;
   }
+
+export function mapOrderStatus(status){
+    let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status">Completed</span>')
+    let bgColor = "bg-warning";
+    if(status ==0){
+        bgColor = "bg-info"
+        statusElement.classList.add("bg-balck")
+        statusElement.innerText = "Pending"
+    }
+    else if(status == 1){
+        bgColor = "bg-success"
+        statusElement.classList.add(bgColor)
+        statusElement.innerText = "Completed"
+    }
+    else if(status == 2){
+        bgColor = "bg-danger"
+        statusElement.classList.add(bgColor)
+        statusElement.innerText = "Rejected"
+    }
+    else if(status == 3){
+        statusElement.classList.add(bgColor)
+        statusElement.innerText = "Hnaged"
+    }
+    return {bgColor,statusElement}
+}
