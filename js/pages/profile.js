@@ -3,8 +3,9 @@ import { Component } from "../componentModules/components.js";
 import { createAlert, redirect} from "../util.js";
 import {Validation} from "../modules/validation.js";
 import { Order } from "../modules/order.js";
+import { Auth } from "../modules/authModule.js";
 
-
+Auth.enforcePageAuthorization();
 
 
 await Component.renderNavbar();

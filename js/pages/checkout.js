@@ -17,7 +17,7 @@ Auth.enforcePageAuthorization();
 
 await Component.renderNavbar();
 await Component.renderFooter();
-// await Component.renderCartOffcanvas();
+
 
 
 
