@@ -43,7 +43,7 @@ export class Validation {
   static validateCreditCard(cardNumber) {
     const regex = /^\d{16}$/;
     if (typeof cardNumber !== 'string' || !regex.test(cardNumber.trim())) return false;
-    return this.luhnCheck(cardNumber);
+    return Validation.luhnCheck(cardNumber);
   }
 
   static luhnCheck(cardNumber) {
@@ -85,10 +85,7 @@ export class Validation {
     return typeof cvv === 'string' && regex.test(cvv.trim());
   }
 
-  // static validateImage(image) {
-  //   const regex = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
-  //   return typeof image === 'string' && regex.test(image.trim());
-  // }
+
   static validateImage(file) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
     const maxSizeInBytes = 5 * 1024 * 1024;

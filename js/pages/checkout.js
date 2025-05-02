@@ -32,7 +32,19 @@ const cart_ = cart.map(item =>{
 const placeOrder = document.getElementById("placeOrder");
 
 
-
+function PlaceOrder(){
+  let orderData = {};
+  orderData.userId = currentUser.id;
+  orderData.items = cart_;
+  let order = new Order(orderData);
+   delete order.items;
+   Order.addOrder(order);
+   console.log(cart_)
+   cart_.forEach(item =>{
+      let orderItem = new OrderItem({orderID:item.id, productID:item.productID, quantity:item.quantity,price:item.price});
+      OrderItem.addOrderItem(orderItem);
+   })
+}
 
 
 
@@ -98,15 +110,13 @@ cashRadio.addEventListener('change', toggleCreditCardDetails);
 const checkoutForm = document.getElementById("checkoutform");
 checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
-  e.target.querySelector("input[type='submit']").disabled = true;
   let formInputs = getFormInputs(checkoutForm);
   const validationRules = Validation.checkoutRuls(formInputs,creditCardRadio.checked)
   if (!(Validation.validateForm(checkoutForm, validationRules))){
-    e.target.querySelector("input[type='submit']").disabled = false;
     return;
   };
 
-   placeOrder();
+   PlaceOrder();
    Cart.emptyCartByUserID(currentUser.id)
   
     createAlert("Successfully ordered", "success");
@@ -121,16 +131,3 @@ await renderCartSummary();
 toggleCreditCardDetails();
 
 
-function PlaceOrder(){
-  let orderData = {};
-  orderData.userId = currentUser.id;
-  orderData.items = cart_;
-  let order = new Order(orderData);
-   delete order.items;
-   Order.addOrder(order);
-   console.log(cart_)
-   cart_.forEach(item =>{
-      let orderItem = new OrderItem({orderID:o.id, productID:item.productID, quantity:item.quantity,price:item.price});
-      OrderItem.addOrderItem(x);
-   })
-}
