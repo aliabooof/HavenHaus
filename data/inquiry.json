@@ -1,49 +1,5 @@
 {
     "inquiry": [
-        {
-            "id": 1,
-            "userId": "aliouf_3532",
-            "title": "Product Availability",
-            "date": "April 23, 2025",
-            "summary": "Inquiry about the availability of the latest smartphone model...",
-            "name": "John Smith",
-            "email": "john.smith@example.com",
-            "details": {
-                "status": "Pending",
-                "statusClass": "bg-warning"
-            },
-            "message": "I'm interested in purchasing the latest XYZ Smartphone model. Could you please let me know if it's currently in stock? Also, do you offer any promotions for first-time customers? I would appreciate any information about color options available as well.",
-            "reply": "     "
-        },
-        {
-            "id": 3,
-            "userId": "aliouf_3532",
-            "title": "Product Availability",
-            "date": "April 23, 2025",
-            "summary": "Inquiry about the availability of the latest smartphone model...",
-            "name": "John Smith",
-            "email": "john.smith@example.com",
-            "details": {
-                "status": "Pending",
-                "statusClass": "bg-warning"
-            },
-            "message": "I'm interested in purchasing the latest XYZ Smartphone model. Could you please let me know if it's currently in stock? Also, do you offer any promotions for first-time customers? I would appreciate any information about color options available as well.",
-            "reply": "     "
-        },
-        {
-            "id": 3,
-            "userId": "aliouf_3532",
-            "title": "Product Availability",
-            "date": "April 23, 2025",
-            "summary": "Inquiry about the availability of the latest smartphone model...",
-            "name": "John Smith",
-            "email": "john.smith@example.com",
-            "details": {
-                "status": "Pending",
-                "statusClass": "bg-warning"
-            },
-            "message": "I'm interested in purchasing the latest XYZ Smartphone model. Could you please let me know if it's currently in stock? Also, do you offer any promotions for first-time customers? I would appreciate any information about color options available as well.",
-            "reply": "   "
-        }
+        
     ]
 }

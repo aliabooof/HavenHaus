@@ -17,7 +17,7 @@ Auth.enforcePageAuthorization();
 
 await Component.renderNavbar();
 await Component.renderFooter();
-// await Component.renderCartOffcanvas();
+
 
 
 
@@ -41,7 +41,7 @@ function PlaceOrder(){
    Order.addOrder(order);
    console.log(cart_)
    cart_.forEach(item =>{
-      let orderItem = new OrderItem({orderID:item.id, productID:item.productID, quantity:item.quantity,price:item.price});
+      let orderItem = new OrderItem({orderID:order.id, productID:item.productID, quantity:item.quantity,price:item.price});
       OrderItem.addOrderItem(orderItem);
    })
 }

@@ -4,12 +4,11 @@ import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFie
 import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
-
-import { Order } from "../../js/modules/order.js";
+import {Order} from "../../js/modules/order.js";
 
 import { Validation } from "../modules/validation.js";
 import { Inquiry } from "../modules/inquiryModule.js";
-
+import { Product } from "../../js/modules/productModule.js";
 
 export class Component {
 
@@ -100,7 +99,8 @@ export class Component {
         const classArr = ["from-left-animation", "from-right-animation", "from-z-animation", "from-top-animation", "from-bottom-animation"];
         let productCard = await fetchComponent("../../components/product-card.html");
         productCard = convertToHtmlElement(productCard);
-
+        const seller = User.getUserById(product.sellerID);
+        
         productCard.id = product.id;
 
         const prodductName = productCard.querySelector("h5");
@@ -108,8 +108,9 @@ export class Component {
         prodductName.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
 
         const productImg = productCard.querySelector("img");
+        productImg.src=`../../assets/images/Products/${product.name}.png`
         productImg.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
-
+        productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
         productCard.querySelector("p").innerText = product.desc;
         productCard.querySelector("span").innerText = "$ " + product.price;
 
@@ -123,7 +124,7 @@ export class Component {
             Cart.cartUi(productCard.id)
         });
 
-        if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
+        if (User.getCurrentUser() !== null &&( User.getCurrentUser().role == 0 ||User.getCurrentUser().role == 1)) {
 
             productCard.querySelector("button").remove();
         }
@@ -414,14 +415,14 @@ export class Component {
         container.appendChild(chart);
     }
 
-    static async renderProducts() {
+    // static async renderProducts() {
 
-        const product = await fetchComponent("../../components/products-dashboard.html");
-        const product_chart = convertToHtmlElement(product);
-        const container = document.getElementById("content");
-        container.innerHTML = "";
-        container.appendChild(product_chart);
-    }
+    //     const product = await fetchComponent("../../components/products-dashboard.html");
+    //     const product_chart = convertToHtmlElement(product);
+    //     const container = document.getElementById("content");
+    //     container.innerHTML = "";
+    //     container.appendChild(product_chart);
+    // }
 
     static async renderOrders() {
         const order = await fetchComponent("../../components/order-dashboard.html");
@@ -508,7 +509,6 @@ export class Component {
         }
     }
 
-
     static async renderAdminInquires(inquiry) {
         console.log("hey");
         const container = document.getElementById("inquireis-container");
@@ -536,100 +536,14 @@ export class Component {
         if(inquiry.details.status == 'in progress'){
             
             buttonResolve.classList.remove('d-none');
-        }
-
-
-        buttonView.addEventListener("click", async () => {
-            let modalElement = document.getElementById(`inquiryModal${inquiry.id}`);
-
-            if (!modalElement) {
-                await this.renderInquiryModal(inquiry.id);
-                modalElement = document.getElementById(`inquiryModal${inquiry.id}`);
-                modalElement.querySelector("h5").innerText = inquiry.title;
-                const pArr = modalElement.querySelectorAll("p");
-                pArr[0].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.name}`;
-                pArr[1].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.email}`;
-                pArr[2].querySelector("strong").nextSibling.nodeValue = ` ${inquiry.date}`;
-
-                const statusSpan = pArr[3].querySelector("span");
-                statusSpan.textContent = inquiry.details.status;
-                statusSpan.className = `badge ${inquiry.details.statusClass}`;
-                pArr[4].innerText = inquiry.message;
-                const replyMessageCard = document.querySelector(".conversation-container-parent");
-                if (!inquiry.reply.trim()) {
-                    replyMessageCard.classList.add("d-none")
-                    const form = modalElement.querySelector("form");
-                    form.classList.remove("d-none");
-                    form.addEventListener("submit", async (e) => {
-                        e.preventDefault();
-                        const formData = getFormFields("inquiry-form-id");
-                        const data = {
-                            id: inquiry.id,
-                            reply: formData.reply,
-                            details: {
-                                status: formData.status,
-                                statusClass: formData.status == "pending" ? "bg-warning" :
-                                    formData.status == "in progress" ? "bg-primary" :
-                                    formData.status == "resolved" ? "bg-success" : "bg-secondary"
-                            }
-                        }
-
-                        Inquiry.replyToInquiry(data);
-                        if(data.details.status !='pending'&& data.details.status !='resolved')
-                        {
-                            inquiryCardElement.querySelector("span").className = `badge ${data.details.statusClass}`
-                            inquiryCardElement.querySelector("span").innerText = data.details.status;
-                            buttonResolve.classList.remove('d-none');
-
-                        }
-
-                        statusSpan.textContent = data.details.status;
-                        statusSpan.className = `badge ${data.details.statusClass}`;
-                        const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                        modalInstance.hide();
-
-
-                    });
-                } else {
-                    replyMessageCard.classList.remove("d-none");
-                    replyMessageCard.querySelector('.message-text').innerText = inquiry.reply;
-
-                }
-
-
-                
-                modalElement.addEventListener("hide.bs.modal", () => {
-                    if (document.activeElement && modalElement.contains(document.activeElement)) {
-                        document.activeElement.blur();
-                    }
-                });
-
-                
-
-
-                
-                modalElement.addEventListener("hidden.bs.modal", () => {
-                    const modalInstance = bootstrap.Modal.getInstance(modalElement);
-                    if (modalInstance) modalInstance.dispose();
-                    modalElement.remove();
-                }, { once: true });
-            }
-
-            
-            const modal = new bootstrap.Modal(modalElement);
-            modal.show();
-        });
-
-
-        container.insertAdjacentElement("beforeend", inquiryCardElement);
-    }
+        }}
 
 
     static async renderEditUserForm(userId) {
-        const editForm = await fetchComponent("../../components/edit-user-form.html");
-        const editFormElement = convertToHtmlElement(editForm);
-        editFormElement.setAttribute('id', `editUserModal${userId}`);
-        document.getElementById("editFormModal").appendChild(editFormElement);
+    const editForm = await fetchComponent("../../components/edit-user-form.html");
+    const editFormElement = convertToHtmlElement(editForm);
+    editFormElement.setAttribute('id', `editUserModal${userId}`);
+    document.getElementById("editFormModal").appendChild(editFormElement);
 
 
         buttonView.addEventListener("click", async () => {
@@ -653,8 +567,7 @@ export class Component {
                 const replyMessageCard = document.querySelector(".conversation-container-parent");
 
 
-
-
+                
                 if (!inquiry.reply.trim()) {
                     replyMessageCard.classList.add("d-none")
                     const form = modalElement.querySelector("form");
@@ -718,13 +631,17 @@ export class Component {
         });
 
     }
+
     static async renderInquiryModal(inquiryId) {
-        const inquiryForm = await fetchComponent("../../components/inquiry-information-popup.html");
-        const inquiryFormElement = convertToHtmlElement(inquiryForm);
-        inquiryFormElement.setAttribute('id', `inquiryModal${inquiryId}`);
-        document.getElementById("inquireis-container").insertAdjacentElement("beforeend", inquiryFormElement);
+    const inquiryForm = await fetchComponent("../../components/inquiry-information-popup.html");
+    const inquiryFormElement = convertToHtmlElement(inquiryForm);
+    inquiryFormElement.setAttribute('id', `inquiryModal${inquiryId}`);
+    document.getElementById("inquireis-container").insertAdjacentElement("beforeend", inquiryFormElement);
 
     }
+
+
+
 
     static async renderCharts(){
 
@@ -744,7 +661,7 @@ export class Component {
         container.appendChild(product_chart);
     }
 
-       
+   
 
         static async renderOrders(){
         const order = await fetchComponent("../../components/order-dashboard.html");
@@ -757,8 +674,7 @@ export class Component {
         // container.appendChild(orderTable);
         container.appendChild(orders_content);
 
-    }
-
+}
 
     static async renderOrderTable() {
         const ordertable = await fetchComponent("../../components/orderTable.html");
@@ -768,21 +684,19 @@ export class Component {
         container.appendChild(orderTable);
     }
 
-    static async renderOrderRow() {
-        const orders = Order.getAllOrders();
-        for (const order of orders) {
-            const orderrow = await fetchComponent("../../components/orderTablesRows.html");
-            const orderrowElement = convertToHtmlElement(orderrow);
-            const cols = orderrowElement.querySelectorAll("td");
-            const customer = User.getUserById(order.userID);
-            console.log(customer);
-            if (!customer) { continue; }
-            const customerName = `${customer.firstName} ${customer.lastName}`;
-            console.log(order.userID);
-            cols[0].innerText = customerName;
-            cols[1].innerText = order.date;
-            cols[2].innerText = getStatusLabel(order.status);
-            cols[3].innerText = `$${order.cost.toFixed(2)}`;
+static async renderOrderRow() {
+    const orders = Order.getAllOrders();
+    for (const order of orders) {
+        const orderrow = await fetchComponent("../../components/orderTablesRows.html");
+        const orderrowElement = convertToHtmlElement(orderrow);
+        const cols = orderrowElement.querySelectorAll("td");
+        const customer = User.getUserById(order.userID);
+        if(!customer) {continue;}
+        const customerName = `${customer.firstName} ${customer.lastName}`;
+        cols[0].innerText = customerName;
+        cols[1].innerText = order.date;
+        cols[2].innerText = getStatusLabel(order.status);
+        cols[3].innerText = `$${order.cost.toFixed(2)}`;
 
             orderrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
                 Order.removeOrder(order.id);

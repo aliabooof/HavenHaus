@@ -2,14 +2,14 @@
   "product": [
     {
       "id": "ModernDiningChair_1_q1w2e3r",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Modern Dining Chair",
       "category": 1,
       "price": 129.99,
       "desc": "Elegant wooden dining chair with cushioned seat.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 15,
-      "featured": false,
+      "featured": true,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Comfortable Cushioning",
@@ -30,39 +30,10 @@
         }
       ]
     },
-    {
-      "id": 9,
-      "sellerID": 2,
-      "name": "Modern Dining Chair",
-      "category": 1,
-      "price": 129.99,
-      "desc": "Elegant wooden dining chair with cushioned seat.",
-      "imageUrl": "https://placeimg.com/640/480/furniture",
-      "stock": 15,
-      "featured": false,
-      "warranty": "1 Year Manufacturer Warranty",
-      "highlights": [
-        "Comfortable Cushioning",
-        "Durable Finish",
-        "Easy Assembly"
-      ],
-      "instructions": "Assembly required, instructions included.",
-      "reviews": [
-        {
-          "date": "12/5/2015",
-          "customerName": "Ali",
-          "text": "hal aljf aljfl fsljfs fsja fljasfl"
-        },
-        {
-          "date": "12/5/2015",
-          "customerName": "Ali",
-          "text": "hal aljf aljfl fsljfs fsja fljasfl"
-        }
-      ]
-    },
+
     {
       "id": "PlushSofa_2_t4y5u6i",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Plush Sofa",
       "category": 2,
       "price": 780.00,
@@ -80,7 +51,7 @@
     ,"reviews": []},
     {
       "id": "OakCoffeeTable_3_o7p8a9s",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Oak Coffee Table",
       "category": 3,
       "price": 249.50,
@@ -98,7 +69,7 @@
     ,"reviews": []},
     {
       "id": "L-ShapedSectional_4_d0f1g2h",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "L-Shaped Sectional",
       "category": 4,
       "price": 1199.00,
@@ -116,7 +87,7 @@
     ,"reviews": []},
     {
       "id": "QueenPlatformBed_5_j3k4l5z",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Queen Platform Bed",
       "category": 5,
       "price": 599.99,
@@ -134,14 +105,14 @@
     ,"reviews": []},
     {
       "id": "MultipurposeCabinet_6_x6c7v8b",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Multi-purpose Cabinet",
       "category": 6,
       "price": 199.00,
       "desc": "Versatile storage cabinet with 4 drawers.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 10,
-      "featured": false,
+      "featured": true,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Integrated Storage",
@@ -152,7 +123,7 @@
     ,"reviews": []},
     {
       "id": "ErgonomicOfficeDesk_7_n9m0q1w",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Ergonomic Office Desk",
       "category": 7,
       "price": 380.00,
@@ -170,7 +141,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorPatioSet_8_e2r3t4y",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Outdoor Patio Set",
       "category": 8,
       "price": 899.00,
@@ -188,7 +159,7 @@
     ,"reviews": []},
     {
       "id": "MinimalistBookshelf_6_u5i6o7p",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Minimalist Bookshelf",
       "category": 6,
       "price": 149.00,
@@ -206,14 +177,14 @@
     ,"reviews": []},
     {
       "id": "LeatherRecliner_2_a8s9d0f",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Leather Recliner",
       "category": 2,
       "price": 450.00,
       "desc": "Single recliner chair in genuine leather.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 7,
-      "featured": false,
+      "featured": true,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Genuine Leather Upholstery",
@@ -224,7 +195,7 @@
     ,"reviews": []},
     {
       "id": "RoundDiningTable_1_g1h2j3k",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Round Dining Table",
       "category": 1,
       "price": 320.00,
@@ -242,7 +213,7 @@
     ,"reviews": []},
     {
       "id": "KidsBunkBed_5_l4z5x6c",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Kids Bunk Bed",
       "category": 5,
       "price": 480.00,
@@ -260,7 +231,7 @@
     ,"reviews": []},
     {
       "id": "EntrywayConsoleTable_3_v7b8n9m",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Entryway Console Table",
       "category": 3,
       "price": 175.00,
@@ -278,14 +249,14 @@
     ,"reviews": []},
     {
       "id": "FabricArmchair_2_q0w1e2r",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Fabric Armchair",
       "category": 2,
       "price": 240.50,
       "desc": "Comfortable armchair with durable fabric upholstery.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 9,
-      "featured": false,
+      "featured": true,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Comfortable Cushioning",
@@ -296,7 +267,7 @@
     ,"reviews": []},
     {
       "id": "GlassCoffeeTable_3_t3y4u5i",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Glass Coffee Table",
       "category": 3,
       "price": 180.00,
@@ -314,7 +285,7 @@
     ,"reviews": []},
     {
       "id": "KingSizeBedFrame_5_o6p7a8s",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "King Size Bed Frame",
       "category": 5,
       "price": 650.99,
@@ -332,14 +303,14 @@
     ,"reviews": []},
     {
       "id": "ModularSofa_4_d9f0g1h",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Modular Sofa",
       "category": 4,
       "price": 1300.00,
       "desc": "Configurable sofa sections to fit any living room layout.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 3,
-      "featured": false,
+      "featured": true,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Modular Design",
@@ -350,7 +321,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorDiningTable_8_j2k3l4z",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Outdoor Dining Table",
       "category": 8,
       "price": 300.00,
@@ -368,7 +339,7 @@
     ,"reviews": []},
     {
       "id": "VelvetSofa_2_x5c6v7b",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Velvet Sofa",
       "category": 2,
       "price": 650.00,
@@ -386,7 +357,7 @@
     ,"reviews": []},
     {
       "id": "SideTable_3_n8m9q0w",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Side Table",
       "category": 3,
       "price": 95.00,
@@ -404,7 +375,7 @@
     ,"reviews": []},
     {
       "id": "StorageBench_6_e1r2t3y",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Storage Bench",
       "category": 6,
       "price": 130.00,
@@ -422,7 +393,7 @@
     ,"reviews": []},
     {
       "id": "AdjustableOfficeChair_7_u4i5o6p",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Adjustable Office Chair",
       "category": 7,
       "price": 185.50,
@@ -440,7 +411,7 @@
     ,"reviews": []},
     {
       "id": "ChaiseLounge_2_a7s8d9f",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Chaise Lounge",
       "category": 2,
       "price": 315.00,
@@ -458,7 +429,7 @@
     ,"reviews": []},
     {
       "id": "WoodenWardrobe_6_g0h1j2k",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Wooden Wardrobe",
       "category": 6,
       "price": 450.00,
@@ -476,7 +447,7 @@
     ,"reviews": []},
     {
       "id": "IndustrialDiningChair_1_l3z4x5c",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Industrial Dining Chair",
       "category": 1,
       "price": 85.00,
@@ -494,7 +465,7 @@
     ,"reviews": []},
     {
       "id": "Sit-StandDesk_7_v6b7n8m",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Sit-Stand Desk",
       "category": 7,
       "price": 349.00,
@@ -512,7 +483,7 @@
     ,"reviews": []},
     {
       "id": "CornerSectional_4_q9w0e1r",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Corner Sectional",
       "category": 4,
       "price": 950.00,
@@ -530,7 +501,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorLoungeChair_8_t2y3u4i",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Outdoor Lounge Chair",
       "category": 8,
       "price": 190.00,
@@ -548,7 +519,7 @@
     ,"reviews": []},
     {
       "id": "Daybed_5_o5p6a7s",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Daybed",
       "category": 5,
       "price": 400.00,
@@ -566,7 +537,7 @@
     ,"reviews": []},
     {
       "id": "FilingCabinet_6_d8f9g0h",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Filing Cabinet",
       "category": 6,
       "price": 110.00,
@@ -584,7 +555,7 @@
     ,"reviews": []},
     {
       "id": "AccentChair_2_j1k2l3z",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Accent Chair",
       "category": 2,
       "price": 190.00,
@@ -602,7 +573,7 @@
     ,"reviews": []},
     {
       "id": "ExtendableDiningTable_1_x4c5v6b",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Extendable Dining Table",
       "category": 1,
       "price": 420.00,
@@ -620,7 +591,7 @@
     ,"reviews": []},
     {
       "id": "GamingDesk_7_n7m8q9w",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Gaming Desk",
       "category": 7,
       "price": 280.00,
@@ -638,7 +609,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorSofa_8_e0r1t2y",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Outdoor Sofa",
       "category": 8,
       "price": 550.00,
@@ -656,7 +627,7 @@
     ,"reviews": []},
     {
       "id": "TuftedSofa_2_u3i4o5p",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Tufted Sofa",
       "category": 2,
       "price": 680.00,
@@ -674,7 +645,7 @@
     ,"reviews": []},
     {
       "id": "LiftTopCoffeeTable_3_a6s7d8f",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Lift Top Coffee Table",
       "category": 3,
       "price": 190.00,
@@ -692,7 +663,7 @@
     ,"reviews": []},
     {
       "id": "CanopyBed_5_g9h0j1k",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Canopy Bed",
       "category": 5,
       "price": 700.00,
@@ -710,7 +681,7 @@
     ,"reviews": []},
     {
       "id": "DisplayCabinet_6_l2z3x4c",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Display Cabinet",
       "category": 6,
       "price": 250.00,
@@ -728,7 +699,7 @@
     ,"reviews": []},
     {
       "id": "BarStool_1_v5b6n7m",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Bar Stool",
       "category": 1,
       "price": 75.00,
@@ -746,7 +717,7 @@
     ,"reviews": []},
     {
       "id": "ExecutiveDesk_7_q8w9e0r",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Executive Desk",
       "category": 7,
       "price": 550.00,
@@ -764,7 +735,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorBarSet_8_t1y2u3i",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Outdoor Bar Set",
       "category": 8,
       "price": 500.00,
@@ -782,7 +753,7 @@
     ,"reviews": []},
     {
       "id": "SofaBed_2_o4p5a6s",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Sofa Bed",
       "category": 2,
       "price": 500.00,
@@ -800,7 +771,7 @@
     ,"reviews": []},
     {
       "id": "NestingTables_3_d7f8g9h",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Nesting Tables",
       "category": 3,
       "price": 160.00,
@@ -818,7 +789,7 @@
     ,"reviews": []},
     {
       "id": "TrundleBed_5_j0k1l2z",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Trundle Bed",
       "category": 5,
       "price": 380.00,
@@ -836,7 +807,7 @@
     ,"reviews": []},
     {
       "id": "CubeStorage_6_x3c4v5b",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Cube Storage",
       "category": 6,
       "price": 85.00,
@@ -854,7 +825,7 @@
     ,"reviews": []},
     {
       "id": "WingbackChair_2_n6m7q8w",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Wingback Chair",
       "category": 2,
       "price": 300.00,
@@ -872,7 +843,7 @@
     ,"reviews": []},
     {
       "id": "BenchwithBack_1_e9r0t1y",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Bench with Back",
       "category": 1,
       "price": 140.00,
@@ -890,7 +861,7 @@
     ,"reviews": []},
     {
       "id": "ConvertibleSofaBed_2_u2i3o4p",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Convertible Sofa Bed",
       "category": 2,
       "price": 600.00,
@@ -908,7 +879,7 @@
     ,"reviews": []},
     {
       "id": "AccentTable_3_a5s6d7f",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Accent Table",
       "category": 3,
       "price": 85.00,
@@ -926,7 +897,7 @@
     ,"reviews": []},
     {
       "id": "FullSizeBedFrame_5_g8h9j0k",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Full Size Bed Frame",
       "category": 5,
       "price": 400.00,
@@ -944,7 +915,7 @@
     ,"reviews": []},
     {
       "id": "NarrowBookshelf_6_l1z2x3c",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Narrow Bookshelf",
       "category": 6,
       "price": 110.00,
@@ -962,7 +933,7 @@
     ,"reviews": []},
     {
       "id": "SwivelChair_2_v4b5n6m",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Swivel Chair",
       "category": 2,
       "price": 270.00,
@@ -980,7 +951,7 @@
     ,"reviews": []},
     {
       "id": "CounterHeightDiningSet_1_q7w8e9r",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Counter Height Dining Set",
       "category": 1,
       "price": 380.00,
@@ -998,7 +969,7 @@
     ,"reviews": []},
     {
       "id": "CompactOfficeDesk_7_t0y1u2i",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Compact Office Desk",
       "category": 7,
       "price": 120.00,
@@ -1016,7 +987,7 @@
     ,"reviews": []},
     {
       "id": "U-ShapedSectional_4_o3p4a5s",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "U-Shaped Sectional",
       "category": 4,
       "price": 1500.00,
@@ -1034,7 +1005,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorAccentTable_8_d6f7g8h",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Outdoor Accent Table",
       "category": 8,
       "price": 80.00,
@@ -1052,7 +1023,7 @@
     ,"reviews": []},
     {
       "id": "FutonSofa_2_j9k0l1z",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Futon Sofa",
       "category": 2,
       "price": 220.00,
@@ -1070,7 +1041,7 @@
     ,"reviews": []},
     {
       "id": "TrunkCoffeeTable_3_x2c3v4b",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Trunk Coffee Table",
       "category": 3,
       "price": 190.00,
@@ -1088,7 +1059,7 @@
     ,"reviews": []},
     {
       "id": "Captain'sBed_5_n5m6q7w",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Captain's Bed",
       "category": 5,
       "price": 450.00,
@@ -1106,7 +1077,7 @@
     ,"reviews": []},
     {
       "id": "TallStorageCabinet_6_e8r9t0y",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Tall Storage Cabinet",
       "category": 6,
       "price": 280.00,
@@ -1124,7 +1095,7 @@
     ,"reviews": []},
     {
       "id": "PapasanChair_2_u1i2o3p",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Papasan Chair",
       "category": 2,
       "price": 190.00,
@@ -1142,7 +1113,7 @@
     ,"reviews": []},
     {
       "id": "DropLeafDiningTable_1_a4s5d6f",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Drop Leaf Dining Table",
       "category": 1,
       "price": 200.00,
@@ -1160,7 +1131,7 @@
     ,"reviews": []},
     {
       "id": "OfficeCredenza_7_g7h8j9k",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Office Credenza",
       "category": 7,
       "price": 300.00,
@@ -1178,7 +1149,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorChaiseLounge_8_l0z1x2c",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Outdoor Chaise Lounge",
       "category": 8,
       "price": 250.00,
@@ -1196,7 +1167,7 @@
     ,"reviews": []},
     {
       "id": "MurphyBed_5_v3b4n5m",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Murphy Bed",
       "category": 5,
       "price": 900.00,
@@ -1214,7 +1185,7 @@
     ,"reviews": []},
     {
       "id": "Settee_2_q6w7e8r",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Settee",
       "category": 2,
       "price": 350.00,
@@ -1232,7 +1203,7 @@
     ,"reviews": []},
     {
       "id": "ConsoleTablewithShelves_3_t9y0u1i",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Console Table with Shelves",
       "category": 3,
       "price": 160.00,
@@ -1250,7 +1221,7 @@
     ,"reviews": []},
     {
       "id": "AdjustableBedBase_5_o2p3a4s",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Adjustable Bed Base",
       "category": 5,
       "price": 800.00,
@@ -1268,7 +1239,7 @@
     ,"reviews": []},
     {
       "id": "PubTableSet_1_d5f6g7h",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Pub Table Set",
       "category": 1,
       "price": 300.00,
@@ -1286,7 +1257,7 @@
     ,"reviews": []},
     {
       "id": "StandingDeskConverter_7_j8k9l0z",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Standing Desk Converter",
       "category": 7,
       "price": 150.00,
@@ -1304,7 +1275,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorSectional_8_x1c2v3b",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Outdoor Sectional",
       "category": 8,
       "price": 1100.00,
@@ -1322,7 +1293,7 @@
     ,"reviews": []},
     {
       "id": "VelvetArmchair_2_n4m5q6w",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Velvet Armchair",
       "category": 2,
       "price": 280.00,
@@ -1340,7 +1311,7 @@
     ,"reviews": []},
     {
       "id": "DrumCoffeeTable_3_e7r8t9y",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Drum Coffee Table",
       "category": 3,
       "price": 170.00,
@@ -1358,7 +1329,7 @@
     ,"reviews": []},
     {
       "id": "WideBookshelf_6_u0i1o2p",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Wide Bookshelf",
       "category": 6,
       "price": 210.00,
@@ -1376,14 +1347,14 @@
     ,"reviews": []},
     {
       "id": "BenchwithStorage_6_a3s4d5f",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Bench with Storage",
       "category": 6,
       "price": 150.00,
       "desc": "Bench with a lift-top lid for storing shoes or accessories.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 13,
-      "featured": true,
+      "featured": false,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Integrated Storage",
@@ -1394,7 +1365,7 @@
     ,"reviews": []},
     {
       "id": "ClubChair_2_g6h7j8k",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Club Chair",
       "category": 2,
       "price": 320.00,
@@ -1412,7 +1383,7 @@
     ,"reviews": []},
     {
       "id": "SquareCoffeeTable_3_l9z0x1c",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Square Coffee Table",
       "category": 3,
       "price": 145.00,
@@ -1430,7 +1401,7 @@
     ,"reviews": []},
     {
       "id": "LoftBed_5_v2b3n4m",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Loft Bed",
       "category": 5,
       "price": 500.00,
@@ -1448,7 +1419,7 @@
     ,"reviews": []},
     {
       "id": "EntrywayCabinet_6_q5w6e7r",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Entryway Cabinet",
       "category": 6,
       "price": 180.00,
@@ -1466,7 +1437,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorDiningSet_8_t8y9u0i",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Outdoor Dining Set",
       "category": 8,
       "price": 650.00,
@@ -1484,14 +1455,14 @@
     ,"reviews": []},
     {
       "id": "BridgeportSofa_2_o1p2a3s",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Bridgeport Sofa",
       "category": 2,
       "price": 700.00,
       "desc": "Stylish sofa with unique armrests.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 8,
-      "featured": true,
+      "featured": false,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Stylish Design",
@@ -1502,7 +1473,7 @@
     ,"reviews": []},
     {
       "id": "EndTable_3_d4f5g6h",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "End Table",
       "category": 3,
       "price": 75.00,
@@ -1520,7 +1491,7 @@
     ,"reviews": []},
     {
       "id": "SleighBed_5_j7k8l9z",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Sleigh Bed",
       "category": 5,
       "price": 580.00,
@@ -1538,7 +1509,7 @@
     ,"reviews": []},
     {
       "id": "OfficeBookcase_6_x0c1v2b",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Office Bookcase",
       "category": 6,
       "price": 180.00,
@@ -1556,7 +1527,7 @@
     ,"reviews": []},
     {
       "id": "SofaChaise_4_n3m4q5w",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Sofa Chaise",
       "category": 4,
       "price": 850.00,
@@ -1574,7 +1545,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorPicnicTable_8_e6r7t8y",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Outdoor Picnic Table",
       "category": 8,
       "price": 350.00,
@@ -1592,7 +1563,7 @@
     ,"reviews": []},
     {
       "id": "DeskChair_7_u9i0o1p",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Desk Chair",
       "category": 7,
       "price": 110.00,
@@ -1610,14 +1581,14 @@
     ,"reviews": []},
     {
       "id": "TwinBedwithStorage_5_a2s3d4f",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Twin Bed with Storage",
       "category": 5,
       "price": 350.00,
       "desc": "Twin size bed with built-in storage drawers.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 10,
-      "featured": true,
+      "featured": false,
       "warranty": "5 Year Structural Warranty",
       "highlights": [
         "Integrated Storage",
@@ -1628,7 +1599,7 @@
     ,"reviews": []},
     {
       "id": "WallMountedShelves_6_g5h6j7k",
-      "sellerID": 4,
+      "sellerID": "mark_taylor_004",
       "name": "Wall Mounted Shelves",
       "category": 6,
       "price": 55.00,
@@ -1646,7 +1617,7 @@
     ,"reviews": []},
     {
       "id": "RectangleCoffeeTable_3_l8z9x0c",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Rectangle Coffee Table",
       "category": 3,
       "price": 120.00,
@@ -1664,7 +1635,7 @@
     ,"reviews": []},
     {
       "id": "KidsDesk_7_v1b2n3m",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Kids Desk",
       "category": 7,
       "price": 80.00,
@@ -1682,7 +1653,7 @@
     ,"reviews": []},
     {
       "id": "PlatformBed_5_q4w5e6r",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Platform Bed",
       "category": 5,
       "price": 350.00,
@@ -1700,7 +1671,7 @@
     ,"reviews": []},
     {
       "id": "OfficeCabinet_6_t7y8u9i",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Office Cabinet",
       "category": 6,
       "price": 150.00,
@@ -1718,7 +1689,7 @@
     ,"reviews": []},
     {
       "id": "SectionalwithChaise_4_o0p1a2s",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Sectional with Chaise",
       "category": 4,
       "price": 1000.00,
@@ -1736,7 +1707,7 @@
     ,"reviews": []},
     {
       "id": "OttomanwithStorage_3_d3f4g5h",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Ottoman with Storage",
       "category": 3,
       "price": 100.00,
@@ -1754,7 +1725,7 @@
     ,"reviews": []},
     {
       "id": "CaliforniaKingBed_5_j6k7l8z",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "California King Bed",
       "category": 5,
       "price": 750.00,
@@ -1772,7 +1743,7 @@
     ,"reviews": []},
     {
       "id": "ConsoleTable_3_x9c0v1b",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Console Table",
       "category": 3,
       "price": 140.00,
@@ -1790,7 +1761,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorAccentChair_8_n2m3q4w",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Outdoor Accent Chair",
       "category": 8,
       "price": 150.00,
@@ -1808,7 +1779,7 @@
     ,"reviews": []},
     {
       "id": "PullOutSofa_2_e5r6t7y",
-      "sellerID": 2,
+      "sellerID": "michael_clark_006",
       "name": "Pull Out Sofa",
       "category": 2,
       "price": 550.00,
@@ -1826,14 +1797,14 @@
     ,"reviews": []},
     {
       "id": "LadderBookshelf_6_u8i9o0p",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Ladder Bookshelf",
       "category": 6,
       "price": 130.00,
       "desc": "Bookshelf designed to lean against a wall like a ladder.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 20,
-      "featured": true,
+      "featured": false,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Space Saving",
@@ -1844,7 +1815,7 @@
     ,"reviews": []},
     {
       "id": "AdjustableStool_1_a1s2d3f",
-      "sellerID": 4,
+      "sellerID": "mary_smith_002",
       "name": "Adjustable Stool",
       "category": 1,
       "price": 60.00,
@@ -1862,14 +1833,14 @@
     ,"reviews": []},
     {
       "id": "OfficeChairwithWheels_7_g4h5j6k",
-      "sellerID": 2,
+      "sellerID": "david_martin_008",
       "name": "Office Chair with Wheels",
       "category": 7,
       "price": 130.00,
       "desc": "Standard office chair with casters for mobility.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 26,
-      "featured": true,
+      "featured": false,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Ergonomic Support",
@@ -1880,7 +1851,7 @@
     ,"reviews": []},
     {
       "id": "OutdoorCoffeeTableSet_8_l7z8x9c",
-      "sellerID": 3,
+      "sellerID": "aliouf_35322",
       "name": "Outdoor Coffee Table Set",
       "category": 8,
       "price": 250.00,

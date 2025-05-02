@@ -1,20 +1,14 @@
 {
-    "cartItem": [
-      { "userID": 5, "productID": 3, "quantity": 2 },
-      { "userID": 6, "productID": 5, "quantity": 1 },
-      { "userID": 7, "productID": 9, "quantity": 3 },
-      { "userID": 8, "productID": 10, "quantity": 1 },
-      { "userID": 9, "productID": 6, "quantity": 2 },
-      { "userID": 10, "productID": 2, "quantity": 1 },
-      { "userID": 11, "productID": 4, "quantity": 3 },
-      { "userID": 12, "productID": 13, "quantity": 1 },
-      { "userID": 13, "productID": 14, "quantity": 2 },
-      { "userID": 14, "productID": 11, "quantity": 1 },
-      { "userID": 15, "productID": 1, "quantity": 4 },
-      { "userID": 5, "productID": 12, "quantity": 1 },
-      { "userID": 6, "productID": 8, "quantity": 2 },
-      { "userID": 7, "productID": 7, "quantity": 1 },
-      { "userID": 8, "productID": 15, "quantity": 3 }
-    ]
-  }
-  
+  "cartItem": [
+    {
+      "userID": "susan_james_005",
+      "productID": "ModernDiningChair_1_q1w2e3r",
+      "quantity": 1
+    },
+    {
+      "userID": "susan_james_005",
+      "productID": "QueenPlatformBed_5_j3k4l5z",
+      "quantity": 1
+    }
+  ]
+}

@@ -3,20 +3,29 @@ import { getTable, add, setTable } from "./db.js";
 
 export class Inquiry {
 
-    constructor(userId,title,name,email,message) {
+    constructor(userId, title, name, email, message) {
         this.userId = userId;
         this.title = title;
-        this.name = name
+        this.name = name;
         this.email = email;
         this.message = message;
-        this.date = new Date().toISOString();
+    
+        
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+        this.date = `${day}/${month}/${year}`;
+    
         this.reply = ""; 
         this.id = this.#generateUniqueId(userId);
         this.summary = this.#generateSummary(message);
         this.details = {
-            status:"Pending",
-            statusClass:"bg-warning"
-        }
+            status: "Pending",
+            statusClass: "bg-warning"
+        };
+    
+    
     }
 
     
