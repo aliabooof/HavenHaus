@@ -2,6 +2,7 @@ import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
 import { createAlert} from "../util.js";
 import {Validation} from "../modules/validation.js";
+import { Order } from "../modules/order.js";
 
 
 console.log(User.getUserById("susan_james_005"));
@@ -9,10 +10,17 @@ console.log(User.getUserById("susan_james_005"));
 await Component.renderNavbar();
 await Component.renderFooter();
 
+await Component.renderCartOffcanvas();
+
 let currentUser = User.getCurrentUser();
 let ususername = document.getElementById("username");
 
+let userOrders = Order.getOrdersByUser(currentUser.id);
+
 const fields = {
+    noorders: document.getElementById("noorders"),
+    exorders: document.getElementById("exorders"),
+    editIcon: document.getElementById("edit_icon"),
     fullName: document.getElementById("fullname"),
     profileEmail: document.getElementById("profile_email"),
     editProfile: document.getElementById("editProfile"),
@@ -29,6 +37,21 @@ const fields = {
     emailInput: document.getElementById("emailInput"),
     phoneInput: document.getElementById("phoneInput")
 };
+
+if (userOrders.length > 0){
+    fields.noorders.style.setProperty("display", "none", "important");
+    userOrders.forEach(()=>{
+        fields.exorders.innerHTML = appendOrder();
+    });
+    
+    // fields.noorders.style.display = "none";
+    // fields.noorders.classList.add("d-none");
+}
+
+fields.editIcon.addEventListener("click", ()=>{
+    console.log(userOrders)
+})
+
 
 UpdateChanges(currentUser);
 
@@ -145,4 +168,40 @@ function UpdateChanges(current_user){
     fields.lName.innerText = current_user.lastName;
     fields.email.innerText = current_user.email;
     fields.phone.innerText = current_user.phone;
+}
+
+function appendOrder(){
+    return `<div class="order">
+                                <hr>
+                                <div class="order-header d-flex justify-content-between ">
+                                    <div class="d-flex">
+                                        <h4 class="" style="font-size: 17px;">Order #1745915902339</h4>
+                                        <p class="ms-3">4/29/2025</p>
+                                    </div>
+                                    <div>
+                                        <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #dbeafe; color: #1e5aca;">Processing</span>
+                                        <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #fef9c3; color: #854d0e;">Shipping: Pending</span>
+                                    </div>
+                                </div>
+                                <div class="order-body">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="d-flex align-items-center">
+                                            <div style="width: 80px; height: 90px;">
+                                                <img src="../assets/images/1.jpg" alt="" width="100%" height="100%">
+                                            </div>
+                                            <div class="ms-2" style="line-height: 5px;">
+                                                <p>Leather Cream Sofa × 1</p>
+                                                <p style="font-size: 14px;">Leather - Cream</p>
+                                            </div>
+                                        </div>
+                                        <h5 class="h6">$1299.99</h5>
+                                    </div>
+                                    <hr>
+                                    <div class="d-flex align-items-center justify-content-between">
+                                        <button id="viewOrder" class="btn">View Order Details</button>
+                                        <button id="cancelOrder" class="btn">Cancel Order</button>
+                                        <p>Total: <span style="font-weight: bold;">$4449.96</span></p>
+                                    </div>
+                                </div>
+                            </div>`;
 }
