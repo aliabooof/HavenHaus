@@ -9,7 +9,7 @@
       "desc": "Elegant wooden dining chair with cushioned seat.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 15,
-      "featured": false,
+      "featured": true,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Comfortable Cushioning",
@@ -30,36 +30,7 @@
         }
       ]
     },
-    {
-      "id": 9,
-      "sellerID": "david_martin_008",
-      "name": "Modern Dining Chair",
-      "category": 1,
-      "price": 129.99,
-      "desc": "Elegant wooden dining chair with cushioned seat.",
-      "imageUrl": "https://placeimg.com/640/480/furniture",
-      "stock": 15,
-      "featured": false,
-      "warranty": "1 Year Manufacturer Warranty",
-      "highlights": [
-        "Comfortable Cushioning",
-        "Durable Finish",
-        "Easy Assembly"
-      ],
-      "instructions": "Assembly required, instructions included.",
-      "reviews": [
-        {
-          "date": "12/5/2015",
-          "customerName": "Ali",
-          "text": "hal aljf aljfl fsljfs fsja fljasfl"
-        },
-        {
-          "date": "12/5/2015",
-          "customerName": "Ali",
-          "text": "hal aljf aljfl fsljfs fsja fljasfl"
-        }
-      ]
-    },
+
     {
       "id": "PlushSofa_2_t4y5u6i",
       "sellerID": "aliouf_35322",
@@ -141,7 +112,7 @@
       "desc": "Versatile storage cabinet with 4 drawers.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 10,
-      "featured": false,
+      "featured": true,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Integrated Storage",
@@ -213,7 +184,7 @@
       "desc": "Single recliner chair in genuine leather.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 7,
-      "featured": false,
+      "featured": true,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Genuine Leather Upholstery",
@@ -285,7 +256,7 @@
       "desc": "Comfortable armchair with durable fabric upholstery.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 9,
-      "featured": false,
+      "featured": true,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Comfortable Cushioning",
@@ -339,7 +310,7 @@
       "desc": "Configurable sofa sections to fit any living room layout.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 3,
-      "featured": false,
+      "featured": true,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Modular Design",
@@ -1383,7 +1354,7 @@
       "desc": "Bench with a lift-top lid for storing shoes or accessories.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 13,
-      "featured": true,
+      "featured": false,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Integrated Storage",
@@ -1491,7 +1462,7 @@
       "desc": "Stylish sofa with unique armrests.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 8,
-      "featured": true,
+      "featured": false,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Stylish Design",
@@ -1617,7 +1588,7 @@
       "desc": "Twin size bed with built-in storage drawers.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 10,
-      "featured": true,
+      "featured": false,
       "warranty": "5 Year Structural Warranty",
       "highlights": [
         "Integrated Storage",
@@ -1833,7 +1804,7 @@
       "desc": "Bookshelf designed to lean against a wall like a ladder.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 20,
-      "featured": true,
+      "featured": false,
       "warranty": "1 Year Manufacturer Warranty",
       "highlights": [
         "Space Saving",
@@ -1869,7 +1840,7 @@
       "desc": "Standard office chair with casters for mobility.",
       "imageUrl": "https://placeimg.com/640/480/furniture",
       "stock": 26,
-      "featured": true,
+      "featured": false,
       "warranty": "2 Years Limited Warranty",
       "highlights": [
         "Ergonomic Support",
