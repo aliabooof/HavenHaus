@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../css/profile_style.css">
+    <link rel="stylesheet" href="../css/style.css">
     <script src="../js/pages/profile.js" type="module"></script>
 </head>
 <body class="px-5 px-lg-0">
@@ -32,9 +33,11 @@
                     </div>
                     <ul class="nav flex-column list-unstyled mt-3">
                         <li class="nav-item item item-active p-1" ><a class="nav-link active" data-bs-toggle="pill" role="tab" data-bs-target="#profile_info_container"><i class="fa-regular fa-user"></i> Profile Information</a></li>
-                        <li class="nav-item item p-1" ><a class="nav-link" data-bs-toggle="pill" role="tab" data-bs-target="#profile_orders_container"><i class="fa-solid fa-border-all"></i> My Orders</a></li>
+                        <li id="my-order-button" class="nav-item item p-1" ><a class="nav-link" data-bs-toggle="pill" role="tab" data-bs-target="#profile_orders_container"><i class="fa-solid fa-border-all"></i> My Orders</a></li>
                         <li class="nav-item item p-1" ><a class="nav-link" data-bs-toggle="pill" role="tab" data-bs-target="#profile_whishlist_container"><i class="fa-regular fa-heart"></i> Wishlist</a></li>
                         <!-- <li class="item" ><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</li> -->
+                        <li id="sellerdashboard" class="nav-item item p-1" ><a class="nav-link"  role="tab" ><i class="fa-regular fa-heart"></i> Go To dashboard </a></li>
+
                     </ul>
                 </div>
             </section>
@@ -160,11 +163,11 @@
                     <div id="profile_orders_container" class="tab-pane fade pt-1" role="tabpanel">
                         
                         <h3 class="h4 mt-4 ps-2 ms-1">Order History</h3>
-                        <div class="container d-flex flex-column align-items-center justify-content-center mt-5">
+                        <div id="noorders" class="container d-flex flex-column align-items-center justify-content-center mt-5">
                             <p class="">You haven't placed any orders yet.</p>
                             <button id="shopping" class="border-0 text-light rounded-3 px-3 py-2 mx-auto" onclick="window.location.href='catalog.html'">Start Shopping</button>
                         </div>
-                        <div class="orders mx-1 px-2">
+                        <div id="exorders" class="orders mx-1 px-2">
                             <!-- <div class="order">
                                 <hr>
                                 <div class="order-header d-flex justify-content-between ">
@@ -205,6 +208,7 @@
                     <div id="profile_whishlist_container" class="tab-pane fade" role="tabpanel">
                         <h3 class="h4 mt-4 ps-2 ms-1">Whishlist</h3>
                     </div>
+
                 </div>
             </section>
         </div>

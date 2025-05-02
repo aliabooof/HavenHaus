@@ -2,8 +2,10 @@ import { Order } from "../modules/order.js";
 import { Product } from "../modules/productModule.js";
 import { Seller } from "../modules/seller.js";
 import { fetchComponent ,convertToHtmlElement } from "../util.js";
-
-
+import { User } from "../modules/userModule.js";
+import { Auth } from "../modules/authModule.js";
+// import { Modal } from "https://esm.sh/bootstrap@5.3.3";
+var seller = User.getCurrentUser();
 
 //___________________________ Functions Section ___________________________\\
 
@@ -31,6 +33,13 @@ function mapOrderStatus(status){
     }
     return statusElement
 }
+
+function showOrderRejectModal(event){
+    orderDeleteConfirmModal.show();
+}
+function showOrderAcceptModal(event){
+    orderAcceptConfirmModal.show()
+}   
 function createOrderTableRow(orderItem,order){
     let orderTableRow = convertToHtmlElement(orderTableRowString);
         let product = Product.getProductById(orderItem.productID)
@@ -40,6 +49,17 @@ function createOrderTableRow(orderItem,order){
         orderTableRow.querySelector(".order-date").textContent = new Date(order.date).toLocaleString()
         orderTableRow.querySelector(".order-product-amount").textContent = orderItem.quantity
         orderTableRow.querySelector(".order-status").appendChild( mapOrderStatus(order.status));
+        let rejectBtn = orderTableRow.querySelector(".order-reject-btn")
+        let acceptBtn = orderTableRow.querySelector(".order-accept-btn")
+        if(order.status == 0){
+            rejectBtn.dataset.id = order.id
+            acceptBtn.dataset.id = order.id
+            rejectBtn.addEventListener("click",showOrderRejectModal)
+            acceptBtn.addEventListener("click",showOrderAcceptModal)
+        }else{
+            rejectBtn.classList.add("d-none")
+            acceptBtn.classList.add("d-none")
+        }
         orderTableRow.dataset.orderId = order.id
     return orderTableRow;
 }
@@ -76,6 +96,10 @@ let sellerId = 2;
 let sellerOrders = Seller.getSortedSellerOrdersById(sellerId)
 let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId);
 let orderTableBody = document.getElementById("orders-table-body");
+var orderDeleteConfirmModal = new bootstrap.Modal(document.getElementById("orderDeleteConfirmModal"))
+var orderAcceptConfirmModal = new bootstrap.Modal(document.getElementById("orderAcceptConfirmModal"))
+console.log(orderDeleteConfirmModal)
+// console.log(Modal)
 //___________________________ End Of Gloabal Variables ___________________________\\
 
 

@@ -194,6 +194,7 @@ document.getElementById("total-products").innerText =
                                         Product.getProductsBySeller(2).length 
     // getSellerOrders
 let sellerOrders = Seller.getSellerOrdersById(2);
+console.log(sellerOrders)
     // Get shipped orders Orders Only
 let shippedOrders = sellerOrders.filter(order=> order.status == 1);
 // console.log(sellerOrders.filter(order=> order.status == 0))
@@ -212,11 +213,11 @@ document.getElementById("total-revenue").innerText =
                                         (orderItemsAcc,orderItem)=>{
                                             let productPrice =
                                             Product.getProductById(orderItem.productID).price   
-                                            productPrice = productPrice || 1    
+                                            productPrice = productPrice || 0    
                                             return orderItemsAcc+(productPrice*orderItem.quantity)
                                         },0)
                                     }
-                                        ,0).toFixed(2) 
+                                    ,0).toFixed(2) 
 
 
 
@@ -239,7 +240,7 @@ const salaries = Object.values(dailySales)
 
     // Creating the Chart  
 let chart = new Chart(document.getElementById('salesChart'), {
-        type: 'line',
+        type: 'bar',
         data: {
         labels: labels,
         datasets: [{
@@ -273,11 +274,12 @@ let chart = new Chart(document.getElementById('salesChart'), {
             title: { display: true, text: 'Date', font:{size:20} }
             },
             y: {
-            title: { display: true, text: 'Salary ($)', font:{size:20} }
+                beginAtZero: true,
+               title: { display: true, text: 'Salary ($)', font:{size:20} }
             }
         }
-        }
-    });
+    }
+});
 
 
 // Listening To Chart Buttons

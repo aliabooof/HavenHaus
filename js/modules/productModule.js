@@ -1,19 +1,19 @@
 import { getTable, add, setTable } from "./db.js";
 
 export class Product {
-    constructor({ name, category, price, desc, imageUrl, stock, sellerID, highlights, instructions, reviews,featured=false }) {
-        this.name = name;
-        this.category = category;
-        this.price = price;
-        this.desc = desc;
-        this.imageUrl = imageUrl;
-        this.stock = stock;
-        this.sellerID = sellerID;
-        this.highlights = highlights || "No highlights provided.";
-        this.instructions = instructions || "No instructions provided.";
-        this.reviews = reviews || [];
-        this.featured = featured;
-        this.id = this.#generateUniqueId(name, category);
+    constructor(productData) {
+        this.name = productData.name;
+        this.category = productData.category;
+        this.price = productData.price;
+        this.desc = productData.desc;
+        this.imageUrl = productData.imageUrl;
+        this.stock = productData.stock;
+        this.sellerID = productData.sellerID;
+        this.highlights = productData.highlights || "No highlights provided.";
+        this.instructions = productData.instructions || "No instructions provided.";
+        this.reviews = productData.reviews || [];
+        this.featured = productData.featured;
+        this.id = this.#generateUniqueId(this.name, this.category);
     }
 
     // Generates a random base ID using name and category
@@ -75,8 +75,10 @@ export class Product {
     
     static updateProduct(updatedProduct) {
         const products = this.getAllProducts();
-        const index = products.findIndex(product => product.id === updatedProduct.id);
-    
+        const index = products.findIndex(product => product.id == updatedProduct.id);
+
+        console.log(" print edit product id"+updatedProduct.id);
+        
         if (index === -1) {
             throw new Error(`Product with ID ${updatedProduct.id} not found.`);
         }
@@ -93,6 +95,7 @@ export class Product {
     
         setTable("product", products);
     }
+    
 
 
     static removeProduct(productId) {

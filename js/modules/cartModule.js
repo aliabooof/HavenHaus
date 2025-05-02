@@ -1,6 +1,6 @@
 import { CreateDisplyCartItem } from "../componentModules/cart-item.js";
 import { User } from "./userModule.js";
-import { ChangeCartItemQuantity, AddCartItem,GetCartByID } from "./db.js";
+import { ChangeCartItemQuantity, AddCartItem,GetCartByID, getTable, setTable } from "./db.js";
 import { redirect } from "../util.js";
 import { Auth } from "./authModule.js";
 
@@ -60,6 +60,13 @@ export class Cart{
             this.DispalyCartItems(cartItemsContainer,cart);
         }
 
+    }
+
+    static emptyCartByUserID(userID){
+        let cartTable = getTable("cartItem").filter((item)=>{
+            return userID != item.userID;
+        });
+        setTable("cartItem", cartTable);
     }
 
 

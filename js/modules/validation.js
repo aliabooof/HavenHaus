@@ -43,7 +43,7 @@ export class Validation {
   static validateCreditCard(cardNumber) {
     const regex = /^\d{16}$/;
     if (typeof cardNumber !== 'string' || !regex.test(cardNumber.trim())) return false;
-    return this.luhnCheck(cardNumber);
+    return Validation.luhnCheck(cardNumber);
   }
 
   static luhnCheck(cardNumber) {
@@ -85,10 +85,7 @@ export class Validation {
     return typeof cvv === 'string' && regex.test(cvv.trim());
   }
 
-  // static validateImage(image) {
-  //   const regex = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
-  //   return typeof image === 'string' && regex.test(image.trim());
-  // }
+
   static validateImage(file) {
     const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/bmp'];
     const maxSizeInBytes = 5 * 1024 * 1024;
@@ -151,6 +148,23 @@ export class Validation {
     return [
       { field: inputs.email, method: Validation.validateEmail, message: "Enter a valid email address." },
       { field: inputs.password, method: Validation.validatePassword, message: "Enter a valid password." }
+    ]
+  }
+  
+    static validatePrice(price) {
+      const regex = /^\d+(\.\d{1,2})?$/; // Matches whole numbers or decimal numbers with up to two decimal places
+      return typeof price === 'string' && regex.test(price);
+  }
+  static validateNumber(number) {
+    const regex = /^-?\d+(\.\d+)?$/;  // Matches integers or decimal numbers, including optional negative sign
+    return typeof number === 'string' && regex.test(number);
+  }
+  static productRules(inputs) {
+
+    return [
+      { field: inputs.productName, method: Validation.validateName, message: "Enter a valid Name." },
+      { field: inputs.productPrice, method: Validation.validatePrice, message: "Enter a valid price." },
+      { field: inputs.stockQuantity, method: Validation.validateNumber, message: "Enter a valid price." }
     ]
   }
 

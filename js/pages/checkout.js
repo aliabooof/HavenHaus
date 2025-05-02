@@ -6,6 +6,10 @@ import { Component } from "../componentModules/components.js";
 import { Auth } from "../modules/authModule.js";
 import { Validation } from "../modules/validation.js";
 import { LoadDB } from "../load_db.js";
+import { Order } from "../modules/order.js";
+import { Product } from "../modules/productModule.js";
+import { OrderItem } from "../modules/OrderItem.js";
+import { Cart } from "../modules/cartModule.js";
 
 await LoadDB()
 Auth.enforcePageAuthorization();
@@ -20,60 +24,37 @@ await Component.renderFooter();
 const currentUser = User.getCurrentUser();
 const cart = GetCartByID(currentUser.id);
 
-// Utility Functions
+const cart_ = cart.map(item =>{
+  item.price = Product.getProductById(item.productID).price;
+  return item;
+});
 
-// function validateCheckout() {
-//   let isValid = true;
-//   let firstInvalidField = null;
-// }
+const placeOrder = document.getElementById("placeOrder");
 
 
-let currUser = User.getCurrentUser();
-let userID = currUser.id;
+function PlaceOrder(){
+  let orderData = {};
+  orderData.userId = currentUser.id;
+  orderData.items = cart_;
+  let order = new Order(orderData);
+   delete order.items;
+   Order.addOrder(order);
+   console.log(cart_)
+   cart_.forEach(item =>{
+      let orderItem = new OrderItem({orderID:order.id, productID:item.productID, quantity:item.quantity,price:item.price});
+      OrderItem.addOrderItem(orderItem);
+   })
+}
+
+
+
 
 
 // Utility Functions
 function GoToCart(event){
   redirect("../../pages/cart.html")
 }
-function validateCheckout() {
-  let isValid = true;
-  let firstInvalidField = null;
 
-  const validations = [
-    { field: fields.firstName, method: Validation.validateName, message: "Enter a valid first name." },
-    { field: fields.lastName, method: Validation.validateName, message: "Enter a valid last name." },
-    { field: fields.email, method: Validation.validateEmail, message: "Enter a valid email address." },
-    { field: fields.phone, method: Validation.validatePhone, message: "Enter a valid phone number." },
-    { field: fields.address, method: Validation.validateAddress, message: "Address is too short." },
-    { field: fields.city, method: Validation.validateCity, message: "Enter a valid city." },
-    { field: fields.country, method: Validation.validateCountry, message: "Enter a valid country." },
-    { field: fields.zip, method: Validation.validateZipCode, message: "Enter a valid zip code." }
-  ];
-
-  // Credit Card Validations (if selected)
-  if (fields.creditCardRadio.checked) {
-    validations.push(
-      { field: fields.cnumber, method: Validation.validateCreditCard, message: "Enter a valid credit card number." },
-      { field: fields.cname, method: Validation.validateName, message: "Enter a valid cardholder name." },
-      { field: fields.expiryDate, method: Validation.validateExpiryDate, message: "Enter a valid expiry date." },
-      { field: fields.ccv, method: Validation.validateCVV, message: "Enter a valid CVV." }
-    );
-  }
-
-
-  // Run validations
-  validations.forEach(({ field, method, message }) => {
-    if (!method(field.value)) {
-      Validation.showError(field, message);
-      isValid = false;
-      if (!firstInvalidField) firstInvalidField = field;
-    } else {
-      Validation.clearError(field);
-    }
-  });
-
-}
 let creditCardRadio = document.getElementById('pmethod-ccard');
 let cashRadio = document.getElementById('cash');
 let creditCardDetails = document.getElementById('credit-card-fields');
@@ -131,8 +112,12 @@ checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let formInputs = getFormInputs(checkoutForm);
   const validationRules = Validation.checkoutRuls(formInputs,creditCardRadio.checked)
-  if (!(Validation.validateForm(checkoutForm, validationRules))) return;
-  
+  if (!(Validation.validateForm(checkoutForm, validationRules))){
+    return;
+  };
+
+   PlaceOrder();
+   Cart.emptyCartByUserID(currentUser.id)
   
     createAlert("Successfully ordered", "success");
     checkoutForm.submit();

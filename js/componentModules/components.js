@@ -5,6 +5,7 @@ import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID } from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
 import {Order} from "../../js/modules/order.js";
+
 import { Validation } from "../modules/validation.js";
 import { Inquiry } from "../modules/inquiryModule.js";
 import { Product } from "../../js/modules/productModule.js";
@@ -71,7 +72,7 @@ export class Component {
             });
             const profileLinks = body.querySelectorAll(".profile-link");
             profileLinks.forEach(link => {
-                link.addEventListener('click', (e) =>{
+                link.addEventListener('click', (e) => {
                     e.target.href = "../../pages/profile.html";
                 });
             });
@@ -98,7 +99,8 @@ export class Component {
         const classArr = ["from-left-animation", "from-right-animation", "from-z-animation", "from-top-animation", "from-bottom-animation"];
         let productCard = await fetchComponent("../../components/product-card.html");
         productCard = convertToHtmlElement(productCard);
-
+        const seller = User.getUserById(product.sellerID);
+        
         productCard.id = product.id;
 
         const prodductName = productCard.querySelector("h5");
@@ -106,8 +108,9 @@ export class Component {
         prodductName.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
 
         const productImg = productCard.querySelector("img");
+        productImg.src=`../../assets/images/Products/${product.name}.png`
         productImg.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
-
+        productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
         productCard.querySelector("p").innerText = product.desc;
         productCard.querySelector("span").innerText = "$ " + product.price;
 
@@ -117,11 +120,11 @@ export class Component {
                 createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
                 return;
             }
-            
+
             Cart.cartUi(productCard.id)
         });
 
-        if (User.getCurrentUser() !== null && User.getCurrentUser().role != 2) {
+        if (User.getCurrentUser() !== null &&( User.getCurrentUser().role == 0 ||User.getCurrentUser().role == 1)) {
 
             productCard.querySelector("button").remove();
         }
@@ -153,7 +156,7 @@ export class Component {
         inquiryHeaderElement.querySelector("h5").innerText = inquiry.title;
         inquiryHeaderElement.querySelectorAll("p")[1].innerText = inquiry.date;
         inquiryHeaderElement.querySelectorAll("p")[2].innerText = inquiry.summary;
-        
+
         inquiryHeaderElement.querySelector("span").className = `badge ${inquiry.details.statusClass}`
         inquiryHeaderElement.querySelector("span").innerText = inquiry.details.status;
 
@@ -431,7 +434,7 @@ export class Component {
 
     static #setEditFormInputs(form, user) {
         const formInputs = getFormInputs(form)
-        
+
         formInputs.firstName.value = user.firstName;
         formInputs.lastName.value = user.lastName;
         formInputs.email.value = user.email;
@@ -496,16 +499,18 @@ export class Component {
 
     }
 
+
+
     static async renderSupport(inquiries) {
-        document.getElementById("inquireis-container").innerHTML=""
-   
+        document.getElementById("inquireis-container").innerHTML = ""
+        
         for (const inquiry of inquiries) {
             await this.renderAdminInquires(inquiry)
         }
     }
 
     static async renderAdminInquires(inquiry) {
-
+        console.log("hey");
         const container = document.getElementById("inquireis-container");
 
         const inquiryCard = await fetchComponent("../../components/inquiry-card.html");
@@ -529,10 +534,10 @@ export class Component {
             
         })
         if(inquiry.details.status == 'in progress'){
-            console.log('hey')
+            
             buttonResolve.classList.remove('d-none');
-        }
-    }
+        }}
+
 
     static async renderEditUserForm(userId) {
     const editForm = await fetchComponent("../../components/edit-user-form.html");
@@ -547,7 +552,7 @@ export class Component {
             if (!modalElement) {
                 await this.renderInquiryModal(inquiry.id);
                 modalElement = document.getElementById(`inquiryModal${inquiry.id}`);
-                
+
                 // Populate modal with inquiry data
                 modalElement.querySelector("h5").innerText = inquiry.title;
                 const pArr = modalElement.querySelectorAll("p");
@@ -561,8 +566,7 @@ export class Component {
                 pArr[4].innerText = inquiry.message;
                 const replyMessageCard = document.querySelector(".conversation-container-parent");
 
-            
-               
+
                 
                 if (!inquiry.reply.trim()) {
                     replyMessageCard.classList.add("d-none")
@@ -578,13 +582,12 @@ export class Component {
                                 status: formData.status,
                                 statusClass: formData.status == "pending" ? "bg-warning" :
                                     formData.status == "in progress" ? "bg-primary" :
-                                    formData.status == "resolved" ? "bg-success" : "bg-secondary"
+                                        formData.status == "resolved" ? "bg-success" : "bg-secondary"
                             }
                         }
 
                         Inquiry.replyToInquiry(data);
-                        if(data.details.status !='pending'||data.details.status !='resolved')
-                        {
+                        if (data.details.status != 'pending' || data.details.status != 'resolved') {
                             statusSpan.textContent = data.details.status;
                             statusSpan.className = `badge ${data.details.statusClass}`;
                             buttonResolve.classList.remove('d-none');
@@ -627,8 +630,6 @@ export class Component {
             modal.show();
         });
 
-
-        container.insertAdjacentElement("beforeend", inquiryCardElement);
     }
 
     static async renderInquiryModal(inquiryId) {
@@ -637,83 +638,51 @@ export class Component {
     inquiryFormElement.setAttribute('id', `inquiryModal${inquiryId}`);
     document.getElementById("inquireis-container").insertAdjacentElement("beforeend", inquiryFormElement);
 
-}
-
-static async renderCharts(){
-
-    const dashboard = await fetchComponent("../../components/dashboard.html");
-    const chart = convertToHtmlElement(dashboard);
-    const container = document.getElementById("content");
-    container.innerHTML = "";
-    container.appendChild(chart);
-}
-
-    static async renderProducts(){
-
-    const product = await fetchComponent("../../components/products-dashboard.html");
-    const product_chart = convertToHtmlElement(product);
-    const container = document.getElementById("content");
-    container.innerHTML = "";
-    container.appendChild(product_chart);
-}
-
-static async renderProductsTable(){
-    const producttable = await fetchComponent("../../components/productTable.html");
-    const productTable = convertToHtmlElement(producttable);
-    const container = document.getElementById("content");
-    // container.innerHTML = "";
-    container.appendChild(productTable);
-}
-
-static async renderProductRow(){
-    const products = Product.getAllProducts();
-    for (const product of products){
-        const productrow = await fetchComponent("../../components/productTableRows.html");
-        const productrowElement = convertToHtmlElement(productrow);
-        const cols = productrowElement.querySelectorAll("td");
-        const seller = User.getUserById(product.sellerID);
-        if(!seller) {continue;}
-        const sellerName = `${seller.firstName} ${seller.lastName}`;
-        // cols[0].innerText = product.imageUrl;
-        // cols[0].innerHTML = `<img src="${product.imageUrl}" width="50" height="50" style="object-fit: cover; border-radius: 4px;">`;
-        cols[1].innerText = product.name;
-        cols[2].innerText = `$${product.price.toFixed(2)}`;
-        cols[3].innerText = sellerName;
-        cols[4].innerText = product.stock;
-        cols[5].innerHTML = `
-        <span class="badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
-            ${product.stock > 0 ? 'In Stock' : 'Out of Stock'}
-        </span>
-    `;
-    productrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
-        Product.removeProduct(product.id);
-        e.target.closest("tr").remove();
-    });
-        document.getElementById("productsTableBody").appendChild(productrowElement);    
-
     }
+
+
+
+
+    static async renderCharts(){
+
+        const dashboard = await fetchComponent("../../components/dashboard.html");
+        const chart = convertToHtmlElement(dashboard);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(chart);
+    }
+
+        static async renderProducts(){
+
+        const product = await fetchComponent("../../components/products-dashboard.html");
+        const product_chart = convertToHtmlElement(product);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        container.appendChild(product_chart);
+    }
+
+   
+
+        static async renderOrders(){
+        const order = await fetchComponent("../../components/order-dashboard.html");
+        // const ordertable = await fetchComponent("../../components/orderTable.html");
+        // const orderTable = convertToHtmlElement(ordertable);
+
+        const orders_content = convertToHtmlElement(order);
+        const container = document.getElementById("content");
+        container.innerHTML = "";
+        // container.appendChild(orderTable);
+        container.appendChild(orders_content);
+
 }
 
-    static async renderOrders(){
-    const order = await fetchComponent("../../components/order-dashboard.html");
-    // const ordertable = await fetchComponent("../../components/orderTable.html");
-    // const orderTable = convertToHtmlElement(ordertable);
-
-    const orders_content = convertToHtmlElement(order);
-    const container = document.getElementById("content");
-    container.innerHTML = "";
-    // container.appendChild(orderTable);
-    container.appendChild(orders_content);
-
-}
-
-static async renderOrderTable() {
-    const ordertable = await fetchComponent("../../components/orderTable.html");
-    const orderTable = convertToHtmlElement(ordertable);
-    const container = document.getElementById("content");
-    // container.innerHTML = "";
-    container.appendChild(orderTable);
-}
+    static async renderOrderTable() {
+        const ordertable = await fetchComponent("../../components/orderTable.html");
+        const orderTable = convertToHtmlElement(ordertable);
+        const container = document.getElementById("content");
+        // container.innerHTML = "";
+        container.appendChild(orderTable);
+    }
 
 static async renderOrderRow() {
     const orders = Order.getAllOrders();
@@ -724,24 +693,23 @@ static async renderOrderRow() {
         const customer = User.getUserById(order.userID);
         if(!customer) {continue;}
         const customerName = `${customer.firstName} ${customer.lastName}`;
-        // console.log(order.userID);
         cols[0].innerText = customerName;
         cols[1].innerText = order.date;
         cols[2].innerText = getStatusLabel(order.status);
         cols[3].innerText = `$${order.cost.toFixed(2)}`;
 
-        orderrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
-            Order.removeOrder(order.id);
-            e.target.closest("tr").remove();
-        });
-        
-        document.getElementById("orderTableBody").appendChild(orderrowElement);
-    
-        function getStatusLabel(status) {
-            return status == 0 ? "Pending" : "completed";
+            orderrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
+                Order.removeOrder(order.id);
+                e.target.closest("tr").remove();
+            });
+
+            document.getElementById("orderTableBody").appendChild(orderrowElement);
+
+            function getStatusLabel(status) {
+                return status == 0 ? "Pending" : "completed";
+            }
         }
     }
-}
 
 
 

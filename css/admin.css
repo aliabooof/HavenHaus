@@ -26,18 +26,18 @@ body{
     #sidebar {
         height: auto !important;
         position: static !important;
-}
+    }
 
-.card{
-    border-radius: 1rem;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
+    .card{
+        border-radius: 1rem;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
 
-.card .card-title{
-    font-size: 1.5rem;
-    font-weight: 600;
+    .card .card-title{
+        font-size: 1.5rem;
+        font-weight: 600;
+    }
 }
-
 
 .pagination-controls {
     display: flex;

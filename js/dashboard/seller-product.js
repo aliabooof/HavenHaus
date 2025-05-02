@@ -1,186 +1,120 @@
-import { getTable } from "/js/modules/db.js";
-import {Product } from '/js/modules/productModule.js';
+import { getTable } from "../modules/db.js";
+import {  Product } from "../modules/productModule.js";
+import {Auth} from "../modules/authModule.js"
+import {User} from "../modules/userModule.js"
+import { OrderItem } from "../modules/OrderItem.js";
 // import { Product } from "../modules/productModule";
+import {Order} from "../modules/order.js"
+import { getFormInputs } from "../util.js";
+import { Validation } from "../modules/validation.js";
 
-window.addEventListener('DOMContentLoaded', function(){
+// window.addEventListener('DOMContentLoaded', function(){
 
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const productModal = new bootstrap.Modal(document.getElementById('productModal'));
-    const saveProductBtn = document.getElementById('saveProductBtn');
-    const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
-    const productImage = document.getElementById('productImage');
-    const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
-    const imagePreview = document.getElementById('imagePreview');
-    const imagePreviewContainer = document.getElementById('imagePreviewContainer');
-    const addProductBtn = document.getElementById('addProductBtn');
-    const productTab =document.getElementById('products-tab');
+        const deleteModal = new bootstrap.Modal(document.getElementById('deleteModal'));
+        const productModal = new bootstrap.Modal(document.getElementById('productModal'));
+        const productForm = document.getElementById('productForm');
+        const addProductBtn = document.getElementById('addProductBtn');
+        const saveProductBtn = document.getElementById('saveProductBtn');
+        const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+        const stockInput = document.getElementById('productStock');
+        const priceInput = document.getElementById('productPrice');
+        const categorySelect = document.getElementById('productCategory');
 
-    const productForm = document.getElementById('productForm');
-    const saveBtn = document.getElementById('saveProductBtn');
+        let getrow;
 
-    const stockInput = document.getElementById('productStock');
-    const priceInput = document.getElementById('productPrice');
-    const categorySelect = document.getElementById('productCategory');
+        let deleteBtns = document.querySelectorAll('.delete-btn');
+
+
+    function confirmDelete(e){
+        console.log(confirmDeleteBtn)
+        console.log(e.target);
+        Product.removeProduct(e.target.dataset.id)
+        // confirmDeleteBtn.closest("tr").remove();
+        getrow.remove();
+        
+        let prodcutOrderItems =OrderItem.getOrderItemsByProductId(productId);
+        let prodcutOrderIds = prodcutOrderItems.map(orderItem=>orderItem.orderID);
+        let orderToBeRejected = Order.getAllOrders().filter(order=> prodcutOrderIds.filter((orderId)=> orderId == order.id).length && order.status == 0)
+        
+        orderToBeRejected.forEach(order=>{
+            Order.updateOrderStatus(order.id,2)
+            let orderItems = OrderItem.getOrderItemsByOrderId(order.id)
+            let orderItemStatus = 3;
+            orderItems.forEach(orderItem => {
+                if(productId == orderItem.productID){orderItemStatus = 2}
+                else{orderItemStatus = 3}
+                
+                OrderItem.setOrderItemStatus(order.id,orderItem.productID,orderItemStatus)
+            });
+        })
+        deleteModal.hide();
+    }
+
+    function attachDeleteHandlers() {
+        let deleteBtns = document.querySelectorAll('.delete-btn');
+        // console.log(deleteBtns)
+        deleteBtns.forEach(button =>{
+            button.addEventListener('click',DeleteProduct)
+        });
+    }
+
+    var seller = User.getCurrentUser()
+    var sellerID = 2 //seller.id
+
+ 
+    let isEditMode = true;
 
     //to show pop up to Add Product
-        addProductBtn.addEventListener('click', function() {
-        document.getElementById('productForm').reset(); 
-        document.getElementById('imagePreviewContainer').style.display = 'none'; 
-        productModal.show(); 
+    addProductBtn.addEventListener('click', function() {
+        isEditMode=false;
+        console.log(isEditMode);
+        document.getElementById('productForm').reset();
+        productModal.show();
     });
 
+    const productName =document.getElementById("productName");
 
-    productTab.addEventListener('click',loadProductsTable);
+    saveProductBtn.addEventListener("click",save);
+    function save(e){
+        e.preventDefault();
+        console.log(isEditMode);
 
-    saveProductBtn.addEventListener('click',addNewProduct );
-
-    // load images 
-
-    // async function uploadProductImage(productId, imageFile) {
-    //     const formData = new FormData();
-    //     formData.append('image', imageFile);
-    //     formData.append('productId', productId);
-        
-    //     try {
-    //         const response = await fetch('/api/upload-product-image', {
-    //             method: 'POST',
-    //             body: formData
-    //         });
-            
-    //         if (!response.ok) throw new Error('Upload failed');
-    //         return await response.json();
-    //     } catch (error) {
-    //         console.error('Image upload error:', error);
-    //         alert('Image upload failed');
-    //     }
-    // }
-
-    // const productName =this.document.getElementById("productName");
-
-    // function nameValidation()
-    // document.getElementById('productName').addEventListener('input', function(e) {
-    //     this.value = this.value.replace(/\d/g, '');
-    //     if (/\d/.test(e.data)) { 
-    //         showWarning(this, "Numbers are not allowed in product names");
-    //     }
-    // });
-
-    // document.getElementById('productPrice').addEventListener('input', function(e) {
-    //     // Convert to number (allow decimals)
-    //     const price = parseFloat(this.value);
-        
-    //     // Check if valid number and > 0
-    //     if (isNaN(price)) {
-    //         // Handle empty input (optional)
-    //         this.classList.remove('is-invalid');
-    //     } else if (price <= 0) {
-    //         // Invalid: Negative or zero
-    //         this.value = ''; // Clear invalid input
-    //         this.classList.add('invalid');
-    //         showWarning(this, "Price must be greater than 0");
-    //     } else {
-    //         // Valid
-    //         this.classList.remove('invalid');
-    //     }
-    // });
-
-    // stockInput.addEventListener('input', function() {
-    //     // Convert to number (allow decimals)
-    //     const stockValue = stockInput.value;
-    //     const hasDecimal = /[.,]/.test(stockValue);
-    //     if( hasDecimal){
-    //         showWarning(this,"stock can not be decimal");
-    //     }
-    //     // Check if valid number and > 0
-    //     else if (isNaN(price)) {
-    //         // Handle empty input (optional)
-    //         this.classList.remove('is-invalid');
-    //     } else if (price <= 0) {
-    //         // Invalid: Negative or zero
-    //         this.value = ''; // Clear invalid input
-    //         this.classList.add('invalid');
-    //         showWarning(this, "Price must be greater than 0");
-    //     } else {
-    //         // Valid
-    //         this.classList.remove('invalid');
-    //     }
-    // });
-
-    function addNewProduct() {
-        if (validateForm()) {
-        // 1. Get form data
-        const productData = {
-            name: document.getElementById('productName').value,
-            price: parseFloat(document.getElementById('productPrice').value),
-            stock: parseInt(document.getElementById('productStock').value),
-            category: document.getElementById('productCategory').value,
-            desc: document.getElementById('productDescription').value,
-            imageUrl: document.getElementById('imagePreview')?.src || 'default.jpg',
-            sellerID: '3' //  dynamic seller ID 
-        };
-        console.log(productData);
-        
-        var nameInput =document.getElementById('productName').value;
-        console.log(nameInput);
-        if (validateProducproductData) {
-            if (!productData.name || productData.price <= 0 || productData.stock <= 0) {
-                alert("Please fill all fields correctly!");
-                return;
-            }
+        let formInputs=getFormInputs(productForm);
+        let validationRules=Validation.productRules(formInputs);
+        if (!Validation.validateForm(formInputs,validationRules)) {
+            return;
         }
-        // nameInput.classList.remove('invalid');
-        // return true;
-         // 3. Create and save the product
-        const newProduct = new Product(productData);
-        Product.addProduct(newProduct); // This saves to localStorage via db.js
-        console.log(newProduct);
+        let product = getFormData();        
+        if (isEditMode) {
+            console.log(isEditMode);
+            let productID = document.getElementById("saveProductBtn").dataset.id;
+            console.log("saveProductBtn dateset.id: ", productID)
+            product.id=productID;
+            Product.updateProduct(product);
+            // e.validateForm();
+            // editProduct();
+        }else{
+        product.sellerID = sellerID
+        product = new Product(product)
+        Product.addProduct(product)
+        console.log(isEditMode);
+        }
+    productModal.hide();
 
-        // 4. Refresh the table
         loadProductsTable();
-        // const imageFile = document.getElementById('productImage').files[0];
-        // if (imageFile) {
-        //      uploadProductImage(productId, imageFile);
-        // }
-        
-        // 4. Refresh UI
-        loadProductsTable();
-        this.reset();
-
-        // 5. Close modal and show feedback
-        productModal.hide();
-        alert("Product added successfully!");
     }
-    else{
-        console.log("Please fix the errors before submitting");
-    }
-        }
-
-        function showWarning(input, message) {
-            const warning = document.createElement('div');
-            warning.className = 'input-warning';
-            warning.textContent = message;
-            warning.style.color = 'red';
-            warning.style.fontSize = '0.8rem';
-            
-            // Add warning if not already there
-            if (!input.nextElementSibling?.classList.contains('input-warning')) {
-                input.insertAdjacentElement('afterend', warning);
-                setTimeout(() => warning.remove(), 2000);
-            }
-        }
-    
 
     function loadProductsTable() {
-        const sellerID = '3'; // Your seller ID
+        console.log("From load Product Table")
+        // Your seller ID
         const products = Product.getProductsBySeller(sellerID);
         const tbody = document.querySelector('#products-table');
         tbody.innerHTML = ''; // Clear existing rows
-    
+
         products.forEach((product, index) => {
             tbody.innerHTML += `
-                <tr>
+                <tr data-id="${product.id}">
                     <td>${index + 1}</td>
-                    <td><img src="${product.imageUrl}" width="50"></td>
                     <td>${product.name}</td>
                     <td>$${product.price}</td>
                     <td>${product.stock}</td>
@@ -196,106 +130,95 @@ window.addEventListener('DOMContentLoaded', function(){
                 </tr>
             `;
         });
+
+        //call edit after render table
+        document.querySelectorAll('.edit-btn').forEach(button =>{
+            button.addEventListener('click', function (e) {
+                isEditMode=true;
+                let productId = button.getAttribute('data-id');
+                document.getElementById('productModalLabel').textContent = "Edit Product";
+                document.getElementById("saveProductBtn").dataset.id=productId;
+
+                let product= Product.getProductById(productId);
+                
+                fillProductForm(product);
+                productModal.show();
+            })
+        });
+        attachDeleteHandlers();
+    }
     
-        // Add event listeners for edit/delete buttons
-        // attachEditDeleteHandlers();
+    loadProductsTable();
+    confirmDeleteBtn.addEventListener("click",confirmDelete);
+
+    function getFormData(){
+        return {
+                // id:document.getElementById('productId').value = product.id,
+                name:document.getElementById('productName').value,
+                category:document.getElementById('productCategory').value,
+                price:document.getElementById('productPrice').value,
+                desc:document.getElementById('productDescription').value ,
+                stock:document.getElementById('productStock').value,
+                highlights:document.getElementById('highlights').value,
+                instructions:document.getElementById('instructions').value,
+        }
+    } //End get formData() function 
+
+    function DeleteProduct(e){
+        console.log("from Delete");
+        const parentTr= e.target.closest("tr");
+
+        getrow =e.target.closest("tr");
+
+        let productId = parentTr.dataset.id
+        confirmDeleteBtn.dataset.id = productId;
+        deleteModal.show();
     }
 
-    
+ 
 
-
-    // try combine validation 
-
-    function validateForm() {
-        let isValid = true;
-        
-        // Validate Product Name
-        const nameInput = document.getElementById('productName');
-        nameInput.value = nameInput.value.replace(/\d/g, ''); // Remove numbers
-        if (nameInput.value.length < 3) {
-            showWarning(nameInput, "Name must be at least 3 characters");
-            isValid = false;
-        }
-        
-        // Validate Price
-        const priceInput = document.getElementById('productPrice');
-        const price = parseFloat(priceInput.value);
-        if (isNaN(price) ){
-            showWarning(priceInput, "Please enter a valid price");
-            isValid = false;
-        } else if (price <= 0) {
-            showWarning(priceInput, "Price must be greater than 0");
-            isValid = false;
-        }
-        
-        // Validate Stock
-        const stockInput = document.getElementById('productStock');
-        const stockValue = stockInput.value;
-        const stock = parseInt(stockValue);
-        
-        if (/[.,]/.test(stockValue)) {
-            showWarning(stockInput, "Stock cannot be decimal");
-            isValid = false;
-        } else if (isNaN(stock)) {
-            showWarning(stockInput, "Please enter a valid stock quantity");
-            isValid = false;
-        } else if (stock < 0) {
-            showWarning(stockInput, "Stock cannot be negative");
-            isValid = false;
-        }
-        
-        // Validate Category
-        const categorySelect = document.getElementById('productCategory');
-        if (!categorySelect.value) {
-            showWarning(categorySelect, "Please select a category");
-            isValid = false;
-        }
-        
-        return isValid;
+    function fillProductForm(product) {
+        document.getElementById('productName').value = product.name;
+        document.getElementById('productPrice').value = product.price;
+        document.getElementById('productStock').value = product.stock;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productDescription').value = product.desc || '';
+        document.getElementById('highlights').value = product.highlights || '';
+        document.getElementById('instructions').value = product.instructions || '';
     }
 
+    // updateProduct()
+
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        Auth.logout();
+    });
+
+
+
+    attachDeleteHandlers()
+
+    console.log(sellerID)
+
+
+// }); //End of DOMContentLoaded Event to Window
+
+//    static logout() {
+//         deleteTable("currentUser");
+//         deleteTable("loggedin");
+//         console.log("User logged out.");
+//         redirect("/");
+//     }
+
+    // document.getElementById('logout').addEventListener('click',Auth.logout());
 
 
 
 
+// const productModal = document.getElementById('productModal');
 
-
-
-
-    
-
-
-
-}); //End of DOMContentLoaded Event to Window 
-
-
-
-
-
-//     const products = Product.getProductsBySeller(sellerID);
-//     // Add each product as a row
-//     products.forEach((product ,index) => {
-//         const row = document.createElement('tr');
-//         row.innerHTML = `
-//             <td>${index + 1}</td>
-//             <td><img src="${product.imageUrl || 'default-image.jpg'}" alt="${product.name}" class="product-image" style="max-width: 80px;"></td>
-//             <td>${product.name}</td>
-//             <td>$${product.price.toFixed(2)}</td>
-//             <td>${product.stock}</td>
-//             <td>
-//                 <span class="badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
-//                 ${product.stock > 0 ? 'In Stock' : 'Out of Stock'}
-//                 </span>
-//             </td>
-//             <td>
-//                 <button class="btn btn-sm btn-primary"><i class="bi bi-pencil-square"></i>Edit</button>
-//                 <button class="btn btn-sm btn-danger ms-2">Delete</button>
-//             </td>
-//         `;
-//         tbody.appendChild(row);
-//     });
-// }
-
-// loadProductsTable(); 
-
-
+// productModal.addEventListener('hidden.bs.modal', () => {
+//     if (document.activeElement && productModal.contains(document.activeElement)) {
+//     document.activeElement.blur();
+//     }
+// });
