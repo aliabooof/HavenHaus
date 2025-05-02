@@ -17,6 +17,7 @@ document.getElementById("category-name").innerText = Product.getCategoryById(cat
 
  for (const prod of productsByCategory) {
          await Component.renderProductCard(prod);
+         observeElements();
 }
 
 observeElements();
