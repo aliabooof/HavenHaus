@@ -1,6 +1,6 @@
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
-import { createAlert} from "../util.js";
+import { createAlert, redirect} from "../util.js";
 import {Validation} from "../modules/validation.js";
 import { Order } from "../modules/order.js";
 
@@ -37,6 +37,14 @@ const fields = {
     emailInput: document.getElementById("emailInput"),
     phoneInput: document.getElementById("phoneInput")
 };
+
+const sellerbutton =document.getElementById("sellerdashboard");
+sellerbutton.addEventListener('click',function(){
+    redirect('../../pages/dashboard-seller.html');
+})
+if (currentUser.role !=1) {
+    sellerbutton.classList.add('d-none');
+}
 
 if (userOrders.length > 0){
     fields.noorders.style.setProperty("display", "none", "important");
