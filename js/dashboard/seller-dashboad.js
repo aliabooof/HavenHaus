@@ -3,7 +3,7 @@ import { OrderItem } from "../modules/OrderItem.js";
 import { Product } from "../modules/productModule.js";
 import {Seller} from "../modules/seller.js"
 import {Auth} from "../modules/authModule.js"
-import {redirect, fetchComponent, convertToHtmlElement} from "../util.js"
+import {redirect, fetchComponent, convertToHtmlElement, mapOrderStatus} from "../util.js"
 import  'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
 
 // Authintication
@@ -46,21 +46,10 @@ function sortData(data){
 
 function prepareBestSellingElement(product){
     let bestSellingElement = convertToHtmlElement(BestSellingComponentString);
-//     <a href="#best-selling" class="list-group-item py-3 border rounded mb-2 shadow-sm">
-//     <div class="col-12  col-md-4 d-flex flex-column ">
-//         <div class="d-flex flex-row gap-4 flex-lg-column flex-xl-row justify-content-start bg-success">
-//             <p class="">#<span class="number">1</span></p>
-//             <p class="product-name">Product Name</p>
-//         </div>
-//         <p><span class="units-sold">2</span> Unit</p>
-//     </div>
-// </a>
     bestSellingElement.querySelector(".units-sold").innerText = product.totalQuantity;
     bestSellingElement.querySelector(".product-name").innerText = product.name;
     return bestSellingElement
 }
-
-
 
 
 function prepareBestSelling(){
@@ -72,10 +61,8 @@ function prepareBestSelling(){
                     (product)=>{
                         let productQuanity = sellerOrderItems.reduce(
                                             (totalQuantity,orderItem)=>{
-                                                // console.log("prodcutID from reduce "+product.id)
                                                 if(orderItem.productID == product.id)
                                                 {
-                                                    // console.log(product.id +"  "+ orderItem.quantity)
                                                     return totalQuantity += orderItem.quantity;
                                                 }
                                                 return totalQuantity;  
@@ -83,7 +70,6 @@ function prepareBestSelling(){
                                         ,0)
 
                                         product.totalQuantity = productQuanity;
-                                        // console.log(product.totalQuantity)
                     return product
                 }
             )
@@ -108,29 +94,17 @@ function prepareBestSelling(){
     
 }
 
-
-
-
 function prepareOrder(order){        
         let recentOrderElement = convertToHtmlElement(recentOrderComponentString)
         // set id & date
         recentOrderElement.querySelector(".order-id").innerText = order.id
         recentOrderElement.querySelector(".order-date").innerText = new Date(order.date).toDateString()
+        
         // set status
-        let statusText = "Unknown";
-        let statusBGColor = "bg-danger";
-        if(order.status == 0)
-        {
-            statusText = "Pending"
-            statusBGColor = "bg-info"
-        }else if(order.status == 1)
-        {
-            statusText = "Completed"
-            statusBGColor = "bg-success"
-        }
-        let statusElement = recentOrderElement.querySelector(".order-status")  
-        statusElement.innerText = statusText;
-        statusElement.classList.add(statusBGColor)
+        let statusMap = mapOrderStatus(order.status)
+        let orderStatusElement = recentOrderElement.querySelector(".order-status")
+        orderStatusElement.innerText = statusMap.statusElement.innerText;
+        orderStatusElement.classList.add(statusMap.bgColor)
         //____________________________________\\
 
         
@@ -155,7 +129,6 @@ function prepareOrder(order){
 function prepareRecentOrders(){
     let recentOrdersContainer = document.getElementById("recent-orders")
                                     .querySelector(".list-group")
-    let sellerId = 2
     let sellerSortedOrders = Seller.getSortedSellerOrdersById(sellerId)
                                 .filter(
                                     order=>{
@@ -176,6 +149,23 @@ function prepareRecentOrders(){
     // console.log(sellerSortedOrders) ;
 }
 
+
+
+function animateCount(id, endValue, duration = 1000) {
+    const element = document.getElementById(id);
+    let startValue = 0;
+    const stepTime = Math.abs(Math.floor(duration / endValue));
+
+    const counter = setInterval(() => {
+        startValue++;
+        element.textContent = startValue;
+        if (startValue >= endValue) {
+            clearInterval(counter);
+        }
+    }, stepTime);
+}
+
+
 // ____________________________ End Of Functions Section ____________________________\\
 
 // ____________________________ Global Variabls Section ____________________________\\
@@ -186,28 +176,36 @@ var sellerId =  2
 // ____________________________ End Global Variabls Section ____________________________\\
 
 
+
+
+
+
 // ____________________________ Starting ____________________________\\
 
 
     // Total products
-document.getElementById("total-products").innerText = 
-                                        Product.getProductsBySeller(2).length 
-    // getSellerOrders
-let sellerOrders = Seller.getSellerOrdersById(2);
+let totalProductsCountContainer = document.getElementById("total-products")
+let totalProductsCount = Product.getProductsBySeller(sellerId).length 
+animateCount("total-products",totalProductsCount)
+
+
+// getSellerOrders
+let sellerOrders = Seller.getSellerOrdersById(sellerId);
 console.log(sellerOrders)
-    // Get shipped orders Orders Only
+// Get shipped orders Orders Only
 let shippedOrders = sellerOrders.filter(order=> order.status == 1);
 // console.log(sellerOrders.filter(order=> order.status == 0))
-    // seller orders 
-let sellerOrderItems = Seller.getSellerOrderItemsById(2)
+// seller orders 
+let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId)
 
-    // Total orders, Pending Orders, Total Revenue
-document.getElementById("total-orders").innerText = sellerOrders.length 
-document.getElementById("pending-orders").innerText = 
-                                        sellerOrders.filter(order=> order.status == 0).length 
-    // calculate the total revenue
-document.getElementById("total-revenue").innerText =
-                            shippedOrders.reduce((ordersAcc,order)=> {
+// Total orders, Pending Orders
+animateCount("total-orders",shippedOrders.length)
+let pendingOrdersCount = sellerOrders.filter(order=> order.status == 0).length 
+animateCount("pending-orders",pendingOrdersCount)
+
+
+// calculate the total revenue
+let totalRevenue   = shippedOrders.reduce((ordersAcc,order)=> {
                             return ordersAcc + OrderItem.getOrderItemsByOrderId(order.id)
                                     .reduce(
                                         (orderItemsAcc,orderItem)=>{
@@ -219,18 +217,23 @@ document.getElementById("total-revenue").innerText =
                                     }
                                     ,0).toFixed(2) 
 
+animateCount("total-revenue",totalRevenue)
+console.log(totalRevenue)
 
-
-    // Total Sold Units
+// Total Sold Units
 let shippedOrderIds = shippedOrders.map(order=> order.id)
-document.getElementById("total-sold-units").innerText = 
-sellerOrderItems.filter(  
+let totalSoldUnits = sellerOrderItems.filter(  
                             orderItem=> shippedOrderIds.includes(orderItem.orderID)
                         )
                         .reduce((acc,orderItem)=> acc+orderItem.quantity,0)
+animateCount("total-sold-units",totalSoldUnits)
+
+
+
+
 
     // prepare sales                                                    
-let allSales = Seller.calculateSales(2);  
+let allSales = Seller.calculateSales(sellerId);  
 let dailySales = sortData(allSales.dailySales);
 let monthlySales = sortData(allSales.monthlySales);
 let yearlySales = sortData(allSales.yearlySales);

@@ -69,5 +69,21 @@ export class OrderItem {
             setTable("orderItem",orderItems)
         }
     }
+    static rejectOrderById(orderId){
+        let orderItems = this.getAllOrderItems().map(orderItem=>{
+            if(orderItem.orderID == orderId)
+                orderItem.status = 3 
+            return orderItem
+        })
+        setTable("orderItem",orderItems)
+    }
+    // static acceptOrderById(orderId){
+    //     let orderItems = this.getAllOrderItems().map(orderItem=>{
+    //         if(orderItem.orderID == orderId)
+    //             orderItem.status = 1 
+    //         return orderItem
+    //     })
+    //     setTable("orderItem",orderItems)
+    // }
 
 }

@@ -24,7 +24,7 @@
     <!-- Custom CSS -->
     <style>
         * {
-            font-size: 0.8rem !important;
+            font-size: 1rem !important;
         }
 
         table,
@@ -32,6 +32,12 @@
         thead,
         tr {
             font-size: 0.8rem !important;
+        }
+        tr>*,td>*{
+            min-height: px !important;
+            /* max-height: 1rem; */
+            overflow: hidden !important;
+            /* font-size: 4rem !important; */
         }
 
         .min-vh-25 {
@@ -44,6 +50,18 @@
 
         .min-vh-75 {
             min-height: 75vh !important;
+        }
+
+        .max-vh-25 {
+            max-height: 25vh !important;
+        }
+
+        .max-vh-50 {
+            max-height: 50vh !important;
+        }
+
+        .max-vh-75 {
+            max-height: 75vh !important;
         }
 
         .dashboard-container {
@@ -240,7 +258,7 @@
                                             aria-selected="true"><span class="h3 small">Yearly Sales</span></button>
                                     </div>
                                 </div>
-                                <div class="card-body col-11 col-md-12 min-vh-50 ">
+                                <div class="card-body col-11 col-md-12 min-vh-50 max-vh-50">
                                     <canvas id="salesChart"></canvas>
                                 </div>
                             </div>
@@ -363,17 +381,17 @@
                 <div class="tab-pane fade" id="orders" role="tabpanel">
                     <h2 class="mb-4">Order Management</h2>
                     <div class="card">
-                        <div class="card-body">
+                        <div class="card-body overflow-x-hidden">
                             <div class="table-responsive">
                                 <table class="table table-hover table-bordered align-middle text-center">
-                                    <thead class="table-light">
-                                        <tr>
-                                            <th>Product name</th>
-                                            <th>Product ID</th>
-                                            <th>Date</th>
-                                            <th>Amount</th>
-                                            <th>Status</th>
-                                            <th>Actions</th>
+                                    <thead class="table-light bg-black text-light">
+                                        <tr class="bg-transparent">
+                                            <th class="bg-transparent text-light">Product name</th>
+                                            <th class="bg-transparent text-light">Product ID</th>
+                                            <th class="bg-transparent text-light">Date</th>
+                                            <th class="bg-transparent text-light">Amount</th>
+                                            <th class="bg-transparent text-light">Status</th>
+                                            <th class="bg-transparent text-light">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody id="orders-table-body">
@@ -428,7 +446,7 @@
 
 
 
-    <!-- Order Delete Confirmation Modal -->
+    <!-- Product Delete Confirmation Modal -->
     <div class="modal fade " id="deleteModal" aria-labelledby="deleteModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -446,42 +464,45 @@
             </div>
         </div>
     </div>
-    <!-- Accept And Delete Modals  -->
-    <div class="modal" id="orderAcceptConfirmModal" aria-labelledby="orderAcceptConfirmModalLabel" tabindex="-1" aria-hidden="false">
+    <!-- Order Accept  Modal  -->
+    <div class="modal" id="orderAcceptConfirmModal" aria-labelledby="orderAcceptConfirmModalLabel" tabindex="-1"
+        aria-hidden="false">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="orderAcceptConfirmModalLabel">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderAcceptConfirmModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>This Will accept all items in this order, are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-success " id="orderConfirmAcceptBtn">Accept All</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="orderConfirmAcceptBtn">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
-      <!-- **************************************** -->
-    <div class="modal" id="orderDeleteConfirmModal" aria-labelledby="orderDeleteConfirmModalLabel" tabindex="-1" aria-hidden="false">
+    </div>
+            <!-- Order Delete Confirmation Modal -->
+
+    <div class="modal" id="orderDeleteConfirmModal" aria-labelledby="orderDeleteConfirmModalLabel" tabindex="-1"
+        aria-hidden="false">
         <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="orderDeleteConfirmModalLabel">Modal title</h5>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderDeleteConfirmModalLabel">Rejcting Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p>This Will Totally reject the order, are you sure?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-danger" id="orderConfirmDeleteBtn">Reject Order</button>
+                </div>
             </div>
-            <div class="modal-body">
-              <p>Modal body text goes here.</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-              <button type="button" class="btn btn-primary" id="orderConfirmDeleteBtn">Save changes</button>
-            </div>
-          </div>
         </div>
-      </div>
+    </div>
     <!-- Add/Edit Product Modal aria-hidden="true"> -->
     <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
