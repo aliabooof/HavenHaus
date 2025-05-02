@@ -499,7 +499,7 @@ confirmDeleteBtn.addEventListener("click",confirmDelete)
 
     function attachDeleteHandlers() {
         let deleteBtns = document.querySelectorAll('.delete-btn');
-        console.log(deleteBtns)
+        // console.log(deleteBtns)
         deleteBtns.forEach(button =>{
             button.addEventListener('click',DeleteProduct)
         });
