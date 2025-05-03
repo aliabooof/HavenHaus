@@ -46,7 +46,9 @@ input[name]:focus, select:focus{
 .nav-link:hover {
     color: #656d79;
 }
-
+.nav-item-profile:hover{
+    transform: scale(1) !important;
+}
 .item-active{
     color: #2563ee;
     background-color: #f0f8ff;
@@ -68,13 +70,6 @@ input[name]:focus, select:focus{
     background-color: #f0f8ff;
 }
 
-/* .item-active:hover{
-    background-color: #f0f8ff;
-} 
-
-.nav-link{
-    color: #656d79 !important;
-} */
 
 #editProfile, #saveChanges, #shopping{
     background-color: #2563eb;
