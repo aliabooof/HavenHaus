@@ -5,7 +5,7 @@ import {User} from "../modules/userModule.js"
 import { OrderItem } from "../modules/OrderItem.js";
 // import { Product } from "../modules/productModule";
 import {Order} from "../modules/order.js"
-import { getFormInputs } from "../util.js";
+import { getFormInputs, redirect } from "../util.js";
 import { Validation } from "../modules/validation.js";
 
 // window.addEventListener('DOMContentLoaded', function(){
@@ -19,6 +19,7 @@ import { Validation } from "../modules/validation.js";
         const stockInput = document.getElementById('productStock');
         const priceInput = document.getElementById('productPrice');
         const categorySelect = document.getElementById('productCategory');
+        const PENDING_ORDER = 0
 
         let getrow;
 
@@ -70,8 +71,15 @@ import { Validation } from "../modules/validation.js";
         });
     }
 
-    var seller = User.getCurrentUser()
-    let sellerID = seller.id
+var seller = User.getCurrentUser()
+var sellerID; //seller.id
+if(!seller)
+    redirect("../../login.html")
+else if(seller.role != 1)
+    redirect("../../pages/not-found.html")
+else
+    sellerID = seller.id
+
 
  
     let isEditMode = true;
@@ -98,9 +106,21 @@ import { Validation } from "../modules/validation.js";
         }
         let product = getFormData();        
         if (isEditMode) {
-            console.log(isEditMode);
             let productID = document.getElementById("saveProductBtn").dataset.id;
-            console.log("saveProductBtn dateset.id: ", productID)
+
+            // Checking if the new Stock is equal or less than the pending orders on this product
+        //______________________________________________________________________\\
+            let productPendingOredersQuantity = OrderItem.getOrderItemsByProductId(productID)
+                                                    .filter(orderItem=>{
+                                                        return orderItem.status == PENDING_ORDER
+                                                    }).length
+            if(formInputs.stockQuantity.value < productPendingOredersQuantity){
+                Validation.showError(formInputs.stockQuantity,"Invalid stock, handle pending orders first.")
+                return;
+            }
+        //_____________________________________________________________________________\\
+
+        
             product.id=productID;
             Product.updateProduct(product);
             // e.validateForm();
@@ -111,10 +131,13 @@ import { Validation } from "../modules/validation.js";
         Product.addProduct(product)
         console.log(isEditMode);
         }
-    productModal.hide();
+        productModal.hide();
 
         loadProductsTable();
     }
+
+
+
 
     function loadProductsTable() {
         console.log("From load Product Table")

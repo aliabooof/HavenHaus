@@ -8,17 +8,19 @@
     <title>Seller Dashboard</title>
     <!-- Bootstrap CSS -->
     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+
 
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Style -->
+    <link rel="stylesheet" href="../css/order-status.css">
+    <!-- JS Scripts -->
     <script src="../js/dashboard/seller-dashboad.js" type="module"></script>
     <script src="../js/dashboard/seller-orders-list.js" type="module"></script>
-
 
     <script type="module" src="/js/dashboard/seller-product.js"></script>
 
@@ -39,7 +41,7 @@
             font-size: 0.8rem !important;
         }
         tr>*,td>*{
-            min-height: px !important;
+            min-height: 10px !important;
             /* max-height: 1rem; */
             overflow: hidden !important;
             /* font-size: 4rem !important; */
@@ -206,7 +208,7 @@
                             </div>
                         </div>
 
-                        <div class=" mb-2 col-sm-5 col-xl-3 w-25">
+                        <div class=" mb-2 col-12 col-sm-5 col-xl-3 ">
                             <div class="card card-stat bg-primary text-white">
                                 <div class="card-body" class="stats-box">
                                     <h5 class="card-title small">Total Products</h5> 
@@ -297,7 +299,7 @@
                                 <div class="tab-content">
                                     <div id="recent-orders" class="card tab-pane active">
                                         <div class="card-header ">
-                                            <h5>Recent Orders</h5>
+                                            <!-- <h5>Recent Orders</h5> -->
                                         </div>
                                         <div class="card-body p-1">
                                             <div class="list-group p-0">
@@ -331,7 +333,7 @@
                                     </div>
                                     <div id="best-selling" class="card tab-pane  col-12">
                                         <div class="card-header ">
-                                            <h5>Best Selling</h5>
+                                            <!-- <h5>Best Selling</h5> -->
                                         </div>
                                         <div class="card-body p-0">
                                             <div class="list-group p-0">

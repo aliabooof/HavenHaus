@@ -31,9 +31,11 @@ export class Seller{
         return this.getSellerOrdersById(sellerId)
                                     .sort(
                                         (order1,order2)=> {
-                                            if(new Date(order1.date) < new Date(order2.date))
+                                            let order1Date = new Date(order1.date||order1.createdAt) 
+                                            let order2Date = new Date(order2.date||order2.createdAt)
+                                            if(order1Date <order2Date)
                                                 return 1;
-                                            else if(new Date(order1.date) > new Date(order2.date))
+                                            else if(order1Date > order2Date)
                                                 return -1;
                                             else 
                                                 return 0

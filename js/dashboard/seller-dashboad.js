@@ -5,6 +5,7 @@ import {Seller} from "../modules/seller.js"
 import {Auth} from "../modules/authModule.js"
 import {redirect, fetchComponent, convertToHtmlElement, mapOrderStatus} from "../util.js"
 import  'https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js';
+import { User } from "../modules/userModule.js";
 
 // Authintication
 let seller = Auth.isLoggedIn()
@@ -55,11 +56,16 @@ function prepareBestSellingElement(product){
 function prepareBestSelling(){
     let bestSellingContainer = document.getElementById("best-selling").querySelector(".list-group")
     let sellerProdcuts = Product.getProductsBySeller(sellerId);
-    let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId);
+    let sellerCompletedOrdersItems = Seller.getSellerOrderItemsById(sellerId).filter(
+        (orderItem)=>{
+            let order = Order.getOrderById(orderItem.orderID)
+            return order.status == COMPLETED_ORDER;
+        }
+    );
     // console.log(sellerProdcuts)
     sellerProdcuts = sellerProdcuts.map(
                     (product)=>{
-                        let productQuanity = sellerOrderItems.reduce(
+                        let productQuanity = sellerCompletedOrdersItems.reduce(
                                             (totalQuantity,orderItem)=>{
                                                 if(orderItem.productID == product.id)
                                                 {
@@ -109,13 +115,14 @@ function prepareOrder(order){
 
         
         //__________________Total Order Price & Order Items Count_________________//
+        
         let orderItems = Seller.getSellerOrderItemsById(sellerId)
         .filter(orderItem=> orderItem.orderID == order.id)
         // console.log(orderItems)
         let orderTotalPice = orderItems.map(
                     orderItem=> 
-                        orderItem.quantity *
-                    Product.getProductById(orderItem.productID).price
+                        orderItem.quantity * orderItem.price
+                    // Product.getProductById(orderItem.productID).price
                 ).reduce(
                     (totalPrice,itemPrice)=>totalPrice+itemPrice
                 ,0)
@@ -135,7 +142,7 @@ function prepareRecentOrders(){
                                         let xDaysAgoDate = new Date();
                                         xDaysAgoDate.setMonth(new Date().getMonth()-1)
                                         xDaysAgoDate = xDaysAgoDate.toISOString()
-                                        return order.date >= xDaysAgoDate  
+                                        return order.createdAt >= xDaysAgoDate  
                                     }
                                 )
                                 .slice(0,2)
@@ -154,16 +161,19 @@ function prepareRecentOrders(){
 function animateCount(id, endValue, duration = 1000) {
     const element = document.getElementById(id);
     let startValue = 0;
-    const stepTime = Math.abs(Math.floor(duration / endValue));
-
+    // endValue = Math.max(endValue,1)
+    let stepTime = Math.abs(Math.floor(  duration/ endValue));
+    // stepTime = 0.1
     const counter = setInterval(() => {
-        startValue++;
-        element.textContent = startValue;
         if (startValue >= endValue) {
             clearInterval(counter);
         }
+        element.textContent = startValue;
+        startValue = Math.min(startValue+10,endValue);
+
     }, stepTime);
 }
+
 
 
 // ____________________________ End Of Functions Section ____________________________\\
@@ -171,8 +181,8 @@ function animateCount(id, endValue, duration = 1000) {
 // ____________________________ Global Variabls Section ____________________________\\
 let recentOrderComponentString = await fetchComponent("../../components/seller-recent-order.html")
 let BestSellingComponentString = await fetchComponent("../../components/seller-best-selling.html")
-
-var sellerId =  2
+const COMPLETED_ORDER = 1;
+var sellerId = User.getCurrentUser().id
 // ____________________________ End Global Variabls Section ____________________________\\
 
 
@@ -184,14 +194,13 @@ var sellerId =  2
 
 
     // Total products
-let totalProductsCountContainer = document.getElementById("total-products")
 let totalProductsCount = Product.getProductsBySeller(sellerId).length 
-animateCount("total-products",totalProductsCount)
+animateCount("total-products",totalProductsCount,100)
 
 
 // getSellerOrders
 let sellerOrders = Seller.getSellerOrdersById(sellerId);
-console.log(sellerOrders)
+
 // Get shipped orders Orders Only
 let shippedOrders = sellerOrders.filter(order=> order.status == 1);
 // console.log(sellerOrders.filter(order=> order.status == 0))
@@ -199,26 +208,30 @@ let shippedOrders = sellerOrders.filter(order=> order.status == 1);
 let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId)
 
 // Total orders, Pending Orders
-animateCount("total-orders",shippedOrders.length)
+animateCount("total-orders",shippedOrders.length,200)
 let pendingOrdersCount = sellerOrders.filter(order=> order.status == 0).length 
-animateCount("pending-orders",pendingOrdersCount)
+animateCount("pending-orders",pendingOrdersCount,100)
 
+
+let sellerProductsIds = Product.getProductsBySeller(sellerId).map(product=> product.id)
 
 // calculate the total revenue
 let totalRevenue   = shippedOrders.reduce((ordersAcc,order)=> {
                             return ordersAcc + OrderItem.getOrderItemsByOrderId(order.id)
-                                    .reduce(
-                                        (orderItemsAcc,orderItem)=>{
-                                            let productPrice =
-                                            Product.getProductById(orderItem.productID).price   
-                                            productPrice = productPrice || 0    
-                                            return orderItemsAcc+(productPrice*orderItem.quantity)
+                                    .reduce((orderItemsAcc,orderItem)=>{
+                                            if(sellerProductsIds.includes(orderItem.productID)){
+                                                let productPrice //=
+                                                // Product.getProductById(orderItem.productID).price   
+                                                productPrice = orderItem.price || 0    
+                                                return orderItemsAcc+(productPrice*orderItem.quantity)
+                                            }else
+                                                return orderItemsAcc;
                                         },0)
                                     }
                                     ,0).toFixed(2) 
 
-animateCount("total-revenue",totalRevenue)
-console.log(totalRevenue)
+animateCount("total-revenue",totalRevenue,1)
+// console.log(totalRevenue)    
 
 // Total Sold Units
 let shippedOrderIds = shippedOrders.map(order=> order.id)
