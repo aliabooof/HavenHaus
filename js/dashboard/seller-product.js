@@ -64,19 +64,19 @@ import { Validation } from "../modules/validation.js";
 
     function attachDeleteHandlers() {
         let deleteBtns = document.querySelectorAll('.delete-btn');
-        // console.log(deleteBtns)
+        
         deleteBtns.forEach(button =>{
             button.addEventListener('click',DeleteProduct)
         });
     }
 
     var seller = User.getCurrentUser()
-    var sellerID = 2 //seller.id
+    let sellerID = seller.id
 
  
     let isEditMode = true;
 
-    //to show pop up to Add Product
+    
     addProductBtn.addEventListener('click', function() {
         isEditMode=false;
         console.log(isEditMode);
@@ -120,6 +120,7 @@ import { Validation } from "../modules/validation.js";
         console.log("From load Product Table")
         // Your seller ID
         const products = Product.getProductsBySeller(sellerID);
+        console.log(products)
         const tbody = document.querySelector('#products-table');
         tbody.innerHTML = ''; // Clear existing rows
 
