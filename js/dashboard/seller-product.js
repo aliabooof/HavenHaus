@@ -87,6 +87,9 @@ else
         isEditMode=false;
         document.getElementById('productForm').reset();
         productModal.show();
+        document.getElementById("preview").parentElement.classList.add("d-none")
+        document.getElementById("image-input").value = ""
+
     });
 
     const productName =document.getElementById("productName");
@@ -122,7 +125,15 @@ else
             Product.updateProduct(product);
             // e.validateForm();
             // editProduct();
+            
         }else{
+            if(!document.getElementById("image-input").files||document.getElementById("image-input").value =="" || document.getElementById("image-input").files.length ===0 ){
+                Validation.showError(document.getElementById("image-input"),"Must upload image for new products")
+                return
+            }
+            product.sellerID = sellerID
+            product = new Product(product)
+            Product.addProduct(product)
             product.sellerID = sellerID
             product = new Product(product)
             product.imageUrl = product.name
@@ -130,6 +141,7 @@ else
             Product.addProduct(product)
             saveImage(product.imageUrl)
         }
+        document.getElementById("preview").classList.add("d-none")
         productModal.hide();
 
         loadProductsTable();
@@ -176,6 +188,10 @@ else
                 
                 fillProductForm(product);
                 productModal.show();
+                document.getElementById("preview").parentElement.classList.add("d-none")
+                document.getElementById("image-input").value = ""
+
+
             })
         });
         attachDeleteHandlers();
@@ -269,13 +285,22 @@ fileInput.addEventListener('change', event => {
     originalFileName = file.name;
 
     const reader = new FileReader();
+    // reader.onload = function (e) {
+    //   const base64 = e.target.result;
+    //   localStorage.setItem('savedImage', base64);
+    //   preview.src = base64;
+    document.getElementById("preview").classList.remove("d-none")
+    document.getElementById("preview").parentElement.classList.remove("d-none")
+
+    
     reader.onload = e => {
-    imageDataUrl = e.target.result;
-    preview.src = imageDataUrl;
-    preview.style.display = 'block';
-    downloadBtn.disabled = false;
+        imageDataUrl = e.target.result;
+        preview.src = imageDataUrl;
+        preview.style.display = 'block';
+        downloadBtn.disabled = false;
     };
     reader.readAsDataURL(file);
+
 });
 
 function saveImage(imageDownloadName){   

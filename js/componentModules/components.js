@@ -2,7 +2,7 @@ import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
 import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields, getFormInputs } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
-import { GetCartByID } from "../modules/db.js";
+import { GetCartByID, RemoveCartItem} from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
 import {Order} from "../../js/modules/order.js";
 
@@ -29,6 +29,14 @@ export class Component {
             redirect("../../pages/cart.html")
         })
         let cartItems = GetCartByID(User.getCurrentUser().id)
+        let cartID = User.getCurrentUser().id
+        let allProductsIds = Product.getAllProducts().map(p=>p.id)
+        let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
+        deletedProdcutsCartItems.forEach(cartItem=>{
+            RemoveCartItem(cartID,cartItem.productID)
+        })
+
+        cartItems = GetCartByID(User.getCurrentUser().id)
         if (cartItems.length == 0) {
             Cart.showEmpty("main-container");
             return;
