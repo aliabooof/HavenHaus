@@ -69,7 +69,7 @@ export class OrderItem {
             setTable("orderItem",orderItems)
         }
     }
-    static rejectOrderById(orderId){
+    static suppressOrderById(orderId){
         let orderItems = this.getAllOrderItems().map(orderItem=>{
             if(orderItem.orderID == orderId)
                 orderItem.status = 3 

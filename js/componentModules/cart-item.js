@@ -23,13 +23,18 @@ export function CreateDisplyCartItem(cartItem){
             cartElement.querySelector("#prod-price").innerText = product.price;
             //----
             cartElement.querySelector(".quantity-container").dataset.cardProdId = product.id;
-            cartElement.querySelector(".quantity").innerText = cartItem.quantity;
+            cartElement.querySelector(".quantity").innerText = Math.min(cartItem.quantity,product.stock);
             cartElement.querySelector(".stock").innerText = product.stock;
             cartElement.querySelector(".stock-display").innerText = product.stock;
             // addEventListener on buttons
             cartElement.querySelector(".increaseQuantityBtn").addEventListener("click",IncreaseQuantity)
             cartElement.querySelector(".decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)
             cartElement.querySelector(".delete-card-btn").addEventListener("click",DeleteCard)
+
+
+
+            if(cartItem.quantity > product.stock)
+                ChangeCartItemQuantity(User.getCurrentUser().id,product.id,product.stock)
             return cartElement
         }
 
