@@ -2,9 +2,7 @@
 <html lang="en">
     <head>
         <script async src="../js/PagePreload/product.js" type="module"></script>
-        <script>
-            console.log("hello2")
-        </script>
+        
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Product</title>
@@ -53,8 +51,8 @@
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-half-stroke"></i>
                                 </div>
-                                <div>(<span class="review-count">42</span>
-                                    reviewer)
+                                <div>(
+                                    <span class="review-count">0</span> <i class="bi-person"></i> )
                                 </div>
                             </div><!-- Ratings End  -->
 
@@ -147,19 +145,26 @@
                                 <div class="tab-content p-3 border border-top-0" id="productTabContent">
                                     <div class="tab-pane fade show active" id="desc" role="tabpanel">
                                         <h5>Description</h5>
-                                        <p id="product-description">This is the product description section.</p>
+                                        <!-- <p id="product-description">This is the product description section.</p> -->
+                                        <div id="description-container" class="">
+                                        </div>
                                     </div>
                                     <div id="highlights" class="tab-pane fade"  role="tabpanel">
                                         <h5>Highlights</h5>
-                                        <p id="product-highlights">This is the product Highlights section.</p>
+                                        <!-- <p id="product-highlights">This is the product Highlights section.</p> -->
+                                        <div id="highlights-container" class="">
+                                        </div>
                                     </div>
                                     <div  class="tab-pane fade" id="inst" role="tabpanel">
                                         <h5>Instructions</h5>
-                                        <p id="product-instructions">This is the product instructions section.</p>
+                                        <!-- <p id="product-instructions">This is the product instructions section.</p> -->
+                                        <div id="instructions-container" class="">
+                                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cum voluptas explicabo velit id qui, necessitatibus, at dignissimos molestiae reiciendis impedit sequi, doloremque asperiores totam atque cumque a architecto? Fugit, voluptate!</p>
+                                        </div>
                                     </div>
                                     <div id="reviews-container" class="tab-pane fade"  role="tabpanel">
                                         <h5>Reviews</h5>
-                                        <p id="product-reviews">This is the product reviews section.</p>
+                                        <!-- <p id="product-reviews">This is the product reviews section.</p> -->
                                         <div style="overflow-y: auto; height: 200px;">
 
                                         </div>

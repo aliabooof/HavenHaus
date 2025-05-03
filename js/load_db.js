@@ -1,4 +1,3 @@
-import { GetUrlField } from "./util.js";
 async function  LoadFile(url){
     let response = await fetch(url);
     let json = await response.json();
@@ -26,4 +25,4 @@ export async function LoadDB(){
     }
 }
 
-LoadDB();
+await LoadDB();
