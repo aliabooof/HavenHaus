@@ -251,3 +251,29 @@ else
 //     document.activeElement.blur();
 //     }
 // });
+
+
+const input = document.getElementById('fileInput');
+  const preview = document.getElementById('preview');
+function saveImage(event){
+
+    const file = this.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      const base64 = e.target.result;
+      localStorage.setItem('savedImage', base64);
+      preview.src = base64;
+    };
+    reader.readAsDataURL(file);
+  
+
+  // On page load: load image from localStorage
+  const savedImage = localStorage.getItem('savedImage');
+  if (savedImage) {
+    preview.src = savedImage;
+  }
+
+
+}

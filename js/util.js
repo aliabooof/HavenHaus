@@ -33,9 +33,13 @@ export function IncreaseQuantity(event){
 }
 export function DecreaseQuantity(event){
     let quantityEle = GetQuantityElement(event)
-    if(Number(quantityEle.innerText.trim())-1 <= Math.min(Number(quantityEle.innerText.trim()),1)){
+    if(Number(quantityEle.innerText.trim())-1 == Math.min(Number(quantityEle.innerText.trim()),1)){
         QuantityBtnDisable(quantityEle, true,false)
         ChangeQuantity(quantityEle,-1)
+        return
+    }
+    else if(Number(quantityEle.innerText.trim()) <= Number(stockEle.innerText.trim())){
+        QuantityBtnDisable(quantityEle, false, true)
         return
     }
 
