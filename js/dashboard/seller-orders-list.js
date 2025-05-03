@@ -54,31 +54,19 @@ function getOrderTrs(tableBreak){
 function updateOrderItemTrStatus(orderItemTr,status){
     let statusObejct = mapOrderStatus(status)
 
+    orderItemTr.querySelector(".order-status").innerHTML = ""
     orderItemTr.querySelector(".order-status").appendChild(statusObejct.statusElement)
     orderItemTr.querySelector(".order-reject-btn").classList.add("d-none")
     orderItemTr.classList.remove(mapOrderStatus(0).bgColor);
-    // orderItemTr.classList.add(statusObejct.bgColor);
     
 
 }
-function updateOrderTrStatus(tableBreak,status){
-    
-    hideTableBreakAcceptBtn(tableBreak)
-    let isTableBreak = false
-    let orderItemTr = tableBreak.nextElementSibling
-    while(!isTableBreak){
-        if(orderItemTr.classList.contains("table-break"))
-            isTableBreak = true
-        else{
-            updateOrderItemTrStatus(orderItemTr,status)
-            orderItemTr= orderItemTr.nextElementSibling
-        }
-    }
 
 
-}
-function hideTableBreakAcceptBtn(tableBreak){
-    tableBreak.querySelector(".btn-td").classList.add("d-none");
+
+function hideTableBreakBtn(tableBreak){
+    tableBreak.querySelector(".order-accept-btn").classList.add("d-none");
+    tableBreak.querySelector(".order-reject-btn").classList.add("d-none");
     // tableBreak.querySelector(".order-id-td").colSap = 6
 }
 function rejectOrder(event){
@@ -87,26 +75,31 @@ function rejectOrder(event){
     let orderId = event.target.dataset.id
     let orderItemTr =  document.querySelector(`.order-item[data-id="${CSS.escape(orderId)}"]`)
     let productId = event.target.dataset.productId
+    let rejectAll= event.target.dataset.rejectAll
     
     
     let orderTableBreak = closestTableBreakSibling(orderItemTr)
-    hideTableBreakAcceptBtn(orderTableBreak)
+    hideTableBreakBtn(orderTableBreak)
 
 
     let orderItemsTr = getOrderTrs(orderTableBreak)
+    
+    // reject order in Database
+    OrderItem.suppressOrderById(orderId)
+    Order.updateOrderStatus(orderId,REJECTED_ORDER)
+
     let orderItemStatus ;
     orderItemsTr.forEach((orderItemTr)=>{
-        let product
-        if(orderItemTr.dataset.productId == productId)
-            orderItemStatus = 2
+        if(rejectAll== "true" || orderItemTr.dataset.productId == productId)
+            orderItemStatus = REJECTED_ORDER
         else
-            orderItemStatus = 3
+            orderItemStatus = SUPPRESSED_ORDER
 
         updateOrderItemTrStatus(orderItemTr,orderItemStatus)
+        OrderItem.setOrderItemStatus(orderId,productId,orderItemStatus)
     })
-    OrderItem.rejectOrderById(orderId)
-    OrderItem.setOrderItemStatus(orderId,productId,2)
-    Order.updateOrderStatus(orderId,2)
+    
+    event.target.dataset.rejectAll = ""
 
 }
 function acceptOrder(event){
@@ -117,7 +110,7 @@ function acceptOrder(event){
   
     
     let orderTableBreak = closestTableBreakSibling(randomOrderItemTr)
-    hideTableBreakAcceptBtn(orderTableBreak)
+    hideTableBreakBtn(orderTableBreak)
     
     let orderItemsTr = getOrderTrs(orderTableBreak)
     
@@ -143,13 +136,18 @@ function showOrderRejectModal(event){
     // Extract order-id & product-id from the button 
     let orderId = btn.dataset.id
     let productId =  btn.dataset.productId
+    let rejectAll =  btn.dataset.rejectAll
     // add them on the ConfirmDeleteBtn
     orderConfirmDeleteBtn.dataset.id = orderId
     orderConfirmDeleteBtn.dataset.productId = productId
+    orderConfirmDeleteBtn.dataset.rejectAll = rejectAll 
     // Show Modal
     orderDeleteConfirmModal.show();
 }
-
+function rejectAllItems(event){
+    event.target.closest("button").dataset.rejectAll = "true";
+    showOrderRejectModal(event)
+}
 
 function showOrderAcceptModal(event){
     // Get The Button itself
@@ -173,8 +171,14 @@ function createOrderTableRow(orderItem,order){
     let product = Product.getProductById(orderItem.productID)
     orderTableRow.querySelector(".order-product-name").textContent = product.name
     orderTableRow.querySelector(".order-product-id").textContent = product.id
-    orderTableRow.querySelector(".order-date").textContent = new Date(order.date || order.createdAt).toLocaleString()
+    
+    let orderDate = new Date(order.date || order.createdAt).toISOString().split("T")
+    let orderDMY = orderDate[0]
+    let orderTime = orderDate[1].split(".")[0]
+    orderTableRow.querySelector(".order-date").textContent = `${orderDMY}, ${orderTime}`
     orderTableRow.querySelector(".order-product-amount").textContent = orderItem.quantity
+        
+
  
     let statusMap = mapOrderStatus(orderItem.status) 
     orderTableRow.querySelector(".order-status").appendChild(statusMap.statusElement );
@@ -206,15 +210,23 @@ function showOrders(sellerOrders,sellerOrderItems){
         // add order id and AcceptBtn listner
         tableBreakElement.querySelector(".order-id").innerText = order.id
         let orderAcceptBnt = tableBreakElement.querySelector(".order-accept-btn")
+        let rejectOrderBnt = tableBreakElement.querySelector(".order-reject-btn")
 
         if(order.status ==0 && orderPedningItems.length > 0){
             orderAcceptBnt.dataset.id = order.id;
+            rejectOrderBnt.dataset.id = order.id;
             orderAcceptBnt.addEventListener("click",showOrderAcceptModal)
+            rejectOrderBnt.addEventListener("click",rejectAllItems)
+            console.log("hello")
         }else if(order.status ==0 && orderPedningItems.length==0){
             tableBreakElement.querySelector(".btn-td").innerText= "Waiting"
-            orderAcceptBnt.classList.add("d-none")
-        }else 
-            orderAcceptBnt.classList.add("d-none")
+            orderAcceptBnt.classList.add("d-none");
+            rejectOrderBnt.classList.add("d-none");
+        }else{
+            orderAcceptBnt.classList.add("d-none");
+            rejectOrderBnt.classList.add("d-none");
+        }
+
         
 
         // add row to Table Body
@@ -228,6 +240,25 @@ function showOrders(sellerOrders,sellerOrderItems){
     });
 }
 
+function applyFilter(event){
+    let filteredOrders = sellerOrders, filteredOrderItems = sellerOrderItems;
+    let filterSelectValue = event.target.value.toLowerCase()
+    // console.log(filteredOrders,filteredOrderItems)
+    
+    if(!( filterSelectValue == "-1")){
+        console.log(filterSelectValue)
+                filteredOrderItems = sellerOrderItems.filter(orderItem=> orderItem.status == filterSelectValue )
+                let filteredOrdersIds = filteredOrderItems.map(orderItem=> orderItem.orderID)
+
+                filteredOrders = sellerOrders.filter(order=>
+                                                        filteredOrdersIds.includes(order.id)
+                                                    ) 
+    }
+    orderTableBody.innerHTML = "";
+    showOrders(filteredOrders,filteredOrderItems);
+
+}
+
 //___________________________ End Functions Section ___________________________\\
 
 
@@ -236,23 +267,30 @@ function showOrders(sellerOrders,sellerOrderItems){
 let orderTableRowString = await fetchComponent("../../components/seller-order-row.html");
 let orderTableBreakString = await fetchComponent("../../components/seller-order-table-break.html");
 let sellerId = seller.id;
+const PENDING_ORDER = 0
+const ACCEPTED_ORDER = 1
+const REJECTED_ORDER = 2
+const SUPPRESSED_ORDER = 3
 // console.log(sellerId,seller)
 let sellerOrders = Seller.getSortedSellerOrdersById(sellerId)
-console.log(sellerOrders)
 let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId);
 let orderTableBody = document.getElementById("orders-table-body");
-
+let orderFilterSelect = document.getElementById("filter-order-status");
 // modals
 var orderDeleteConfirmModal = new bootstrap.Modal(document.getElementById("orderDeleteConfirmModal"))
 var orderAcceptConfirmModal = new bootstrap.Modal(document.getElementById("orderAcceptConfirmModal"))
 // Buttons
 var orderConfirmDeleteBtn = document.getElementById("orderConfirmDeleteBtn");
 var orderConfirmAcceptBtn = document.getElementById("orderConfirmAcceptBtn");
-// Event Listeners
-orderConfirmDeleteBtn.addEventListener("click",rejectOrder)
-orderConfirmAcceptBtn.addEventListener("click",acceptOrder)
 
 //___________________________ End Of Gloabal Variables ___________________________\\
+
+
+//------------------ Event Listeners ------------------\\
+orderFilterSelect.addEventListener("change",applyFilter)
+orderConfirmDeleteBtn.addEventListener("click",rejectOrder)
+orderConfirmAcceptBtn.addEventListener("click",acceptOrder)
+    //_____________________ End _________________//
 
 
 showOrders(sellerOrders,sellerOrderItems)

@@ -30,7 +30,7 @@
     <style>
         * {
 
-            font-size: 1.2rem !important;
+            font-size: 1.1rem !important;
 
         }
 
@@ -136,7 +136,7 @@
 <body>
     <div class="dashboard-container">
         <!-- Sidebar -->
-        <div id="sidebar" class="collapse d-md-block  text-black ">
+        <div id="sidebar" class="collapse d-md-block   text-black ">
             <div class="sidebar-header p-3">
                 <h3 class="fs-6"><i class="fas fa-store me-2"></i><span>Seller Dashboard</span></h3>
             </div>
@@ -384,7 +384,18 @@
 
                 <!-- Orders Tab -->
                 <div class="tab-pane fade" id="orders" role="tabpanel">
-                    <h2 class="mb-4"> <i class="bi bi-check2-square"></i> Order Management</h2>
+                    <div class="d-flex justify-content-between align-items-md-center">
+                        <h2 class="mb-4"> <i class="bi bi-check2-square"></i> Order Management</h2>
+                        <div>
+                            <select id="filter-order-status" name="filter-order-status" class="form-select" >
+                                <option value="-1">All</option>
+                                <option value="1">Accepted</option>
+                                <option value="0">pending</option>
+                                <option value="2">Rejected</option>
+                                <option value="3">Suppressed</option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="card">
                         <div class="card-body overflow-x-hidden">
                             <div class="table-responsive">

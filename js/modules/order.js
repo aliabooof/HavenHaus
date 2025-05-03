@@ -1,7 +1,7 @@
 import { getTable, setTable, add } from "./db.js";
 
 export class Order {
-    constructor({ userId, items, status = 0}) {
+    constructor({ userId, items, status = 0, createdAt = new Date().toISOString()}) {
         this.userId = userId;
         this.items = items; 
         this.status = status; 

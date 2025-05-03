@@ -3,6 +3,7 @@ import { User } from "./userModule.js";
 import { ChangeCartItemQuantity, AddCartItem,GetCartByID, getTable, setTable } from "./db.js";
 import { redirect } from "../util.js";
 import { Auth } from "./authModule.js";
+import { Product } from "./productModule.js";
 
 export class Cart{
 
@@ -22,11 +23,12 @@ export class Cart{
 
     static DispalyCartItems(itemsContainer,cart){
         cart.forEach(cartItem => {
+            let product = Product.getProductById(cartItem.productID)
             let displayItem = CreateDisplyCartItem(cartItem);
             itemsContainer.appendChild(displayItem)
             // console.log("prodPrice dataset",)
             let prodPrice = displayItem.dataset.prodPrice;
-                Cart.UpdateItemTotalPrice(cartItem.productID,prodPrice,cartItem.quantity)
+                Cart.UpdateItemTotalPrice(cartItem.productID,prodPrice,Math.min(cartItem.quantity,product.stock))
 
             // totalPrice[cartItem.id] =  cartItem.quantity * displayItem.dataset.prodPrice;
         });

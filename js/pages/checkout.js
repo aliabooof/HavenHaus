@@ -42,8 +42,15 @@ function PlaceOrder(){
    console.log(cart_)
    cart_.forEach(item =>{
       let orderItem = new OrderItem({orderID:order.id, productID:item.productID, quantity:item.quantity,price:item.price});
+      let orderItemProduct = Product.getProductById(orderItem.productID)
+      orderItemProduct.stock =  Number(orderItemProduct.stock) - Number(orderItem.quantity)
+      if(!Number(orderItemProduct.stock))
+        throw new Error(`Stock Format Should Be Number.`);
+      Product.updateProduct(orderItemProduct)
       OrderItem.addOrderItem(orderItem);
+
    })
+
 }
 
 

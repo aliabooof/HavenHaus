@@ -18,19 +18,27 @@ function QuantityBtnDisable(quantityEle ,minusBtn,plusBtn){
 export function IncreaseQuantity(event){
     let quantityEle = GetQuantityElement(event);
     let stockEle = GetStockElement(event);
-    if(Number(quantityEle.innerText.trim()) == Number(stockEle.innerText.trim())){
+    console.log(quantityEle.innerText,stockEle.innerText)
+    if(Number(quantityEle.innerText.trim())+1 == Number(stockEle.innerText.trim())){
         QuantityBtnDisable(quantityEle, false, true)
-        return;
+        ChangeQuantity(quantityEle,1)
+        return
+    }else if(Number(quantityEle.innerText.trim()) >= Number(stockEle.innerText.trim())){
+        QuantityBtnDisable(quantityEle, false, true)
+        return
     }
+
     QuantityBtnDisable(quantityEle, false, false)
     ChangeQuantity(quantityEle,1)
 }
 export function DecreaseQuantity(event){
     let quantityEle = GetQuantityElement(event)
-    if(Number(quantityEle.innerText.trim()) == 1){
+    if(Number(quantityEle.innerText.trim())-1 <= Math.min(Number(quantityEle.innerText.trim()),1)){
         QuantityBtnDisable(quantityEle, true,false)
-        return;
+        ChangeQuantity(quantityEle,-1)
+        return
     }
+
     QuantityBtnDisable(quantityEle, false,false)
     ChangeQuantity(quantityEle,-1)
 }
@@ -206,7 +214,7 @@ export function getFormInputs(form) {
   }
 
 export function mapOrderStatus(status){
-    let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status">Completed</span>')
+    let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status small  h1">Completed</span>')
     let bgColor = "bg-order-superesed";
     if(status ==0){
         bgColor = "bg-order-pending"
@@ -214,14 +222,14 @@ export function mapOrderStatus(status){
     }
     else if(status == 1){
         bgColor = "bg-order-complete"
-        statusElement.innerText = "Completed"
+        statusElement.innerText = "Accepted"
     }
     else if(status == 2){
         bgColor = "bg-order-reject"
         statusElement.innerText = "Rejected"
     }
     else if(status == 3){
-        statusElement.innerText = "suppressed"
+        statusElement.innerText = "Suppressed"
     }
     statusElement.classList.add(bgColor)
     return {bgColor,statusElement}

@@ -50,12 +50,15 @@ export class Seller{
         const salesData = sellerOrderItems.map(item => {
           // Find matching order
           const order = this.getSortedSellerOrdersById(sellerID)
-                            .filter(order=> order.status == 1 && new Date(order.date) > new Date(`${new Date().getFullYear()-1}`))
+                            .filter(order=> {
+                                let orderDate = new Date(order.date || order.createdAt) 
+                                return order.status == 1 && orderDate >  new Date(`${new Date().getFullYear()-1}`)
+                            })
                             .find(order =>  order.id == item.orderID);
           
           if (!order) return null; // If no matching order, skip
       
-          const date = new Date(order.date);
+          const date = new Date(order.date||order.createdAt);
           const dailyKey = date.toISOString().split('T')[0]; // e.g. '2025-04-28'
           const monthlyKey = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0'); // e.g. '2025-04'
           const yearlyKey = date.getFullYear().toString(); // e.g. '2025'

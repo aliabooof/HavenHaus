@@ -64,11 +64,13 @@ if(product.stock < 1){
 let currUser = User.getCurrentUser();
 let cartItem, quantity=1 ;
 if(currUser) {
-      cartItem = GetCartItem(currUser.id,product.id)
-      if(cartItem.length > 0 )
-        quantity = cartItem[0].quantity;
+    cartItem = GetCartItem(currUser.id,product.id)
+    if(cartItem.length > 0 )
+    quantity = cartItem[0].quantity;
+    if(quantity>product.stock)
+        ChangeCartItemQuantity(currUser.id,product.id,product.stock)
 }
-
+quantity = Math.min(product.stock,quantity)
 document.querySelector(".quantity").innerText = quantity
 document.getElementById("increaseQuantityBtn").addEventListener("click",IncreaseQuantity)
 document.getElementById("decreaseQuantityBtn").addEventListener("click",DecreaseQuantity)

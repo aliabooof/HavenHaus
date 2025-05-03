@@ -65,20 +65,21 @@ function prepareBestSelling(){
     // console.log(sellerProdcuts)
     sellerProdcuts = sellerProdcuts.map(
                     (product)=>{
-                        let productQuanity = sellerCompletedOrdersItems.reduce(
-                                            (totalQuantity,orderItem)=>{
-                                                if(orderItem.productID == product.id)
-                                                {
-                                                    return totalQuantity += orderItem.quantity;
-                                                }
-                                                return totalQuantity;  
+                            let productQuanity = 
+                                    sellerCompletedOrdersItems.reduce(
+                                        (totalQuantity,orderItem)=>{
+                                            if(orderItem.productID == product.id)
+                                            {
+                                                return totalQuantity += orderItem.quantity;
                                             }
-                                        ,0)
+                                            return totalQuantity;  
+                                        }
+                                    ,0)
 
-                                        product.totalQuantity = productQuanity;
-                    return product
-                }
-            )
+                            product.totalQuantity = productQuanity;
+                            return product
+                        }
+                    )
     
     sellerProdcuts = sellerProdcuts.sort(
                             (prod1,prod2)=>{
@@ -107,9 +108,20 @@ function prepareOrder(order){
         recentOrderElement.querySelector(".order-date").innerText = new Date(order.date).toDateString()
         
         // set status
-        let statusMap = mapOrderStatus(order.status)
+        let status = order.status
+        let sellerPedingItemsOnThisOrder = sellerOrderItems.filter(orderItem=>
+                                            order.id == orderItem.orderID &&  orderItem.status == 0
+                                    )
+        let statusText = ""
+        if(status ==0 &&  sellerPedingItemsOnThisOrder.length == 0)
+            {
+                status = 1
+                statusText = "Waiting"
+            }
+        
+        let statusMap = mapOrderStatus( status)
         let orderStatusElement = recentOrderElement.querySelector(".order-status")
-        orderStatusElement.innerText = statusMap.statusElement.innerText;
+        orderStatusElement.innerText = statusText || statusMap.statusElement.innerText;
         orderStatusElement.classList.add(statusMap.bgColor)
         //____________________________________\\
 
@@ -139,10 +151,11 @@ function prepareRecentOrders(){
     let sellerSortedOrders = Seller.getSortedSellerOrdersById(sellerId)
                                 .filter(
                                     order=>{
+                                        let orderDate = new Date(order.date || order.createdAt)
                                         let xDaysAgoDate = new Date();
                                         xDaysAgoDate.setMonth(new Date().getMonth()-1)
-                                        xDaysAgoDate = xDaysAgoDate.toISOString()
-                                        return order.createdAt >= xDaysAgoDate  
+                                        // xDaysAgoDate = xDaysAgoDate.toISOString()
+                                        return orderDate >= xDaysAgoDate  
                                     }
                                 )
                                 .slice(0,2)
@@ -203,8 +216,8 @@ let sellerOrders = Seller.getSellerOrdersById(sellerId);
 
 // Get shipped orders Orders Only
 let shippedOrders = sellerOrders.filter(order=> order.status == 1);
-// console.log(sellerOrders.filter(order=> order.status == 0))
-// seller orders 
+
+// get zseller orders 
 let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId)
 
 // Total orders, Pending Orders
