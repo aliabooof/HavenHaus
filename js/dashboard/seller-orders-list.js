@@ -1,13 +1,17 @@
 import { Order } from "../modules/order.js";
 import { Product } from "../modules/productModule.js";
 import { Seller } from "../modules/seller.js";
-import { fetchComponent ,convertToHtmlElement } from "../util.js";
+import { fetchComponent ,convertToHtmlElement, redirect } from "../util.js";
 import { User } from "../modules/userModule.js";
 import { Auth } from "../modules/authModule.js";
 import { OrderItem } from "../modules/OrderItem.js";
 import { mapOrderStatus } from "../util.js";
 
 var seller = User.getCurrentUser();
+if(!seller || !seller.role)
+    redirect("../../login.html")
+else if(seller.role !=1 )
+        redirect("../../pages/not-found.html")
 
 //___________________________ Functions Section ___________________________\\
 function alternateRowColors() {
@@ -50,10 +54,10 @@ function getOrderTrs(tableBreak){
 function updateOrderItemTrStatus(orderItemTr,status){
     let statusObejct = mapOrderStatus(status)
 
-    orderItemTr.querySelector(".order-status").innerHTML = statusObejct.statusElement
+    orderItemTr.querySelector(".order-status").appendChild(statusObejct.statusElement)
     orderItemTr.querySelector(".order-reject-btn").classList.add("d-none")
     orderItemTr.classList.remove(mapOrderStatus(0).bgColor);
-    orderItemTr.classList.add(statusObejct.bgColor);
+    // orderItemTr.classList.add(statusObejct.bgColor);
     
 
 }
@@ -106,8 +110,7 @@ function rejectOrder(event){
 
 }
 function acceptOrder(event){
-    orderDeleteConfirmModal.hide()
-
+    orderAcceptConfirmModal.hide()
     let orderId = event.target.dataset.id
     let randomOrderItemTr =  document.querySelector(`.order-item[data-id="${CSS.escape(orderId)}"]`)
     // let productId = event.target.dataset.productId
@@ -122,13 +125,17 @@ function acceptOrder(event){
         updateOrderItemTrStatus(orderItemTr,1)
         let productId = orderItemTr.dataset.productId
         OrderItem.setOrderItemStatus(orderId,productId,1)
-        console.log("from Accept Order productId for tr",orderItemTr.dataset.productId)
     })
     // Change Order State if all OrderItems are Accepted
     let notAcceptedOrderItems = OrderItem.getOrderItemsByOrderId(orderId).filter(orderItem=> orderItem.status != 1)
     if(notAcceptedOrderItems.length == 0)
         Order.updateOrderStatus(orderId,1)
-    orderAcceptConfirmModal.hide()
+    else
+        {
+            console.log("From btn-td")
+            orderTableBreak.querySelector(".btn-td").innerText = "Waiting"
+        }
+    
 }
 function showOrderRejectModal(event){
     // Get The Button itself
@@ -151,33 +158,13 @@ function showOrderAcceptModal(event){
     let orderId = btn.dataset.id
     let productId =  btn.dataset.productId
     // add them on the ConfirmBtn
-    console.log("from showAcceptModal ",btn)
-    console.log("from showAcceptModal ",orderId,productId)
+    // console.log("from showAcceptModal ",btn)
+    // console.log("from showAcceptModal ",orderId,productId)
     orderConfirmAcceptBtn.dataset.id = orderId
     orderConfirmAcceptBtn.dataset.productId = productId
     // show the modal
     orderAcceptConfirmModal.show()
 }   
-// function mapOrderStatus(status){
-//     let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status">Completed</span>')
-//     let bgColor = "bg-warning";
-//     if(status ==0){
-//         bgColor = "bg-info"
-//         statusElement.classList.add("bg-balck")
-//         statusElement.innerText = "Pending"
-//     }
-//     else if(status == 1){
-//         bgColor = "bg-success"
-//         statusElement.classList.add(bgColor)
-//         statusElement.innerText = "Completed"
-//     }
-//     else if(status == 2){
-//         bgColor = "bg-danger"
-//         statusElement.classList.add(bgColor)
-//         statusElement.innerText = "Rejected"
-//     }
-//     return {bgColor,statusElement}
-// }
 
 function createOrderTableRow(orderItem,order){
     let orderTableRow = convertToHtmlElement(orderTableRowString);
@@ -186,12 +173,12 @@ function createOrderTableRow(orderItem,order){
     let product = Product.getProductById(orderItem.productID)
     orderTableRow.querySelector(".order-product-name").textContent = product.name
     orderTableRow.querySelector(".order-product-id").textContent = product.id
-    orderTableRow.querySelector(".order-date").textContent = new Date(order.date).toLocaleString()
+    orderTableRow.querySelector(".order-date").textContent = new Date(order.date || order.createdAt).toLocaleString()
     orderTableRow.querySelector(".order-product-amount").textContent = orderItem.quantity
  
     let statusMap = mapOrderStatus(orderItem.status) 
     orderTableRow.querySelector(".order-status").appendChild(statusMap.statusElement );
-    orderTableRow.classList.add(statusMap.bgColor)
+    // orderTableRow.classList.add(statusMap.bgColor)
 
     let rejectBtn = orderTableRow.querySelector(".order-reject-btn")
     if(orderItem.status == 0){
@@ -224,7 +211,7 @@ function showOrders(sellerOrders,sellerOrderItems){
             orderAcceptBnt.dataset.id = order.id;
             orderAcceptBnt.addEventListener("click",showOrderAcceptModal)
         }else if(order.status ==0 && orderPedningItems.length==0){
-            tableBreakElement.querySelector(".btn-td").innerText= "Wating"
+            tableBreakElement.querySelector(".btn-td").innerText= "Waiting"
             orderAcceptBnt.classList.add("d-none")
         }else 
             orderAcceptBnt.classList.add("d-none")
@@ -248,8 +235,10 @@ function showOrders(sellerOrders,sellerOrderItems){
 //___________________________ Gloabal Variables ___________________________\\
 let orderTableRowString = await fetchComponent("../../components/seller-order-row.html");
 let orderTableBreakString = await fetchComponent("../../components/seller-order-table-break.html");
-let sellerId = 2;
+let sellerId = seller.id;
+// console.log(sellerId,seller)
 let sellerOrders = Seller.getSortedSellerOrdersById(sellerId)
+console.log(sellerOrders)
 let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId);
 let orderTableBody = document.getElementById("orders-table-body");
 

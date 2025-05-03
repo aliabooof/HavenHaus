@@ -6,11 +6,22 @@ import { Product } from "../modules/productModule.js";
 import { Auth } from "../modules/authModule.js";
 import { LoadDB } from "../load_db.js";
 
+console.log("hello3")
 await LoadDB();
+// redirect if prod-id is not set properly in url (id is wrong)
+let productId = GetUrlField("prod-id")
+if(!productId) redirect("../../pages/not-found.html")   
+
+let product = Product.getProductById(productId);
+
+// if(!product) redirect("../../pages/not-found.html")
+
+
 Auth.enforcePageAuthorization();
 await Component.renderNavbar();
 await Component.renderFooter();
 await Component.renderCartOffcanvas();
+
 
 let user = User.getCurrentUser();
 if(user.role != 2){
@@ -19,6 +30,7 @@ if(user.role != 2){
     document.getElementById("quantity-control-container").classList.add("d-none")
 
 }
+
 
 
 function AddToCart(event){
@@ -31,14 +43,9 @@ function AddToCart(event){
     redirect("../../pages/cart.html");    
 }
 
-let productId = GetUrlField("prod-id")
-// redirect if prod-id is not set properly in url (id is wrong)
-if(!productId) redirect("../../pages/not-found.html")   
-    
-let product = Product.getProductById(productId);
+
 let seller = User.getUserById(product.sellerID)
 // redirect if product not found (id is wrong)
-if(!product) redirect("../../pages/not-found.html")
 
     
 // add product details to page
@@ -47,7 +54,8 @@ document.querySelector("#product-price").innerText = product.price
 document.querySelector("#product-description").innerText = product.desc
 document.querySelector("#stock-count").innerText = product.stock
 document.querySelector(".stock").innerText = product.stock
-document.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
+if(seller)
+    document.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
 document.querySelector("img").src=`../../assets/images/Products/${product.name}.png`;
 if(product.stock < 1){
     document.querySelector("#stock-label").classList.remove("text-success")

@@ -207,25 +207,22 @@ export function getFormInputs(form) {
 
 export function mapOrderStatus(status){
     let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status">Completed</span>')
-    let bgColor = "bg-warning";
+    let bgColor = "bg-order-superesed";
     if(status ==0){
-        bgColor = "bg-info"
-        statusElement.classList.add("bg-balck")
+        bgColor = "bg-order-pending"
         statusElement.innerText = "Pending"
     }
     else if(status == 1){
-        bgColor = "bg-success"
-        statusElement.classList.add(bgColor)
+        bgColor = "bg-order-complete"
         statusElement.innerText = "Completed"
     }
     else if(status == 2){
-        bgColor = "bg-danger"
-        statusElement.classList.add(bgColor)
+        bgColor = "bg-order-reject"
         statusElement.innerText = "Rejected"
     }
     else if(status == 3){
-        statusElement.classList.add(bgColor)
-        statusElement.innerText = "Hnaged"
+        statusElement.innerText = "suppressed"
     }
+    statusElement.classList.add(bgColor)
     return {bgColor,statusElement}
 }

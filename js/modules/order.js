@@ -5,7 +5,7 @@ export class Order {
         this.userId = userId;
         this.items = items; 
         this.status = status; 
-        
+        this.date = createdAt;
         this.total = this.#calculateTotal();
         this.id = this.#generateUniqueId(userId);
         

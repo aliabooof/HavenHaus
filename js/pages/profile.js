@@ -1,6 +1,6 @@
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
-import { createAlert, redirect} from "../util.js";
+import { createAlert, redirect, mapOrderStatus} from "../util.js";
 import {Validation} from "../modules/validation.js";
 import { Order } from "../modules/order.js";
 import { Auth } from "../modules/authModule.js";
@@ -65,13 +65,14 @@ if (userOrders.length > 0){
         let divOrder = document.createElement("div");
         divOrder.classList.add("order");
         divOrder.innerHTML = "";
-        divOrder.innerHTML += appendOrderHeader(user_order.id, user_order.createdAt, getStatus(user_order.status));
+        divOrder.innerHTML += appendOrderHeader(user_order.id, user_order.createdAt || user_order.date, mapOrderStatus(user_order.status));
         for (let j = 0; j < order_items.length; j++) {
 
             divOrder.innerHTML += appendOrderBody(GetProductByID(order_items[j].productID)[0].name, order_items[j].quantity, order_items[j].price);
         }
         // divOrder.innerHTML = appendOrder(user_order.id, "islam", order_items[i].quantity, order_items[i].price);
         divOrder.innerHTML += appendOrderFooter(user_order.total, user_order.status)
+    if(userOrders[i].status == 0 )
         divOrder.querySelector("#cancelOrder").addEventListener("click", ()=>{
             modal.style.display = "block";
             confirmBtn.onclick = () => {
@@ -264,7 +265,7 @@ function appendOrderHeader(orderID, orderDate, status){
                                     </div>
                                     <div>
                                         <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #dbeafe; color: #1e5aca;">Processing</span>
-                                        <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #fef9c3; color: #854d0e;">Shipping: ${status}</span>
+                                        <span class="px-3 py-1 rounded-5 ${status.bgColor}" style="font-size: 14px; display: inline-block; color:rgb(0, 0, 0);">Shipping: ${status.statusElement.innerText}</span>
                                     </div>
                                 </div>`;
 }
@@ -297,7 +298,7 @@ function appendOrderFooter(totalPrice, status){
 
 function getStatus(status){
     if (status == 0){
-        return "Pending";
+        return {title:"Pending",bgColor:""};
     }else if(status == 1){
         return "Completed";
     }else if(status == 2){

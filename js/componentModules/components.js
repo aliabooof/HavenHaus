@@ -128,7 +128,8 @@ export class Component {
         const productImg = productCard.querySelector("img");
         productImg.src=`../../assets/images/Products/${product.name}.png`
         productImg.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
-        productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
+        if(seller)
+            productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
         productCard.querySelector("p").innerText = product.desc;
         productCard.querySelector("span").innerText = "$ " + product.price;
 

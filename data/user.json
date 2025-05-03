@@ -1,6 +1,33 @@
 {
   "user": [
     {
+      "id": "3ssam",
+      "firstName": "Essam",
+      "lastName": "Admin",
+      "email": "3ssam@admin.com",
+      "password": "121212",
+      "role": "0",
+      "phone": "201207751489"
+    },
+    {
+      "id": "3ssam_seller",
+      "firstName": "Essam",
+      "lastName": "Seller",
+      "email": "3ssam@seller.com",
+      "password": "121212",
+      "role": "1",
+      "phone": "201207751489"
+    },
+    {
+      "id": "3ssam_customer",
+      "firstName": "Essam",
+      "lastName": "User",
+      "email": "3ssam@user.com",
+      "password": "121212",
+      "role": "2",
+      "phone": "201207751489"
+    },
+    {
       "id": "aliouf_3532",
       "firstName": "Ali",
       "lastName": "Ouf",
