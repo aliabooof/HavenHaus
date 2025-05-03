@@ -123,9 +123,12 @@ else
             // e.validateForm();
             // editProduct();
         }else{
-        product.sellerID = sellerID
-        product = new Product(product)
-        Product.addProduct(product)
+            product.sellerID = sellerID
+            product = new Product(product)
+            product.imageUrl = product.name
+
+            Product.addProduct(product)
+            saveImage(product.imageUrl)
         }
         productModal.hide();
 
@@ -252,28 +255,36 @@ else
 //     }
 // });
 
+const fileInput = document.getElementById('image-input');
+    const preview = document.getElementById('preview');
+    const downloadBtn = document.getElementById('downloadBtn');
+    
+let imageDataUrl = null;
+let originalFileName = 'downloaded_image.png';
 
-const input = document.getElementById('fileInput');
-  const preview = document.getElementById('preview');
-function saveImage(event){
-
-    const file = this.files[0];
+fileInput.addEventListener('change', event => {
+    const file = event.target.files[0];
     if (!file) return;
 
+    originalFileName = file.name;
+
     const reader = new FileReader();
-    reader.onload = function (e) {
-      const base64 = e.target.result;
-      localStorage.setItem('savedImage', base64);
-      preview.src = base64;
+    reader.onload = e => {
+    imageDataUrl = e.target.result;
+    preview.src = imageDataUrl;
+    preview.style.display = 'block';
+    downloadBtn.disabled = false;
     };
     reader.readAsDataURL(file);
-  
+});
 
-  // On page load: load image from localStorage
-  const savedImage = localStorage.getItem('savedImage');
-  if (savedImage) {
-    preview.src = savedImage;
-  }
-
-
+function saveImage(imageDownloadName){   
+        if(!imageDataUrl)
+            return
+          const link = document.createElement('a');
+          link.href = imageDataUrl;
+          link.download = imageDownloadName; // keep original name
+          document.body.appendChild(link); // required for Firefox
+          link.click();
+          document.body.removeChild(link);    
 }

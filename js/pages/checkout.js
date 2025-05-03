@@ -115,6 +115,8 @@ creditCardRadio.addEventListener('change', toggleCreditCardDetails);
 cashRadio.addEventListener('change', toggleCreditCardDetails);
 
 const checkoutForm = document.getElementById("checkoutform");
+
+
 checkoutForm.addEventListener("submit", (e) => {
   e.preventDefault();
   let formInputs = getFormInputs(checkoutForm);
@@ -122,7 +124,15 @@ checkoutForm.addEventListener("submit", (e) => {
   if (!(Validation.validateForm(checkoutForm, validationRules))){
     return;
   };
-
+  
+  let outOfStockProducts = cart_.filter(orderItem=> {
+    return Product.getProductById(orderItem.productID).stock < 1
+  })
+  
+  if(outOfStockProducts.length > 0){
+    createAlert("Remove Out Of Stock Product First","danger")
+    return
+  }
    PlaceOrder();
    Cart.emptyCartByUserID(currentUser.id)
   

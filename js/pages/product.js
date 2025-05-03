@@ -25,10 +25,10 @@ await Component.renderCartOffcanvas();
 
 let user = User.getCurrentUser();
 console.log("user",user)
-if(user.role ==1 || user.role ==2 ){
+if(user.role ==0 || user.role ==1 ){
     document.getElementById("addToCartBtn").classList.add("d-none")
     document.getElementById("review-submit-container").classList.add("d-none")
-    // document.getElementById("quantity-control-container").classList.add("d-none")
+    document.getElementById("quantity-control-container").classList.add("d-none")
 
 }
 //-------------------------- Functions Section --------------------------\\
@@ -75,7 +75,12 @@ function addHighlights(product){
     if(!product.highlights || product.highlights.length == 0){
         ul.innerHTML+= "<p>No Highlights.</p>"
     }
-    else{
+    else if(typeof product.highlights === "string")
+    {
+        ul.innerHTML+= `<li>${product.highlights}</li>`
+
+    }
+     else   {
         product.highlights.forEach(item => {
             
             ul.innerHTML+= `<li>${item}</li>`
