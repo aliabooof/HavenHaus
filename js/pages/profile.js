@@ -274,7 +274,7 @@ function appendOrderBody(productName, quantity, price){
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
                                             <div style="width: 80px; height: 90px;">
-                                                <img src="../assets/images/1.jpg" alt="" width="100%" height="100%">
+                                                <img src="../../assets/images/Products/${productName}.png" alt="" width="100%" height="100%">
                                             </div>
                                             <div class="ms-2" style="line-height: 5px;">
                                                 <p>${productName} × ${quantity}</p>

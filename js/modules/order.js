@@ -1,13 +1,19 @@
 import { getTable, setTable, add } from "./db.js";
 
 export class Order {
-    constructor({ userId, items, status = 0, createdAt = new Date().toISOString() }) {
+    constructor({ userId, items, status = 0}) {
         this.userId = userId;
         this.items = items; 
         this.status = status; 
-        this.createdAt = createdAt;
+        
         this.total = this.#calculateTotal();
         this.id = this.#generateUniqueId(userId);
+        
+        const today = new Date();
+        const day = String(today.getDate()).padStart(2, '0');
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const year = today.getFullYear();
+        this.createdAt = `${day}/${month}/${year}`;
     }
 
     #generateId(userId) {

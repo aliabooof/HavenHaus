@@ -84,13 +84,13 @@ async function loadContent(x) {
             break;
         case 3:
             await Component.renderProducts();
-            await loadProductDashboardChart();
+            loadProductDashboardChart();
             await Component.renderProductsTable();
             await Component.renderProductRow();
             break;
         case 4:
             await Component.renderOrders();
-            await loadOrderDashboardChart();
+                loadOrderDashboardChart();
             await Component.renderOrderTable();
             await Component.renderOrderRow();
             break;

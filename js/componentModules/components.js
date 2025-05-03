@@ -585,7 +585,7 @@ export class Component {
         container.appendChild(chart);
     }
 
-        static async renderProducts(){
+    static async renderProducts(){
 
         const product = await fetchComponent("../../components/products-dashboard.html");
         const product_chart = convertToHtmlElement(product);
@@ -594,6 +594,43 @@ export class Component {
         container.appendChild(product_chart);
     }
 
+    static async renderProductsTable(){
+        const producttable = await fetchComponent("../../components/productTable.html");
+        const productTable = convertToHtmlElement(producttable);
+        const container = document.getElementById("content");
+        // container.innerHTML = "";
+        container.appendChild(productTable);
+    }
+    
+    static async renderProductRow(){
+        const products = Product.getAllProducts();
+        for (const product of products){
+            const productrow = await fetchComponent("../../components/productTableRows.html");
+            const productrowElement = convertToHtmlElement(productrow);
+            const cols = productrowElement.querySelectorAll("td");
+            const seller = User.getUserById(product.sellerID);
+            if(!seller) {continue;}
+            const sellerName = `${seller.firstName} ${seller.lastName}`;
+            // cols[0].innerText = product.imageUrl;
+            // cols[0].innerHTML = `<img src="${product.imageUrl}" width="50" height="50" style="object-fit: cover; border-radius: 4px;">`;
+            productrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
+                Product.removeProduct(product.id);
+                e.target.closest("tr").remove();
+            });
+            cols[1].innerText = product.name;
+            cols[2].innerText = `$${product.price.toFixed(2)}`;
+            cols[3].innerText = sellerName;
+            cols[4].innerText = product.stock;
+            cols[5].innerHTML = `
+            <span class="badge ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
+                ${product.stock > 0 ? 'In Stock' : 'Out of Stock'}
+            </span>
+        `;
+        console.log(productrowElement)
+            document.getElementById("productsTableBody").appendChild(productrowElement);    
+    
+        }
+    }
 
     static async renderOrderTable() {
         const ordertable = await fetchComponent("../../components/orderTable.html");
@@ -605,17 +642,20 @@ export class Component {
 
     static async renderOrderRow() {
     const orders = Order.getAllOrders();
+    console.log(orders)
     for (const order of orders) {
         const orderrow = await fetchComponent("../../components/orderTablesRows.html");
         const orderrowElement = convertToHtmlElement(orderrow);
         const cols = orderrowElement.querySelectorAll("td");
-        const customer = User.getUserById(order.userID);
+        console.log(order.userID);
+        const customer = User.getUserById(order.userId);
+        console.log(customer)
         if(!customer) {continue;}
         const customerName = `${customer.firstName} ${customer.lastName}`;
         cols[0].innerText = customerName;
-        cols[1].innerText = order.date;
+        cols[1].innerText = order.createdAt;
         cols[2].innerText = getStatusLabel(order.status);
-        cols[3].innerText = `$${order.cost.toFixed(2)}`;
+        cols[3].innerText = `$${order.total.toFixed(2)}`;
 
             orderrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
                 Order.removeOrder(order.id);
