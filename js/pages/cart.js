@@ -9,6 +9,7 @@ Auth.enforcePageAuthorization();
 
 import { Component } from "../componentModules/components.js";
 import { Cart } from "../modules/cartModule.js";
+import { Product } from "../modules/productModule.js";
 await Component.renderNavbar();
 await Component.renderFooter();
 document.querySelectorAll(".fa-cart-shopping").forEach(element=>{
@@ -26,9 +27,13 @@ document.getElementById("cart-items-container").dataset.totalPrice = "{}"
 let cartID= User.getCurrentUser().id;
 let totalPrice = {};
 
+let allProductsIds = Product.getAllProducts().map(p=>p.id)
+let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
+deletedProdcutsCartItems.forEach(cartItem=>{
+    RemoveCartItem(cartID,cartItem.productID)
+})
 
 let cart = GetCartByID(cartID)
-
 function showEmptyCart(){
     emtpyElement.classList.remove("d-none")
     emtpyElement.classList.add("d-flex");  

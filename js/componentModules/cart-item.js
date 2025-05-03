@@ -18,6 +18,9 @@ export function CreateDisplyCartItem(cartItem){
             cartElement.dataset.prodPrice = product.price;
             
             // product name, description, price, quantity, stock and stock-display
+            cartElement.querySelector("img").src =`../../assets/images/Products/${product.name}.png`
+            cartElement.querySelector("img").parentElement.href =`../../pages/product.html?prod-id=${product.id}`
+            cartElement.querySelector(".prod-name").parentElement.href = `../../pages/product.html?prod-id=${product.id}`
             cartElement.querySelector(".prod-name").innerText = product.name;
             cartElement.querySelector(".prod-desc").innerText = product.desc;
             cartElement.querySelector("#prod-price").innerText = product.price;
