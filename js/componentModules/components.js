@@ -210,7 +210,7 @@ export class Component {
     }
 
     static async renderAdminInquires(inquiry) {
-        console.log("hey");
+     
         const container = document.getElementById("inquireis-container");
 
         const inquiryCard = await fetchComponent("../../components/inquiry-card.html");
@@ -234,7 +234,7 @@ export class Component {
             
         })
         if(inquiry.details.status == 'in progress'){
-            console.log('hey')
+           
             buttonResolve.classList.remove('d-none');
         }
 
@@ -627,7 +627,7 @@ export class Component {
                 ${product.stock > 0 ? 'In Stock' : 'Out of Stock'}
             </span>
         `;
-        console.log(productrowElement)
+        
             document.getElementById("productsTableBody").appendChild(productrowElement);    
     
         }
@@ -643,14 +643,14 @@ export class Component {
 
     static async renderOrderRow() {
     const orders = Order.getAllOrders();
-    console.log(orders)
+    
     for (const order of orders) {
         const orderrow = await fetchComponent("../../components/orderTablesRows.html");
         const orderrowElement = convertToHtmlElement(orderrow);
         const cols = orderrowElement.querySelectorAll("td");
-        console.log(order.userID);
+        
         const customer = User.getUserById(order.userId);
-        console.log(customer)
+        
         if(!customer) {continue;}
         const customerName = `${customer.firstName} ${customer.lastName}`;
         cols[0].innerText = customerName;

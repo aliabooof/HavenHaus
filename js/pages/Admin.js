@@ -277,6 +277,7 @@ function loadOrderDashboardChart() {
         const orders = Order.getOrdersByUser(seller.id);
         return orders.length; // number of orders for this seller
     });
+    console.log(ordersCount)
     new Chart(dashOrder, {
         type: 'bar',
         data: {
