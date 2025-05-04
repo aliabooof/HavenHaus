@@ -39,7 +39,7 @@ import { Validation } from "../modules/validation.js";
 
 
     function confirmDelete(e){
-        Product.removeProduct(e.target.dataset.id)
+        let productId = e.target.dataset.id
         // confirmDeleteBtn.closest("tr").remove();
         getrow.remove();
         
@@ -58,7 +58,9 @@ import { Validation } from "../modules/validation.js";
                 OrderItem.setOrderItemStatus(order.id,orderItem.productID,orderItemStatus)
             });
         })
+        Product.removeProduct(e.target.dataset.id)
         deleteModal.hide();
+        loadProductsTable();
     }
 
     function attachDeleteHandlers() {
@@ -85,6 +87,7 @@ else
     
     addProductBtn.addEventListener('click', function() {
         isEditMode=false;
+        document.getElementById('productModalLabel').innerHTML = `New Product \t <i class="bi bi-clipboard-plus"></i>`
         document.getElementById('productForm').reset();
         productModal.show();
         document.getElementById("preview").parentElement.classList.add("d-none")
@@ -169,8 +172,8 @@ else
                         </span>
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-primary edit-btn" data-id="${product.id}">Edit</button>
-                        <button class="btn btn-sm btn-danger delete-btn" data-id="${product.id}">Delete</button>
+                        <button class="btn btn-sm btn-primary edit-btn" data-id="${product.id}"><i class="bi bi-pencil-square"></i></button>
+                        <button class="btn btn-sm btn-danger delete-btn" data-id="${product.id}"><i class="bi bi-x-octagon-fill"></i></button>
                     </td>
                 </tr>
             `;
@@ -178,10 +181,11 @@ else
 
         //call edit after render table
         document.querySelectorAll('.edit-btn').forEach(button =>{
-            button.addEventListener('click', function (e) {
+            button.addEventListener('click', function (event) {
+                // event.target.closest("button")
                 isEditMode=true;
                 let productId = button.getAttribute('data-id');
-                document.getElementById('productModalLabel').textContent = "Edit Product";
+                document.getElementById('productModalLabel').innerHTML = `Edit Product <i class="bi bi-pencil-square"></i>`;
                 document.getElementById("saveProductBtn").dataset.id=productId;
 
                 let product= Product.getProductById(productId);
