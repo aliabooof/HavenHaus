@@ -133,7 +133,9 @@ if(product.stock < 1){
 }
 
 if(product.reviews.length !== 0){
-    document.querySelectorAll(".review-count").innerText = product.reviews.length;
+    let reviewCountSpan = document.querySelectorAll(".review-count");
+    for(let i=0;i<reviewCountSpan.length;i++)
+        reviewCountSpan[i].innerText = product.reviews.length
     for (const review of product.reviews) {
         await Component.renderReviews(review);
     }
