@@ -28,9 +28,9 @@
           "customerName": "Ali",
           "text": "hal aljf aljfl fsljfs fsja fljasfl"
         }
-      ]
+      ],
+      "isDeleted": false
     },
-
     {
       "id": "PlushSofa_2_t4y5u6i",
       "sellerID": "aliouf_35322",
@@ -47,8 +47,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OakCoffeeTable_3_o7p8a9s",
       "sellerID": "mark_taylor_004",
@@ -65,8 +67,10 @@
         "Integrated Storage",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "L-ShapedSectional_4_d0f1g2h",
       "sellerID": "david_martin_008",
@@ -83,8 +87,10 @@
         "Comfortable Cushioning",
         "Space Saving"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "QueenPlatformBed_5_j3k4l5z",
       "sellerID": "aliouf_35322",
@@ -101,8 +107,10 @@
         "Sturdy Construction",
         "Stylish Design"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "MultipurposeCabinet_6_x6c7v8b",
       "sellerID": "mark_taylor_004",
@@ -119,8 +127,10 @@
         "Space Saving",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ErgonomicOfficeDesk_7_n9m0q1w",
       "sellerID": "michael_clark_006",
@@ -137,8 +147,10 @@
         "Adjustable Features",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorPatioSet_8_e2r3t4y",
       "sellerID": "aliouf_35322",
@@ -155,8 +167,10 @@
         "Durable Finish",
         "Comfortable Cushioning"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "MinimalistBookshelf_6_u5i6o7p",
       "sellerID": "mary_smith_002",
@@ -173,8 +187,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "LeatherRecliner_2_a8s9d0f",
       "sellerID": "david_martin_008",
@@ -191,8 +207,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "RoundDiningTable_1_g1h2j3k",
       "sellerID": "aliouf_35322",
@@ -209,8 +227,10 @@
         "Space Saving",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "KidsBunkBed_5_l4z5x6c",
       "sellerID": "mary_smith_002",
@@ -227,8 +247,10 @@
         "Sturdy Construction",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "EntrywayConsoleTable_3_v7b8n9m",
       "sellerID": "david_martin_008",
@@ -245,8 +267,10 @@
         "Space Saving",
         "Stylish Design"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "FabricArmchair_2_q0w1e2r",
       "sellerID": "aliouf_35322",
@@ -263,8 +287,10 @@
         "Durable Finish",
         "Stylish Design"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "GlassCoffeeTable_3_t3y4u5i",
       "sellerID": "mary_smith_002",
@@ -281,8 +307,10 @@
         "Easy to Clean",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "KingSizeBedFrame_5_o6p7a8s",
       "sellerID": "david_martin_008",
@@ -299,8 +327,10 @@
         "Easy Assembly",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ModularSofa_4_d9f0g1h",
       "sellerID": "aliouf_35322",
@@ -317,8 +347,10 @@
         "Comfortable Cushioning",
         "Space Saving"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorDiningTable_8_j2k3l4z",
       "sellerID": "mary_smith_002",
@@ -335,8 +367,10 @@
         "Durable Finish",
         "Easy to Clean"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "VelvetSofa_2_x5c6v7b",
       "sellerID": "david_martin_008",
@@ -353,8 +387,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SideTable_3_n8m9q0w",
       "sellerID": "aliouf_35322",
@@ -371,8 +407,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "StorageBench_6_e1r2t3y",
       "sellerID": "mary_smith_002",
@@ -389,8 +427,10 @@
         "Space Saving",
         "Comfortable Cushioning"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "AdjustableOfficeChair_7_u4i5o6p",
       "sellerID": "michael_clark_006",
@@ -407,8 +447,10 @@
         "Adjustable Features",
         "Comfortable Cushioning"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ChaiseLounge_2_a7s8d9f",
       "sellerID": "aliouf_35322",
@@ -425,8 +467,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "WoodenWardrobe_6_g0h1j2k",
       "sellerID": "mark_taylor_004",
@@ -443,8 +487,10 @@
         "Solid Wood Construction",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "IndustrialDiningChair_1_l3z4x5c",
       "sellerID": "david_martin_008",
@@ -461,8 +507,10 @@
         "Sturdy Metal Frame",
         "Easy to Clean"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "Sit-StandDesk_7_v6b7n8m",
       "sellerID": "aliouf_35322",
@@ -479,8 +527,10 @@
         "Ergonomic Support",
         "Durable Finish"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "CornerSectional_4_q9w0e1r",
       "sellerID": "mary_smith_002",
@@ -497,8 +547,10 @@
         "Comfortable Cushioning",
         "Space Saving"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorLoungeChair_8_t2y3u4i",
       "sellerID": "david_martin_008",
@@ -515,8 +567,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "Daybed_5_o5p6a7s",
       "sellerID": "aliouf_35322",
@@ -533,8 +587,10 @@
         "Multi-functional",
         "Stylish Design"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "FilingCabinet_6_d8f9g0h",
       "sellerID": "mary_smith_002",
@@ -551,8 +607,10 @@
         "Durable Finish",
         "Easy to Clean"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "AccentChair_2_j1k2l3z",
       "sellerID": "david_martin_008",
@@ -569,8 +627,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ExtendableDiningTable_1_x4c5v6b",
       "sellerID": "aliouf_35322",
@@ -587,8 +647,10 @@
         "Multi-functional",
         "Solid Wood Construction"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "GamingDesk_7_n7m8q9w",
       "sellerID": "mary_smith_002",
@@ -605,8 +667,10 @@
         "Integrated Storage",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorSofa_8_e0r1t2y",
       "sellerID": "michael_clark_006",
@@ -623,8 +687,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "TuftedSofa_2_u3i4o5p",
       "sellerID": "aliouf_35322",
@@ -641,8 +707,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "LiftTopCoffeeTable_3_a6s7d8f",
       "sellerID": "mary_smith_002",
@@ -659,8 +727,10 @@
         "Integrated Storage",
         "Space Saving"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "CanopyBed_5_g9h0j1k",
       "sellerID": "david_martin_008",
@@ -677,8 +747,10 @@
         "Sturdy Construction",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "DisplayCabinet_6_l2z3x4c",
       "sellerID": "aliouf_35322",
@@ -695,8 +767,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "BarStool_1_v5b6n7m",
       "sellerID": "mary_smith_002",
@@ -713,8 +787,10 @@
         "Durable Finish",
         "Easy to Clean"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ExecutiveDesk_7_q8w9e0r",
       "sellerID": "david_martin_008",
@@ -731,8 +807,10 @@
         "Integrated Storage",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorBarSet_8_t1y2u3i",
       "sellerID": "aliouf_35322",
@@ -749,8 +827,10 @@
         "Durable Finish",
         "Easy to Clean"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SofaBed_2_o4p5a6s",
       "sellerID": "mary_smith_002",
@@ -767,8 +847,10 @@
         "Space Saving",
         "Comfortable Cushioning"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "NestingTables_3_d7f8g9h",
       "sellerID": "david_martin_008",
@@ -785,8 +867,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "TrundleBed_5_j0k1l2z",
       "sellerID": "aliouf_35322",
@@ -803,8 +887,10 @@
         "Multi-functional",
         "Sturdy Construction"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "CubeStorage_6_x3c4v5b",
       "sellerID": "mary_smith_002",
@@ -821,8 +907,10 @@
         "Integrated Storage",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "WingbackChair_2_n6m7q8w",
       "sellerID": "michael_clark_006",
@@ -839,8 +927,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "BenchwithBack_1_e9r0t1y",
       "sellerID": "aliouf_35322",
@@ -857,8 +947,10 @@
         "Solid Wood Construction",
         "Stylish Design"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ConvertibleSofaBed_2_u2i3o4p",
       "sellerID": "mary_smith_002",
@@ -875,8 +967,10 @@
         "Space Saving",
         "Comfortable Cushioning"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "AccentTable_3_a5s6d7f",
       "sellerID": "david_martin_008",
@@ -893,8 +987,10 @@
         "Space Saving",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "FullSizeBedFrame_5_g8h9j0k",
       "sellerID": "aliouf_35322",
@@ -911,8 +1007,10 @@
         "Easy Assembly",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "NarrowBookshelf_6_l1z2x3c",
       "sellerID": "mark_taylor_004",
@@ -929,8 +1027,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SwivelChair_2_v4b5n6m",
       "sellerID": "david_martin_008",
@@ -947,8 +1047,10 @@
         "Multi-functional",
         "Stylish Design"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "CounterHeightDiningSet_1_q7w8e9r",
       "sellerID": "aliouf_35322",
@@ -965,8 +1067,10 @@
         "Solid Wood Construction",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "CompactOfficeDesk_7_t0y1u2i",
       "sellerID": "mary_smith_002",
@@ -983,8 +1087,10 @@
         "Easy Assembly",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "U-ShapedSectional_4_o3p4a5s",
       "sellerID": "david_martin_008",
@@ -1001,8 +1107,10 @@
         "Comfortable Cushioning",
         "Stylish Design"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorAccentTable_8_d6f7g8h",
       "sellerID": "aliouf_35322",
@@ -1019,8 +1127,10 @@
         "Space Saving",
         "Easy to Clean"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "FutonSofa_2_j9k0l1z",
       "sellerID": "mary_smith_002",
@@ -1037,8 +1147,10 @@
         "Space Saving",
         "Comfortable Cushioning"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "TrunkCoffeeTable_3_x2c3v4b",
       "sellerID": "david_martin_008",
@@ -1055,8 +1167,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "Captain'sBed_5_n5m6q7w",
       "sellerID": "aliouf_35322",
@@ -1073,8 +1187,10 @@
         "Space Saving",
         "Sturdy Construction"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "TallStorageCabinet_6_e8r9t0y",
       "sellerID": "mary_smith_002",
@@ -1091,8 +1207,10 @@
         "Space Saving",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "PapasanChair_2_u1i2o3p",
       "sellerID": "michael_clark_006",
@@ -1109,8 +1227,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "DropLeafDiningTable_1_a4s5d6f",
       "sellerID": "aliouf_35322",
@@ -1127,8 +1247,10 @@
         "Multi-functional",
         "Solid Wood Construction"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OfficeCredenza_7_g7h8j9k",
       "sellerID": "mark_taylor_004",
@@ -1145,8 +1267,10 @@
         "Durable Finish",
         "Ergonomic Support"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorChaiseLounge_8_l0z1x2c",
       "sellerID": "david_martin_008",
@@ -1163,8 +1287,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "MurphyBed_5_v3b4n5m",
       "sellerID": "aliouf_35322",
@@ -1181,8 +1307,10 @@
         "Multi-functional",
         "Sturdy Construction"
       ],
-      "instructions": "Professional assembly recommended."
-    ,"reviews": []},
+      "instructions": "Professional assembly recommended.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "Settee_2_q6w7e8r",
       "sellerID": "mary_smith_002",
@@ -1199,8 +1327,10 @@
         "Comfortable Cushioning",
         "Space Saving"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ConsoleTablewithShelves_3_t9y0u1i",
       "sellerID": "david_martin_008",
@@ -1217,8 +1347,10 @@
         "Stylish Design",
         "Space Saving"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "AdjustableBedBase_5_o2p3a4s",
       "sellerID": "aliouf_35322",
@@ -1235,8 +1367,10 @@
         "Ergonomic Support",
         "Sturdy Construction"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "PubTableSet_1_d5f6g7h",
       "sellerID": "mary_smith_002",
@@ -1253,8 +1387,10 @@
         "Durable Finish",
         "Easy to Clean"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "StandingDeskConverter_7_j8k9l0z",
       "sellerID": "david_martin_008",
@@ -1271,8 +1407,10 @@
         "Ergonomic Support",
         "Space Saving"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorSectional_8_x1c2v3b",
       "sellerID": "aliouf_35322",
@@ -1289,8 +1427,10 @@
         "Comfortable Cushioning",
         "Modular Design"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "VelvetArmchair_2_n4m5q6w",
       "sellerID": "mary_smith_002",
@@ -1307,8 +1447,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "DrumCoffeeTable_3_e7r8t9y",
       "sellerID": "michael_clark_006",
@@ -1325,8 +1467,10 @@
         "Solid Wood Construction",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "WideBookshelf_6_u0i1o2p",
       "sellerID": "mary_smith_002",
@@ -1343,8 +1487,10 @@
         "Durable Finish",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "BenchwithStorage_6_a3s4d5f",
       "sellerID": "david_martin_008",
@@ -1361,8 +1507,10 @@
         "Space Saving",
         "Multi-functional"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ClubChair_2_g6h7j8k",
       "sellerID": "aliouf_35322",
@@ -1379,8 +1527,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SquareCoffeeTable_3_l9z0x1c",
       "sellerID": "mark_taylor_004",
@@ -1397,8 +1547,10 @@
         "Durable Finish",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "LoftBed_5_v2b3n4m",
       "sellerID": "david_martin_008",
@@ -1415,8 +1567,10 @@
         "Multi-functional",
         "Sturdy Construction"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "EntrywayCabinet_6_q5w6e7r",
       "sellerID": "aliouf_35322",
@@ -1433,8 +1587,10 @@
         "Space Saving",
         "Stylish Design"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorDiningSet_8_t8y9u0i",
       "sellerID": "mary_smith_002",
@@ -1451,8 +1607,10 @@
         "Durable Finish",
         "Comfortable Cushioning"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "BridgeportSofa_2_o1p2a3s",
       "sellerID": "david_martin_008",
@@ -1469,8 +1627,10 @@
         "Comfortable Cushioning",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "EndTable_3_d4f5g6h",
       "sellerID": "aliouf_35322",
@@ -1487,8 +1647,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SleighBed_5_j7k8l9z",
       "sellerID": "mary_smith_002",
@@ -1505,8 +1667,10 @@
         "Sturdy Construction",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OfficeBookcase_6_x0c1v2b",
       "sellerID": "michael_clark_006",
@@ -1523,8 +1687,10 @@
         "Durable Finish",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SofaChaise_4_n3m4q5w",
       "sellerID": "aliouf_35322",
@@ -1541,8 +1707,10 @@
         "Stylish Design",
         "Space Saving"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorPicnicTable_8_e6r7t8y",
       "sellerID": "mary_smith_002",
@@ -1559,8 +1727,10 @@
         "Durable Finish",
         "Easy to Clean"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "DeskChair_7_u9i0o1p",
       "sellerID": "david_martin_008",
@@ -1577,8 +1747,10 @@
         "Durable Finish",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "TwinBedwithStorage_5_a2s3d4f",
       "sellerID": "aliouf_35322",
@@ -1595,8 +1767,10 @@
         "Space Saving",
         "Sturdy Construction"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "WallMountedShelves_6_g5h6j7k",
       "sellerID": "mark_taylor_004",
@@ -1613,8 +1787,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "RectangleCoffeeTable_3_l8z9x0c",
       "sellerID": "david_martin_008",
@@ -1631,8 +1807,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "KidsDesk_7_v1b2n3m",
       "sellerID": "aliouf_35322",
@@ -1649,8 +1827,10 @@
         "Easy Assembly",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "PlatformBed_5_q4w5e6r",
       "sellerID": "mary_smith_002",
@@ -1667,8 +1847,10 @@
         "Easy Assembly",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OfficeCabinet_6_t7y8u9i",
       "sellerID": "david_martin_008",
@@ -1685,8 +1867,10 @@
         "Durable Finish",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "SectionalwithChaise_4_o0p1a2s",
       "sellerID": "aliouf_35322",
@@ -1703,8 +1887,10 @@
         "Modular Design",
         "Stylish Design"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OttomanwithStorage_3_d3f4g5h",
       "sellerID": "mary_smith_002",
@@ -1721,8 +1907,10 @@
         "Multi-functional",
         "Stylish Design"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "CaliforniaKingBed_5_j6k7l8z",
       "sellerID": "david_martin_008",
@@ -1739,8 +1927,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "ConsoleTable_3_x9c0v1b",
       "sellerID": "aliouf_35322",
@@ -1757,8 +1947,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorAccentChair_8_n2m3q4w",
       "sellerID": "mary_smith_002",
@@ -1775,8 +1967,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Wipe clean with a damp cloth."
-    ,"reviews": []},
+      "instructions": "Wipe clean with a damp cloth.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "PullOutSofa_2_e5r6t7y",
       "sellerID": "michael_clark_006",
@@ -1793,8 +1987,10 @@
         "Space Saving",
         "Comfortable Cushioning"
       ],
-      "instructions": "Refer to the user manual for setup."
-    ,"reviews": []},
+      "instructions": "Refer to the user manual for setup.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "LadderBookshelf_6_u8i9o0p",
       "sellerID": "aliouf_35322",
@@ -1811,8 +2007,10 @@
         "Stylish Design",
         "Easy Assembly"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "AdjustableStool_1_a1s2d3f",
       "sellerID": "mary_smith_002",
@@ -1829,8 +2027,10 @@
         "Multi-functional",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OfficeChairwithWheels_7_g4h5j6k",
       "sellerID": "david_martin_008",
@@ -1847,8 +2047,10 @@
         "Multi-functional",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "OutdoorCoffeeTableSet_8_l7z8x9c",
       "sellerID": "aliouf_35322",
@@ -1865,8 +2067,10 @@
         "Stylish Design",
         "Durable Finish"
       ],
-      "instructions": "Assembly required, instructions included."
-    ,"reviews": []},
+      "instructions": "Assembly required, instructions included.",
+      "reviews": [],
+      "isDeleted": false
+    },
     {
       "id": "KidsSofa_2_v0b1n2m",
       "sellerID": 4,
@@ -1884,7 +2088,8 @@
         "Easy to Clean"
       ],
       "instructions": "Wipe clean with a damp cloth.",
-      "reviews": []
+      "reviews": [],
+      "isDeleted": false
     }
   ]
 }

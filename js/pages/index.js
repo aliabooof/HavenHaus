@@ -40,9 +40,10 @@ import { User } from "../modules/userModule.js";
    
 
     let featuredProducts = Product.getFeaturedProducs();
-    console.log(featuredProducts);
+    let featuredProductsAfterDeletion = featuredProducts.filter(p=>p.isDeleted == false)
+    
 
-    for (const prod of featuredProducts) {
+    for (const prod of featuredProductsAfterDeletion) {
         await Component.renderProductCard(prod);
     }
     

@@ -78,7 +78,10 @@ async function filterAndRenderProducts() {
     }
     
     container.innerHTML = "";
-    for (const product of filtered) {
+
+    let filterdAfterDeletion = filtered.filter(p=>p.isDeleted == false)
+    
+    for (const product of filterdAfterDeletion ) {
         await Component.renderProductCard(product);
         observeElements();
     }
