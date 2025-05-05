@@ -37,6 +37,7 @@ export class Component {
         })
 
         cartItems = GetCartByID(User.getCurrentUser().id)
+        document.querySelectorAll("#cart-badge").forEach(badge => badge.innerText = cartItems.length)
         if (cartItems.length == 0) {
             Cart.showEmpty("main-container");
             return;
@@ -411,6 +412,15 @@ export class Component {
         cols[3].innerText = user.role == 1 ? "Seller" : "Customer";
 
         userrowElement.querySelector(".delete-button").addEventListener("click", (e) => {
+            if(user.role==1){
+                let allProducts = Product.getAllProductsWithDeleted().filter(p=>p.sellerID != user.id);
+                let products = Product.getProductsBySeller(user.id)
+                products.forEach(p=>p.isDeleted = true)
+                console.log(products)
+                let updatedAllProducts = allProducts.concat(products);
+                console.log(updatedAllProducts)
+                setTable('product',updatedAllProducts);
+            }
             User.removeUser(user.id);
             e.target.closest("tr").remove();
             this.users = User.getAllUsers();

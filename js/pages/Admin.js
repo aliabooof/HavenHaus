@@ -5,6 +5,7 @@ import { Component } from "../componentModules/components.js";
 import { LoadDB } from "../load_db.js";
 import { Inquiry } from "../modules/inquiryModule.js";
 import { Auth } from "../modules/authModule.js";
+import {Seller} from "../modules/seller.js";
 
 
 await LoadDB();
@@ -272,10 +273,12 @@ function loadOrderDashboardChart() {
     const dashOrder = document.getElementById('ordersChart').getContext('2d');
     const sellersData = User.getUserByRole(1);
     const sellers = sellersData.map(user => `${user.firstName} ${user.lastName}`);
-    // console.log(sellers);
+    
     const ordersCount = sellersData.map(seller => {
-        const orders = Order.getOrdersByUser(seller.id);
-        return orders.length; // number of orders for this seller
+
+        const orders = Seller.getSellerOrdersById(seller.id).filter(o=>o.status==1);
+        
+        return orders.length; 
     });
     console.log(ordersCount)
     new Chart(dashOrder, {

@@ -13,6 +13,9 @@ let productId = GetUrlField("prod-id")
 if(!productId) redirect("../../pages/not-found.html")   
 
 let product = Product.getProductById(productId);
+if(product.isDeleted == true){
+    redirect("../../pages/not-found.html");
+}
 
 // if(!product) redirect("../../pages/not-found.html")
 

@@ -33,9 +33,12 @@ export class Product {
 
     // Get all products
     static getAllProducts() {
-        return getTable("product") || [];
+        return getTable("product").filter(p=>p.isDeleted == false) || [];
     }
 
+    static getAllProductsWithDeleted(){
+        return getTable("product") || [];
+    }
     // Get all existing product IDs
     static getAllExistingProductIds() {
         return this.getAllProducts().map(product => product.id);
