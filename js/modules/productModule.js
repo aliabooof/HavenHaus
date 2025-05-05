@@ -1,6 +1,7 @@
 import { getTable, add, setTable } from "../db.js";
 
 export class Product {
+<<<<<<< Updated upstream
     constructor({ name, category, price, desc, imageUrl, stock, sellerID, highlights, instructions, reviews }) {
         this.name = name;
         this.category = category;
@@ -13,6 +14,22 @@ export class Product {
         this.instructions = instructions || "No instructions provided.";
         this.reviews = reviews || [];
         this.id = this.#generateUniqueId(name, category);
+=======
+    constructor(productData) {
+        this.name = productData.name;
+        this.category = productData.category;
+        this.price = productData.price;
+        this.desc = productData.desc;
+        this.imageUrl = productData.imageUrl;
+        this.stock = productData.stock;
+        this.sellerID = productData.sellerID;
+        this.highlights = productData.highlights || "No highlights provided.";
+        this.instructions = productData.instructions || "No instructions provided.";
+        this.reviews = productData.reviews || [];
+        this.featured = productData.featured;
+        this.id = this.#generateUniqueId(this.name, this.category);
+        this.isDeleted = false;
+>>>>>>> Stashed changes
     }
 
     // Generates a random base ID using name and category
@@ -32,7 +49,11 @@ export class Product {
 
     // Get all products
     static getAllProducts() {
-        return getTable("product") || [];
+        let table = getTable("product") || [];
+        return table.filter(p=>p.isDeleted == false)
+    }
+    static getAllProductsWithDeleted(){
+        return getTable("product") || []
     }
 
     // Get all existing product IDs
