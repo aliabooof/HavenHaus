@@ -24,8 +24,8 @@ const accessControlList = [
     { path: '/pages/profile.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER] },
     { path: '/pages/cart.html',         allowedRoles: [Roles.CUSTOMER] },
     { path: '/checkout.html',           allowedRoles: [Roles.CUSTOMER] },
-    { path: 'pages/dashboard-seller.html',   allowedRoles: [Roles.SELLER] },
-    { path: '/admin.html',              allowedRoles: [Roles.ADMIN] },
+    { path: '/pages/dashboard-seller.html',   allowedRoles: [Roles.SELLER] },
+    { path: '/pages/admin.html',              allowedRoles: [Roles.ADMIN] },
     { path: '/editUser.html',           allowedRoles: [Roles.ADMIN] },
     { path: '/pages/support.html',      allowedRoles: [Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN,Roles.GUEST] },
     { path: 'default',                  allowedRoles: [Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] }
@@ -121,6 +121,7 @@ export class Auth {
     static enforcePageAuthorization(redirectPath = '/login.html') {
         const currentUserRole = Auth.getCurrentUserRole();
         const currentPath = window.location.pathname;
+        console.log(currentPath);
         enforceAuthorization(currentUserRole, currentPath, redirectPath);
     }
 
