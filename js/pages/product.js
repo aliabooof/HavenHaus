@@ -1,4 +1,4 @@
-import {ChangeCartItemQuantity, GetCartItem, GetProductByID} from "../modules/db.js"
+import {ChangeCartItemQuantity, GetCartItem, GetProductByID,AddSessionCartItem, ChangeSessionCartItemQuantity} from "../modules/db.js"
 import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect, getFormFields, createAlert} from "../util.js"
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
@@ -6,7 +6,7 @@ import { Product } from "../modules/productModule.js";
 import { Auth } from "../modules/authModule.js";
 import { LoadDB } from "../load_db.js";
 
-console.log("hello3")
+
 await LoadDB();
 // redirect if prod-id is not set properly in url (id is wrong)
 let productId = GetUrlField("prod-id")
@@ -27,7 +27,6 @@ await Component.renderCartOffcanvas();
 
 
 let user = User.getCurrentUser();
-console.log("user",user)
 if(user.role ==0 || user.role ==1 ){
     document.getElementById("addToCartBtn").classList.add("d-none")
     document.getElementById("review-submit-container").classList.add("d-none")
@@ -36,11 +35,13 @@ if(user.role ==0 || user.role ==1 ){
 }
 //-------------------------- Functions Section --------------------------\\
 function AddToCart(event){
+    let quantityElement = document.querySelector(".quantity");
     if(!user || user.length == 0){
-        createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
+        // createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
+        
+        ChangeSessionCartItemQuantity(user.id, product.id, Number(quantityElement.innerText.trim()));
         return;
     }    
-    let quantityElement = document.querySelector(".quantity");
     ChangeCartItemQuantity(user.id, product.id, Number(quantityElement.innerText.trim()));
     redirect("../../pages/cart.html");    
 }
@@ -135,7 +136,7 @@ if(product.stock < 1){
     document.querySelector("#stock-label").classList.add("text-danger")
 }
 
-if(product.reviews.length !== 0){
+if(product.reviews && product.reviews.length !== 0){
     let reviewCountSpan = document.querySelectorAll(".review-count");
     for(let i=0;i<reviewCountSpan.length;i++)
         reviewCountSpan[i].innerText = product.reviews.length
