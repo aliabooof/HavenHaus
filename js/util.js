@@ -56,10 +56,12 @@ export function redirect(pageName){
 
 export function createAlert(message, color, subMessage = "") {
   
-
+    if(document.getElementById("side-alert"))
+        document.getElementById("side-alert").remove();
     const alert = document.createElement("div");
     alert.classList.add("alert", `alert-${color}`, "alert-dismissible", "fade", "show");
     alert.setAttribute("role", "alert");
+    alert.setAttribute("id","side-alert");
 
     alert.innerHTML = `
         <strong>${message}</strong><br>

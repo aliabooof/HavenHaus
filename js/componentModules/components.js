@@ -2,7 +2,7 @@ import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
 import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields, getFormInputs } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
-import { GetCartByID, RemoveCartItem} from "../modules/db.js";
+import { AddSessionCartItem, GetCartByID, RemoveCartItem} from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
 import {Order} from "../../js/modules/order.js";
 
@@ -145,11 +145,13 @@ export class Component {
         const productButton = productCard.querySelector("button");
         productButton.addEventListener("click", () => {
             if (!Auth.isLoggedIn()) {
-                createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
-                return;
-            }
+                createAlert("Added to Cart", "success");
+                AddSessionCartItem(productCard.id)
+                // return;
+            }else
+                Cart.cartUi(productCard.id)
+            
 
-            Cart.cartUi(productCard.id)
         });
 
         if (User.getCurrentUser() !== null &&( User.getCurrentUser().role == 0 ||User.getCurrentUser().role == 1)) {

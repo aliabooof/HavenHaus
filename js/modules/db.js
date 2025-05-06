@@ -1,3 +1,4 @@
+// ------------------------ Session Storage -----------------------\\
 export function getSessionTable(tableName){
     // return JSON.parse(window.localStorage.getItem(tableName));
     const data = JSON.parse(sessionStorage.getItem(tableName));
@@ -42,14 +43,31 @@ export function ChangeSessionCartItemQuantity( productID, newQuantity){
     }
     let carts = getSessionTable("cartItem");
     carts.forEach((item,index) => {
-        if(item.userID == userID && item.productID == productID){
+        if(item.productID == productID){
             carts[index].quantity = newQuantity
         }
     });
     setSessionTable("cartItem", carts)
 }
 
+export function RemoveSessionCartItem(productID){
+    // Totally removes the item from the cart
+    let carts = getSessionTable("cartItem");
+    carts.some((item,index) => {
+        if(item.productID == productID){
+            carts.splice(index,1);
+            return true;
+        }
+    });
+    setSessionTable("cartItem", carts)
+}
 
+export function DeleteSessionCart(){
+    sessionStorage.removeItem("cartItem")
+}
+
+
+// ------------------------ Local Storage -----------------------\\
 export function getTable(tableName){
     // return JSON.parse(window.localStorage.getItem(tableName));
     const data = JSON.parse(localStorage.getItem(tableName));

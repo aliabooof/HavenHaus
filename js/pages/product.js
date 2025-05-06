@@ -1,4 +1,4 @@
-import {ChangeCartItemQuantity, GetCartItem, GetProductByID,AddSessionCartItem, ChangeSessionCartItemQuantity} from "../modules/db.js"
+import {ChangeCartItemQuantity, GetCartItem, GetProductByID,AddSessionCartItem, ChangeSessionCartItemQuantity, GetSessionCart, GetSessionCartItem} from "../modules/db.js"
 import {IncreaseQuantity, DecreaseQuantity, GetUrlField, redirect, getFormFields, createAlert} from "../util.js"
 import { User } from "../modules/userModule.js";
 import { Component } from "../componentModules/components.js";
@@ -39,10 +39,9 @@ function AddToCart(event){
     if(!user || user.length == 0){
         // createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
         
-        ChangeSessionCartItemQuantity(user.id, product.id, Number(quantityElement.innerText.trim()));
-        return;
-    }    
-    ChangeCartItemQuantity(user.id, product.id, Number(quantityElement.innerText.trim()));
+        ChangeSessionCartItemQuantity(product.id, Number(quantityElement.innerText.trim()));
+    }else
+        ChangeCartItemQuantity(user.id, product.id, Number(quantityElement.innerText.trim()));
     redirect("../../pages/cart.html");    
 }
 function submitReview(e){
@@ -93,16 +92,42 @@ function addHighlights(product){
     document.getElementById("highlights-container").appendChild(ul)
 
 }
+function getCurrentUserCart(){
+    if(Auth.isLoggedIn()){
+        let user = User.getCurrentUser()
+        if(!user || !user.id)
+            return [];
+        checkDeletedProductsInCart(user.id)
+        return GetCartByID(user.id)
+    }else{
+        return GetSessionCart();
+    }
+
+}
+function checkDeletedProductsInCart(cartID){
+    let allProductsIds = Product.getAllProducts().map(p=>p.id)
+    let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
+    deletedProdcutsCartItems.forEach(cartItem=>{
+        RemoveCartItem(cartID,cartItem.productID)
+    })
+}
 //___________________________ End Of Functions Section _______________________\\
 
 let currUser = User.getCurrentUser();
 let cartItem, quantity=1 ;
-if(currUser) {
+
+if(Auth.isLoggedIn() && currUser.id) {
     cartItem = GetCartItem(currUser.id,product.id)
     if(cartItem.length > 0 )
-    quantity = cartItem[0].quantity;
+        quantity = cartItem[0].quantity;
     if(quantity>product.stock)
         ChangeCartItemQuantity(currUser.id,product.id,product.stock)
+}else{
+    cartItem = GetSessionCartItem(product.id)
+    if(cartItem.length > 0 )
+        quantity = cartItem[0].quantity;
+    if(quantity>product.stock)
+        ChangeSessionCartItemQuantity(product.id,product.stock)
 }
 
 

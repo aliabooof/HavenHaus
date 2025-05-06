@@ -22,7 +22,7 @@ const accessControlList = [
     { path: '/',                        allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/index.html',                        allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER, Roles.ADMIN] },
     { path: '/pages/profile.html',      allowedRoles: [Roles.GUEST, Roles.CUSTOMER, Roles.SELLER] },
-    { path: '/pages/cart.html',         allowedRoles: [Roles.CUSTOMER] },
+    { path: '/pages/cart.html',         allowedRoles: [Roles.CUSTOMER,Roles.GUEST] },
     { path: '/checkout.html',           allowedRoles: [Roles.CUSTOMER] },
     { path: '/pages/dashboard-seller.html',   allowedRoles: [Roles.SELLER] },
     { path: '/pages/admin.html',              allowedRoles: [Roles.ADMIN] },
@@ -62,7 +62,7 @@ export class Auth {
         const loginPassword = data.password;
 
         const user = User.getUserByEmail(loginEmail);
-
+        console.log("from login")
         if (!user) {
             console.log("Login failed: Email not found.");
             return false;

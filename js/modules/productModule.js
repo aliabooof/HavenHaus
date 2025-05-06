@@ -14,6 +14,7 @@ export class Product {
         this.reviews = productData.reviews || [];
         this.featured = productData.featured;
         this.id = this.#generateUniqueId(this.name, this.category);
+        this.isDeleted = false;
     }
 
     // Generates a random base ID using name and category
