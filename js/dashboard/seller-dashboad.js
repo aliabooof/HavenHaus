@@ -176,13 +176,14 @@ function animateCount(id, endValue, duration = 1000) {
     let startValue = 0;
     // endValue = Math.max(endValue,1)
     let stepTime = Math.abs(Math.floor(  duration/ endValue));
+    let valueStep = Math.max(1,Math.floor(Math.min(10,endValue/100)))
     // stepTime = 0.1
     const counter = setInterval(() => {
         if (startValue >= endValue) {
             clearInterval(counter);
         }
         element.textContent = startValue;
-        startValue = Math.min(startValue+10,endValue);
+        startValue = Math.min(startValue+valueStep,endValue);
 
     }, stepTime);
 }
@@ -208,7 +209,7 @@ var sellerId = User.getCurrentUser().id
 
     // Total products
 let totalProductsCount = Product.getProductsBySeller(sellerId).length 
-animateCount("total-products",totalProductsCount,100)
+animateCount("total-products",totalProductsCount,1000)
 
 
 // getSellerOrders
@@ -223,7 +224,7 @@ let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId)
 // Total orders, Pending Orders
 animateCount("total-orders",shippedOrders.length,200)
 let pendingOrdersCount = sellerOrders.filter(order=> order.status == 0).length 
-animateCount("pending-orders",pendingOrdersCount,100)
+animateCount("pending-orders",pendingOrdersCount,500)
 
 
 let sellerProductsIds = Product.getProductsBySeller(sellerId).map(product=> product.id)
@@ -243,7 +244,7 @@ let totalRevenue   = shippedOrders.reduce((ordersAcc,order)=> {
                                     }
                                     ,0).toFixed(2) 
 
-animateCount("total-revenue",totalRevenue,1)
+animateCount("total-revenue",totalRevenue,10000)
 // console.log(totalRevenue)    
 
 // Total Sold Units
@@ -252,7 +253,7 @@ let totalSoldUnits = sellerOrderItems.filter(
                             orderItem=> shippedOrderIds.includes(orderItem.orderID)
                         )
                         .reduce((acc,orderItem)=> acc+orderItem.quantity,0)
-animateCount("total-sold-units",totalSoldUnits)
+animateCount("total-sold-units",totalSoldUnits,)
 
 
 
@@ -269,11 +270,11 @@ const salaries = Object.values(dailySales)
 
     // Creating the Chart  
 let chart = new Chart(document.getElementById('salesChart'), {
-        type: 'bar',
+        type: 'line',
         data: {
         labels: labels,
         datasets: [{
-            label: 'Salary Over Time',
+            label: 'Sales Over Time',
             data: salaries,
             borderColor: 'blue',
             backgroundColor: 'lightblue',
