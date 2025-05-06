@@ -22,6 +22,7 @@ export class Cart{
     }
 
     static DispalyCartItems(itemsContainer,cart){
+
         cart.forEach(cartItem => {
             let product = Product.getProductById(cartItem.productID)
             let displayItem = CreateDisplyCartItem(cartItem);

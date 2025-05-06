@@ -1,6 +1,6 @@
 
 import { Auth } from "../modules/authModule.js";
-import {GetCartByID, GetProductByID, ChangeCartItemQuantity,RemoveCartItem} from "../modules/db.js"
+import {GetCartByID, GetProductByID, ChangeCartItemQuantity,RemoveCartItem,GetSessionCart, GetCartItem} from "../modules/db.js"
 import {IncreaseQuantity as IncQ, DecreaseQuantity as DecQ, redirect, fetchComponent, convertToHtmlElement} from "../util.js"
 import { User } from "../modules/userModule.js";
 
@@ -19,21 +19,32 @@ document.querySelectorAll(".fa-cart-shopping").forEach(element=>{
 
 document.getElementById("cart-items-container").dataset.totalPrice = "{}"
 
+function getCurrentUserCart(){
+    if(Auth.isLoggedIn()){
+        let user = User.getCurrentUser()
+        if(!user || !user.id)
+            return [];
+        checkDeletedProductsInCart(user.id)
+        return GetCartByID(user.id)
+    }else{
+        return GetSessionCart();
+    }
 
-
+}
+function checkDeletedProductsInCart(cartID){
+    let allProductsIds = Product.getAllProducts().map(p=>p.id)
+    let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
+    deletedProdcutsCartItems.forEach(cartItem=>{
+        RemoveCartItem(cartID,cartItem.productID)
+    })
+}
 
 // if not logged in redirect to login
     
-let cartID= User.getCurrentUser().id;
-let totalPrice = {};
 
-let allProductsIds = Product.getAllProducts().map(p=>p.id)
-let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
-deletedProdcutsCartItems.forEach(cartItem=>{
-    RemoveCartItem(cartID,cartItem.productID)
-})
 
-let cart = GetCartByID(cartID)
+
+let cart = getCurrentUserCart()
 function showEmptyCart(){
     emtpyElement.classList.remove("d-none")
     emtpyElement.classList.add("d-flex");  
