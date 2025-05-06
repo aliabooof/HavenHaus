@@ -138,6 +138,7 @@ else
                 }
                 else{
                     Validation.showError(imageInput,"Invalid File Format.")
+                    saveProductBtn.disabled=false;
                     return
                 }
                 
@@ -169,6 +170,7 @@ else
             saveImage(product.imageUrl)
         }
         document.getElementById("preview").classList.add("d-none")
+        saveProductBtn.disabled=false;
         productModal.hide();
 
         loadProductsTable();
