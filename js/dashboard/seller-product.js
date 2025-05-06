@@ -99,11 +99,14 @@ else
 
     saveProductBtn.addEventListener("click",save);
     function save(e){
-        e.preventDefault();
+        const imageInput = document.getElementById('image-input');
 
+        saveProductBtn.disabled = true;
+        e.preventDefault();
         let formInputs=getFormInputs(productForm);
         let validationRules=Validation.productRules(formInputs);
         if (!Validation.validateForm(formInputs,validationRules)) {
+            saveProductBtn.disabled = false;
             return;
         }
         let product = getFormData();  
@@ -119,12 +122,26 @@ else
                                                     }).length
             if(formInputs.stockQuantity.value < productPendingOredersQuantity){
                 Validation.showError(formInputs.stockQuantity,"Invalid stock, handle pending orders first.")
+                saveProductBtn.disabled = false;
+
                 return;
             }
         //_____________________________________________________________________________\\
 
         
             product.id=productID;
+            if(imageInput.files[0]){
+                if(imageInput.files[0].type.startsWith('image/')){
+                    let todayDate = new Date()
+                    product.imageUrl = product.name + `${todayDate.getTime()}`
+                    saveImage(product.imageUrl)
+                }
+                else{
+                    Validation.showError(imageInput,"Invalid File Format.")
+                    return
+                }
+                
+            }
             Product.updateProduct(product);
             // e.validateForm();
             // editProduct();
@@ -132,15 +149,22 @@ else
         }else{
             if(!document.getElementById("image-input").files||document.getElementById("image-input").value =="" || document.getElementById("image-input").files.length ===0 ){
                 Validation.showError(document.getElementById("image-input"),"Must upload image for new products")
+                saveProductBtn.disabled = false;
                 return
             }
-            product.sellerID = sellerID
+            if(imageInput.files[0].type.startsWith('image/')){
+                let todayDate = new Date()
+                product.imageUrl = product.name + `${todayDate.getTime()}`
+            }
+            else{
+                Validation.showError(imageInput,"Invalid File Format.")
+                saveProductBtn.disabled = false;
+                return
+            }
             product = new Product(product)
-            Product.addProduct(product)
             product.sellerID = sellerID
-            product = new Product(product)
-            product.imageUrl = product.name
-
+            let todayDate = new Date()
+            product.imageUrl = product.name + `${todayDate.getTime()}`
             Product.addProduct(product)
             saveImage(product.imageUrl)
         }
@@ -163,7 +187,7 @@ else
             tbody.innerHTML += `
                 <tr data-id="${product.id}">
                     <td>${index + 1}</td>
-                    <td>${product.name}</td>
+                    <td><a href="../../pages/product.html?prod-id=${product.id}" class="text-decoration-none text-black">${product.name}</a></td>
                     <td>$${product.price}</td>
                     <td>${product.stock}</td>
                     <td>
@@ -277,7 +301,6 @@ else
 
 const fileInput = document.getElementById('image-input');
     const preview = document.getElementById('preview');
-    const downloadBtn = document.getElementById('downloadBtn');
     
 let imageDataUrl = null;
 let originalFileName = 'downloaded_image.png';
@@ -301,7 +324,6 @@ fileInput.addEventListener('change', event => {
         imageDataUrl = e.target.result;
         preview.src = imageDataUrl;
         preview.style.display = 'block';
-        downloadBtn.disabled = false;
     };
     reader.readAsDataURL(file);
 
@@ -310,9 +332,11 @@ fileInput.addEventListener('change', event => {
 function saveImage(imageDownloadName){   
         if(!imageDataUrl)
             return
+        const modifiedFile = new File([fileInput.files[0]], imageDownloadName+".png", { type: fileInput.files[0].type });
           const link = document.createElement('a');
-          link.href = imageDataUrl;
-          link.download = imageDownloadName; // keep original name
+          const urlObject = URL.createObjectURL(fileInput.files[0])
+          link.href = urlObject;
+          link.download = modifiedFile.name; // keep original name
           document.body.appendChild(link); // required for Firefox
           link.click();
           document.body.removeChild(link);    

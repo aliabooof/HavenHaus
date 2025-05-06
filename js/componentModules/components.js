@@ -135,7 +135,7 @@ export class Component {
         prodductName.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
 
         const productImg = productCard.querySelector("img");
-        productImg.src=`../../assets/images/Products/${product.name}.png`
+        productImg.src=`../../assets/images/Products/${product.imageUrl}.png`
         productImg.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
         if(seller)
             productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`

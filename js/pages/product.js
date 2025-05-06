@@ -147,7 +147,7 @@ document.querySelector("#stock-count").innerText = product.stock
 document.querySelector(".stock").innerText = product.stock
 if(seller)
     document.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
-document.querySelector("img").src=`../../assets/images/Products/${product.name}.png`;
+document.querySelector("img").src=`../../assets/images/Products/${product.imageUrl}.png`;
 
 
 quantity = Math.min(product.stock,quantity)
