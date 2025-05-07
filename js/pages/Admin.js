@@ -15,6 +15,8 @@ if(Auth.isLoggedIn()){
 }else{
     Auth.enforcePageAuthorization();
 }
+await Component.renderNavbar();
+await Component.renderFooter();
 
 let users = User.getAllUsers();
 
