@@ -103,7 +103,11 @@ export class Product {
 
 
     static removeProduct(productId) {
-        const products = this.getAllProducts().filter(p => p.id !== productId);
+        const products = this.getAllProducts().map(p => {
+            if(p.id==productId)
+                p.isDeleted = true
+            return p;
+    });
         setTable("product", products);
     }
 

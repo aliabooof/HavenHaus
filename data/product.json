@@ -372,26 +372,6 @@
       "isDeleted": false
     },
     {
-      "id": "VelvetSofa_2_x5c6v7b",
-      "sellerID": "david_martin_008",
-      "name": "Velvet Sofa",
-      "category": 2,
-      "price": 650.00,
-      "desc": "Luxurious three-seater sofa in soft velvet fabric.",
-      "imageUrl": "Velvet Sofa",
-      "stock": 6,
-      "featured": false,
-      "warranty": "2 Years Limited Warranty",
-      "highlights": [
-        "Comfortable Cushioning",
-        "Stylish Design",
-        "Durable Finish"
-      ],
-      "instructions": "Wipe clean with a damp cloth.",
-      "reviews": [],
-      "isDeleted": false
-    },
-    {
       "id": "SideTable_3_n8m9q0w",
       "sellerID": "aliouf_35322",
       "name": "Side Table",
