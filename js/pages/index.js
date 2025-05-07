@@ -10,7 +10,7 @@ import { User } from "../modules/userModule.js";
    await Component.renderNavbar();
    await Component.renderFooter();
 
-   if(Auth.isLoggedIn())
+  //  if(Auth.isLoggedIn())
         await Component.renderCartOffcanvas();
    const flashData = sessionStorage.getItem("flashAlert");
 
