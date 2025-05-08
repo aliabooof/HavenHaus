@@ -17,7 +17,7 @@ if(product.isDeleted == true){
     redirect("../../pages/not-found.html");
 }
 
-// if(!product) redirect("../../pages/not-found.html")
+if(!product) redirect("../../pages/not-found.html")
 
 
 Auth.enforcePageAuthorization();

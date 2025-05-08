@@ -130,11 +130,29 @@
   margin-bottom: 1rem;
   border-bottom: 1px solid #dee2e6;
   padding-bottom: 1rem;
+  font-size: 0.9rem;
 }
 
+.cart-item .card-body a {
+  text-decoration: none;
+  font-size: 1rem;
+  color: black;
+}
+
+.cart-item .card-body a  h5{
+  transition: all 0.3s;
+}
+.cart-item .card-body a  :hover{
+  color: blue;
+  transform: scale(1.03);
+}
+.cart-item .delete-card-btn:hover{
+  color: #000;
+  background-color: #eee;
+}
 .cart-item img {
-  width: 60px;
-  height: 60px;
+  width: 100%;
+  /* height: 10000px; */
   object-fit: cover;
   border-radius: 0.5rem;
 }
@@ -202,3 +220,9 @@ body{
   transition: all 1s ease;
 }
 /***** End animation styles *****/
+
+
+
+.cart-item{
+
+}
