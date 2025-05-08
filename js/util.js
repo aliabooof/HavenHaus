@@ -238,6 +238,11 @@ export function mapOrderStatus(status){
     else if(status == 3){
         statusElement.innerText = "Suppressed"
     }
+    else if(status == 5){
+        bgColor = "bg-order-canceled"
+        statusElement.innerText = "Canceled"
+    }
+
     statusElement.classList.add(bgColor)
     return {bgColor,statusElement}
 }
