@@ -218,7 +218,7 @@ else
                 
                 fillProductForm(product);
                 productModal.show();
-                document.getElementById("preview").parentElement.classList.add("d-none")
+                // document.getElementById("preview").parentElement.classList.add("d-none")
                 document.getElementById("image-input").value = ""
 
 
@@ -264,6 +264,11 @@ else
         document.getElementById('productDescription').value = product.desc || '';
         document.getElementById('highlights').value = product.highlights || '';
         document.getElementById('instructions').value = product.instructions || '';
+        document.getElementById('preview').src = `../../assets/images/Products/${product.imageUrl}.png`;
+        document.getElementById('preview').classList.remove("d-none")
+        document.getElementById('preview').parentElement.classList.remove("d-none")
+        document.getElementById('preview').parentElement.classList.add("d-inline-block")
+
     }
 
     // updateProduct()

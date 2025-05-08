@@ -1,3 +1,4 @@
+import { GetProductByID } from "./db.js"
 import { Order } from "./order.js"
 import {OrderItem} from "./OrderItem.js"
 import { Product } from "./productModule.js"
@@ -26,36 +27,56 @@ export class Seller{
         let sellerOrderItemsIds = sellerOrderItems.map(orderItem=> orderItem.orderID)
         return  Order.getAllOrders().filter(order=> sellerOrderItemsIds.includes(order.id))
     }
+    static getFinalSellerOrderItemsById(sellerId)
+    {        
+        let sellerProductIds = Product.getProductsWithDeletedBySeller(sellerId).map(product=> product.id)
+        return  OrderItem.getAllOrderItems().filter(orderItem=> sellerProductIds.includes(orderItem.productID))
+    }
+    
+    static getFinalSellerOrdersById(sellerId)
+    {        
+        let sellerOrderItems = this.getFinalSellerOrderItemsById(sellerId);
+        let sellerOrderItemsIds = sellerOrderItems.map(orderItem=> orderItem.orderID)
+        return  Order.getAllOrders().filter(order=> sellerOrderItemsIds.includes(order.id))
+    }
     static getSortedSellerOrdersById(sellerId)
     {   
         return this.getSellerOrdersById(sellerId)
-                                    .sort(
-                                        (order1,order2)=> {
-                                            let order1Date = new Date(order1.date||order1.createdAt) 
-                                            let order2Date = new Date(order2.date||order2.createdAt)
-                                            if(order1Date <order2Date)
-                                                return 1;
-                                            else if(order1Date > order2Date)
-                                                return -1;
-                                            else 
-                                                return 0
-                                        } )         
+                    .sort(
+                        (order1,order2)=> {
+                            let order1Date = new Date(order1.date||order1.createdAt) 
+                            let order2Date = new Date(order2.date||order2.createdAt)
+                            if(order1Date <order2Date)return 1;
+                            else if(order1Date > order2Date)return -1;
+                            else return 0;
+                        } )         
     
     }
+    static getFinalSortedSellerOrdersById(sellerId)
+    {   
+        return this.getFinalSellerOrdersById(sellerId)
+                .sort(
+                    (order1,order2)=> {
+                        let order1Date = new Date(order1.date||order1.createdAt) 
+                        let order2Date = new Date(order2.date||order2.createdAt)
+                        if(order1Date <order2Date)return 1;
+                        else if(order1Date > order2Date)return -1;
+                        else return 0;
+                    } )         
+    }
+
     static calculateSales(sellerID) {
         // Step 1: Filter only seller's order items
-        const sellerOrderItems = this.getSellerOrderItemsById(sellerID)
-      
+        const sellerOrderItems = this.getFinalSellerOrderItemsById(sellerID)
         // Step 2: Map each orderItem to its matching order
         const salesData = sellerOrderItems.map(item => {
           // Find matching order
-          const order = this.getSortedSellerOrdersById(sellerID)
+          const order = this.getFinalSortedSellerOrdersById(sellerID)
                             .filter(order=> {
                                 let orderDate = new Date(order.date || order.createdAt) 
                                 return order.status == 1 && orderDate >  new Date(`${new Date().getFullYear()-1}`)
                             })
                             .find(order =>  order.id == item.orderID);
-          
           if (!order) return null; // If no matching order, skip
       
           const date = new Date(order.date||order.createdAt);
@@ -63,8 +84,7 @@ export class Seller{
           const monthlyKey = date.getFullYear() + '-' + (date.getMonth() + 1).toString().padStart(2, '0'); // e.g. '2025-04'
           const yearlyKey = date.getFullYear().toString(); // e.g. '2025'
       
-          const totalCost = item.quantity * Product.getProductById(item.productID).price; // quantity from orderItem, cost from order
-      
+          const totalCost = item.quantity * GetProductByID(item.productID)[0].price; // quantity from orderItem, cost from order
           return { dailyKey, monthlyKey, yearlyKey, totalCost };
         }).filter(x => x !== null);
       

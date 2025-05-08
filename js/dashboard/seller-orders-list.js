@@ -168,8 +168,10 @@ function createOrderTableRow(orderItem,order){
     let orderTableRow = convertToHtmlElement(orderTableRowString);
     orderTableRow.dataset.id = order.id
     orderTableRow.dataset.productId = orderItem.productID
-    let product = Product.getProductById(orderItem.productID)
-    orderTableRow.querySelector(".order-product-name").textContent = product.name
+    let product = Product.getFinalProductById(orderItem.productID)
+    let nameElement = orderTableRow.querySelector(".order-product-name");
+    nameElement.textContent = product.name
+    if(product.isDeleted==true) nameElement.classList.add("text-danger")
     orderTableRow.querySelector(".order-product-id").textContent = product.id
     
     let orderDate = new Date(order.date || order.createdAt).toISOString().split("T")
@@ -272,8 +274,9 @@ const ACCEPTED_ORDER = 1
 const REJECTED_ORDER = 2
 const SUPPRESSED_ORDER = 3
 // console.log(sellerId,seller)
-let sellerOrders = Seller.getSortedSellerOrdersById(sellerId)
-let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId);
+let sellerOrders = Seller.getFinalSortedSellerOrdersById(sellerId)
+let sellerOrderItems = Seller.getFinalSellerOrderItemsById(sellerId);
+console.log(sellerOrderItems)
 let orderTableBody = document.getElementById("orders-table-body");
 let orderFilterSelect = document.getElementById("filter-order-status");
 // modals

@@ -11,3 +11,7 @@
 .bg-order-superesed{
     background-color: #d17326 !important;
 }
+/*status == 5*/
+.bg-order-canceled{
+    background-color: #ff692d !important;
+}

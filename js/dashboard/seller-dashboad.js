@@ -209,25 +209,25 @@ var sellerId = User.getCurrentUser().id
 
     // Total products
 let totalProductsCount = Product.getProductsBySeller(sellerId).length 
-animateCount("total-products",totalProductsCount,1000)
+animateCount("total-products",totalProductsCount,500)
 
 
 // getSellerOrders
-let sellerOrders = Seller.getSellerOrdersById(sellerId);
+let sellerFinalOrders = Seller.getFinalSellerOrdersById(sellerId);
 
 // Get shipped orders Orders Only
-let shippedOrders = sellerOrders.filter(order=> order.status == 1);
+let shippedOrders = sellerFinalOrders.filter(order=> order.status == 1);
 
 // get zseller orders 
-let sellerOrderItems = Seller.getSellerOrderItemsById(sellerId)
+let sellerOrderItems = Seller.getFinalSellerOrderItemsById(sellerId)
 
 // Total orders, Pending Orders
 animateCount("total-orders",shippedOrders.length,200)
-let pendingOrdersCount = sellerOrders.filter(order=> order.status == 0).length 
+let pendingOrdersCount = sellerFinalOrders.filter(order=> order.status == 0).length 
 animateCount("pending-orders",pendingOrdersCount,500)
 
 
-let sellerProductsIds = Product.getProductsBySeller(sellerId).map(product=> product.id)
+let sellerProductsIds = Product.getProductsWithDeletedBySeller(sellerId).map(product=> product.id)
 
 // calculate the total revenue
 let totalRevenue   = shippedOrders.reduce((ordersAcc,order)=> {

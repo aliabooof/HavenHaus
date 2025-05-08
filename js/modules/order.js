@@ -1,4 +1,5 @@
 import { getTable, setTable, add } from "./db.js";
+const CANCELED_ORDER = 5
 
 export class Order {
     constructor({ userId, items, status = 0, createdAt = new Date().toISOString()}) {
@@ -56,6 +57,7 @@ export class Order {
     static removeOrder(orderId) {
         const orders = this.getAllOrders().filter(order => order.id != orderId);
         setTable("order", orders);
+    
     }
 
     static updateOrderStatus(orderId, newStatus) {
@@ -63,6 +65,15 @@ export class Order {
             order.id == orderId ? { ...order, status: newStatus } : order
         );
         setTable("order", orders);
+    }
+    static cancelOrderById(orderId){
+        let allOrders = this.getAllOrders();
+        let orderIndex = allOrders.findIndex(order=> order.id == orderId)
+        if(orderIndex > -1){
+            allOrders[orderIndex].status = CANCELED_ORDER
+        }
+        setTable("order",allOrders)
+        console.log("allOrders[orderIndex]",allOrders)
     }
 
 }
