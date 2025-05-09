@@ -51,9 +51,12 @@ sellerbutton.addEventListener('click',function(){
 })
 if (currentUser.role !=1) {
     sellerbutton.classList.add('d-none');
+    
 }
 if(currentUser.role !=2){
     document.getElementById("my-order-button").classList.add('d-none');
+    document.getElementById("profile-whishlist-btn").classList.add('d-none');
+
 }
 
 if (userOrders.length > 0){

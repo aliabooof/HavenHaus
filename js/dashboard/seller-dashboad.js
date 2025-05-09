@@ -55,13 +55,16 @@ function prepareBestSellingElement(product){
 
 function prepareBestSelling(){
     let bestSellingContainer = document.getElementById("best-selling").querySelector(".list-group")
-    let sellerProdcuts = Product.getProductsBySeller(sellerId);
-    let sellerCompletedOrdersItems = Seller.getSellerOrderItemsById(sellerId).filter(
-        (orderItem)=>{
-            let order = Order.getOrderById(orderItem.orderID)
-            return order.status == COMPLETED_ORDER;
-        }
-    );
+    let sellerProdcuts = Product.getProductsWithDeletedBySeller(sellerId);
+    let sellerCompletedOrdersItems = Seller.getFinalSellerOrderItemsById(sellerId)
+                        .filter(
+                            (orderItem)=>{
+                                if(orderItem.orderID == "3ssam_customer_6ek6wnr")
+                                    return false    
+                                let order = Order.getOrderById(orderItem.orderID)
+                                return order.status == COMPLETED_ORDER;
+                            }
+                        );
     // console.log(sellerProdcuts)
     sellerProdcuts = sellerProdcuts.map(
                     (product)=>{
@@ -93,7 +96,7 @@ function prepareBestSelling(){
         (product,index)=>{
             let element = prepareBestSellingElement(product)
             element.querySelector(".number").innerText = index+1
-            element.href = `./product.html?prod-id=${product.id}`
+            element.href = product.isDeleted? "#": `./product.html?prod-id=${product.id}`;
             bestSellingContainer.insertAdjacentElement("beforeend",element);
 
         }
@@ -101,11 +104,12 @@ function prepareBestSelling(){
     
 }
 
-function prepareOrder(order){        
+function prepareOrder(order){ 
+    console.log("order",order)       
         let recentOrderElement = convertToHtmlElement(recentOrderComponentString)
         // set id & date
         recentOrderElement.querySelector(".order-id").innerText = order.id
-        recentOrderElement.querySelector(".order-date").innerText = new Date(order.date).toDateString()
+        recentOrderElement.querySelector(".order-date").innerText = new Date(order.date|| order.createdAt).toDateString()
         
         // set status
         let status = order.status
@@ -128,12 +132,14 @@ function prepareOrder(order){
         
         //__________________Total Order Price & Order Items Count_________________//
         
-        let orderItems = Seller.getSellerOrderItemsById(sellerId)
+        let orderItems = Seller.getFinalSellerOrderItemsById(sellerId)
         .filter(orderItem=> orderItem.orderID == order.id)
         // console.log(orderItems)
         let orderTotalPice = orderItems.map(
-                    orderItem=> 
-                        orderItem.quantity * orderItem.price
+                    orderItem=> {
+                        console.log("orderItem.quantity * orderItem.price",orderItem.quantity * orderItem.price)
+                        return orderItem.quantity * orderItem.price
+                    }
                     // Product.getProductById(orderItem.productID).price
                 ).reduce(
                     (totalPrice,itemPrice)=>totalPrice+itemPrice
@@ -148,17 +154,18 @@ function prepareOrder(order){
 function prepareRecentOrders(){
     let recentOrdersContainer = document.getElementById("recent-orders")
                                     .querySelector(".list-group")
-    let sellerSortedOrders = Seller.getSortedSellerOrdersById(sellerId)
+    let sellerSortedOrders = Seller.getFinalSortedSellerOrdersById(sellerId)
                                 .filter(
                                     order=>{
                                         let orderDate = new Date(order.date || order.createdAt)
                                         let xDaysAgoDate = new Date();
                                         xDaysAgoDate.setMonth(new Date().getMonth()-1)
                                         // xDaysAgoDate = xDaysAgoDate.toISOString()
+
                                         return orderDate >= xDaysAgoDate  
                                     }
                                 )
-                                .slice(0,2)
+                                .slice(0,3)
     recentOrdersContainer.innerHTML = "";
     sellerSortedOrders.map(
         element => 
@@ -220,6 +227,7 @@ let shippedOrders = sellerFinalOrders.filter(order=> order.status == 1);
 
 // get zseller orders 
 let sellerOrderItems = Seller.getFinalSellerOrderItemsById(sellerId)
+console.log("sellerOrderItems",sellerOrderItems)
 
 // Total orders, Pending Orders
 animateCount("total-orders",shippedOrders.length,200)
