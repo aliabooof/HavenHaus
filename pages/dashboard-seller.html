@@ -52,6 +52,9 @@
         tr {
             font-size: 0.8rem !important;
         }
+        /* tr .order-status {
+            font-size: 0.9rem !important;
+        } */
 
         tr>*,
         td>* {
@@ -152,6 +155,7 @@
         }
         #sidebar{
             background-color: rgb(33, 37, 41) !important;
+            background-color: #1F1F2E !important;
         }
         #products table tr a{
             transition: all 0.2s !important;
@@ -162,11 +166,28 @@
         #products table tr a:hover{
             transform: scale(1.07) !important;
         }
-        .side-item :hover{
+        .side-item:hover{
             background-color:lightskyblue;
-            border: 2px;
+            background-color:#8E44AD;
+            /* border: 2px solid lightskyblue; */
             border-radius: 10px;
             
+        }
+
+        thead{
+            background-color: #6A0DAD !important;
+        }
+        thead th{
+            background: transparent !important;
+            color: white !important;    
+        }
+        td{
+            border: 1px;
+        }
+        .order-status *{
+            margin: 0;
+        }
+        #orders-table-body tr td{
         }
     </style>
 
@@ -353,26 +374,28 @@
 
                             <div
                                 class="card-header nav nav-tabs d-flex flex-column flex-sm-row justify-content-center justify-content-lg-center">
-                                <div class="nav-item text-center col-11 col-md-6">
+                                <div class="nav-item text-center col-12  col-sm-6 col-md-6">
                                     <button id="recent-orders-btn" class="nav-link col-12  small active"
                                         data-bs-toggle="tab" data-bs-target="#recent-orders" aria-selected="true"
-                                        aria-controls="recent-orders" role="tab"><span class="h3 small">Recent
-                                            orders</span></button>
+                                        aria-controls="recent-orders" role="tab">
+                                        <span class="h3 small">Recent orders</span>
+                                    </button>
                                 </div>
-                                <div class="nav-item text-center col-11 col-md-6">
+                                <div class="nav-item text-center col-12 col-sm-6 col-md-6">
                                     <button id="best-selling-btn" class="nav-link col-12  small" data-bs-toggle="tab"
                                         data-bs-target="#best-selling" aria-selected="false"
                                         aria-controls="best-selling" role="tab"><span class="h3 small">Best
-                                            Selling</span></button>
+                                            Selling</span>
+                                    </button>
                                 </div>
                             </div>
 
                             <div class="">
                                 <div class="tab-content">
                                     <div id="recent-orders" class="card tab-pane active">
-                                        <div class="card-header ">
-                                            <!-- <h5>Recent Orders</h5> -->
-                                        </div>
+                                        <!-- <div class="card-header ">
+                                            <h5>Recent Orders</h5>
+                                        </div> -->
                                         <div class="card-body p-1">
                                             <div class="list-group p-0">
                                                 <!-- Recent orders will be populated here -->
@@ -424,16 +447,16 @@
 
                 <!-- Products Tab -->
                 <div class="tab-pane fade" id="products" role="tabpanel">
-                    <div class="d-flex justify-content-between align-items-center mb-4">
-                        <h2><i class="fas fa-boxes me-2"></i>Product Management</h2>
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                        <h2><i class="fas fa-boxes me-2"></i><span class="text-break">Product Management</span></h2>
                         <button class="btn btn-success" id="addProductBtn">
-                            <i class="fas fa-plus me-2"></i>Add Product
+                            <i class="fas fa-plus me-2"></i><span class="text-break">Add Product</span>
                         </button>
                     </div>
                     <div class="card">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-striped table-hover">
+                                <table class="table table-striped table-hover table-bordered">
                                     <thead id="products_id"> <!--add id-->
                                         <tr>
                                             <!-- <th>ID</th> -->
@@ -473,13 +496,13 @@
                             <div class="table-responsive col-12">
                                 <table
                                     class="table  overflow-x-auto table-hover table-bordered align-middle text-center">
-                                    <thead class="table-light col-12 bg-black text-light">
+                                    <thead class="table-light col-12  text-light">
                                         <tr class="bg-transparent">
                                             <th class="bg-transparent text-light">Product name</th>
                                             <th class="bg-transparent text-light">Product ID</th>
                                             <th class="bg-transparent text-light">Date</th>
-                                            <th class="bg-transparent text-light">Amount</th>
                                             <th class="bg-transparent text-light">Status</th>
+                                            <th class="bg-transparent text-light">Amount</th>
                                             <th class="bg-transparent text-light">Actions</th>
                                         </tr>
                                     </thead>

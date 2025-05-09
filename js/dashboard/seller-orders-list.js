@@ -55,7 +55,7 @@ function updateOrderItemTrStatus(orderItemTr,status){
     let statusObejct = mapOrderStatus(status)
 
     orderItemTr.querySelector(".order-status").innerHTML = ""
-    orderItemTr.querySelector(".order-status").appendChild(statusObejct.statusElement)
+    orderItemTr.querySelector(".order-status").appendChild(statusObejct.statusIcon)
     orderItemTr.querySelector(".order-reject-btn").classList.add("d-none")
     orderItemTr.classList.remove(mapOrderStatus(0).bgColor);
     
@@ -68,6 +68,9 @@ function hideTableBreakBtn(tableBreak){
     tableBreak.querySelector(".order-accept-btn").classList.add("d-none");
     tableBreak.querySelector(".order-reject-btn").classList.add("d-none");
     // tableBreak.querySelector(".order-id-td").colSap = 6
+}
+function rejectOrderItem(event){
+    
 }
 function rejectOrder(event){
     orderDeleteConfirmModal.hide()
@@ -96,10 +99,10 @@ function rejectOrder(event){
             orderItemStatus = SUPPRESSED_ORDER
 
         updateOrderItemTrStatus(orderItemTr,orderItemStatus)
-        OrderItem.setOrderItemStatus(orderId,productId,orderItemStatus)
+        OrderItem.setOrderItemStatus(orderId,orderItemTr.dataset.productId,orderItemStatus)
     })
     
-    event.target.dataset.rejectAll = ""
+    event.target.dataset.rejectAll = "d"
 
 }
 function acceptOrder(event){
@@ -125,7 +128,6 @@ function acceptOrder(event){
         Order.updateOrderStatus(orderId,1)
     else
         {
-            console.log("From btn-td")
             orderTableBreak.querySelector(".btn-td").innerText = "Waiting"
         }
     
@@ -171,7 +173,11 @@ function createOrderTableRow(orderItem,order){
     let product = Product.getFinalProductById(orderItem.productID)
     let nameElement = orderTableRow.querySelector(".order-product-name");
     nameElement.textContent = product.name
-    if(product.isDeleted==true) nameElement.classList.add("text-danger")
+    if(product.isDeleted==true) 
+        {
+            nameElement.classList.add("text-danger")
+            nameElement.title = "This product's been deleted"
+        }
     orderTableRow.querySelector(".order-product-id").textContent = product.id
     
     let orderDate = new Date(order.date || order.createdAt).toISOString().split("T")
@@ -183,7 +189,7 @@ function createOrderTableRow(orderItem,order){
 
  
     let statusMap = mapOrderStatus(orderItem.status) 
-    orderTableRow.querySelector(".order-status").appendChild(statusMap.statusElement );
+    orderTableRow.querySelector(".order-status").appendChild(statusMap.statusIcon );
     // orderTableRow.classList.add(statusMap.bgColor)
 
     let rejectBtn = orderTableRow.querySelector(".order-reject-btn")
@@ -201,7 +207,7 @@ function createOrderTableRow(orderItem,order){
 
 function showOrders(sellerOrders,sellerOrderItems){
     sellerOrders.forEach((order,index) => {
-        let rowColor = index % 2 === 0 ? "#ffffff" : "#f2f2f2";
+        let rowColor = index % 2 === 0 ? "#e8e8e8" : "#e8e8e8";
         let tableBreakElement = convertToHtmlElement(orderTableBreakString)
         let orderItems = sellerOrderItems.filter((orderItem=> orderItem.orderID == order.id))
         let orderPedningItems = orderItems.filter(orderItem=> orderItem.status == 0)
@@ -219,7 +225,6 @@ function showOrders(sellerOrders,sellerOrderItems){
             rejectOrderBnt.dataset.id = order.id;
             orderAcceptBnt.addEventListener("click",showOrderAcceptModal)
             rejectOrderBnt.addEventListener("click",rejectAllItems)
-            console.log("hello")
         }else if(order.status ==0 && orderPedningItems.length==0){
             tableBreakElement.querySelector(".btn-td").innerText= "Waiting"
             orderAcceptBnt.classList.add("d-none");
@@ -245,10 +250,8 @@ function showOrders(sellerOrders,sellerOrderItems){
 function applyFilter(event){
     let filteredOrders = sellerOrders, filteredOrderItems = sellerOrderItems;
     let filterSelectValue = event.target.value.toLowerCase()
-    // console.log(filteredOrders,filteredOrderItems)
     
     if(!( filterSelectValue == "-1")){
-        console.log(filterSelectValue)
                 filteredOrderItems = sellerOrderItems.filter(orderItem=> orderItem.status == filterSelectValue )
                 let filteredOrdersIds = filteredOrderItems.map(orderItem=> orderItem.orderID)
 
@@ -273,18 +276,21 @@ const PENDING_ORDER = 0
 const ACCEPTED_ORDER = 1
 const REJECTED_ORDER = 2
 const SUPPRESSED_ORDER = 3
-// console.log(sellerId,seller)
+
 let sellerOrders = Seller.getFinalSortedSellerOrdersById(sellerId)
 let sellerOrderItems = Seller.getFinalSellerOrderItemsById(sellerId);
-console.log(sellerOrderItems)
 let orderTableBody = document.getElementById("orders-table-body");
 let orderFilterSelect = document.getElementById("filter-order-status");
+
 // modals
 var orderDeleteConfirmModal = new bootstrap.Modal(document.getElementById("orderDeleteConfirmModal"))
 var orderAcceptConfirmModal = new bootstrap.Modal(document.getElementById("orderAcceptConfirmModal"))
+
 // Buttons
 var orderConfirmDeleteBtn = document.getElementById("orderConfirmDeleteBtn");
 var orderConfirmAcceptBtn = document.getElementById("orderConfirmAcceptBtn");
+
+
 
 //___________________________ End Of Gloabal Variables ___________________________\\
 

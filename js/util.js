@@ -221,28 +221,34 @@ export function getFormInputs(form) {
   }
 
 export function mapOrderStatus(status){
-    let statusElement = convertToHtmlElement('<span class="order-status badge  align-self-start order-status small  h1">Completed</span>')
-    let bgColor = "bg-order-superesed";
+    let statusElement = convertToHtmlElement('<span class="order-status badge small">Completed</span>')
+    let statusIcon = convertToHtmlElement('<span class="order-status-icon badge  align-self-start small"></span>')
+    let bgColor = "bg-order-suppressed";
     if(status ==0){
         bgColor = "bg-order-pending"
         statusElement.innerText = "Pending"
+        statusIcon.innerHTML = `<i class="bi bi-hourglass-split text-order-icon-pending fs-5 " title = "Accepted"></i>`
     }
     else if(status == 1){
         bgColor = "bg-order-complete"
         statusElement.innerText = "Accepted"
+        statusIcon.innerHTML = `<i class="bi bi-check-circle-fill  text-order-icon-complete fs-5 fw-bolder " title = "Accepted"></i>`
     }
     else if(status == 2){
         bgColor = "bg-order-reject"
         statusElement.innerText = "Rejected"
+        statusIcon.innerHTML = `<i class="bi bi-x-circle-fill text-order-icon-reject fs-5 " title = "Rejected"></i>`
     }
     else if(status == 3){
         statusElement.innerText = "Suppressed"
+        statusIcon.innerHTML = `<i class="bi bi-eye-slash-fill text-order-icon-suppressed fs-5 " title = "Suppressed"></i>`
     }
     else if(status == 5){
         bgColor = "bg-order-canceled"
         statusElement.innerText = "Canceled"
+        statusIcon.innerHTML = `<i class="bi bi-exclamation-octagon-fill text-order-icon-cancel fs-5 " title = "Canceled"></i>`
     }
 
     statusElement.classList.add(bgColor)
-    return {bgColor,statusElement}
+    return {bgColor,statusElement,statusIcon}
 }
