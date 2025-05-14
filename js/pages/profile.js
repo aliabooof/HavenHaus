@@ -67,6 +67,7 @@ if (userOrders.length > 0){
         let order_items = OrderItem.getOrderItemsByOrderId(user_order.id);
         let divOrder = document.createElement("div");
         divOrder.classList.add("order");
+        
         divOrder.innerHTML = "";
         divOrder.innerHTML += appendOrderHeader(user_order.id, user_order.createdAt || user_order.date, mapOrderStatus(user_order.status));
         console.log("user_order.status",user_order.status)
@@ -267,12 +268,12 @@ function appendOrder(productName, quantity, price){
 
 function appendOrderHeader(orderID, orderDate, status){
     return `<hr>
-                                <div class="order-header d-flex justify-content-between flex-wrap">
-                                    <div class="d-flex">
+                                <div class="order-header d-flex justify-content-between flex-wrap text-break ">
+                                    <div class="d-flex flex-wrap">
                                         <h4 class="" style="font-size: 17px;">Order #${orderID}</h4>
-                                        <p class="ms-3">${new Date(orderDate).toLocaleDateString()}</p>
+                                        <p class="ms-3">${orderDate}</p>
                                     </div>
-                                    <div>
+                                    <div class="ms-auto gap-2">
                                         <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #dbeafe; color: #1e5aca;">Processing</span>
                                         <span class="px-3 py-1 rounded-5 ${status.bgColor} order-status" style="font-size: 14px; display: inline-block; color:rgb(0, 0, 0);">${status.statusElement.innerText}</span>
                                     </div>
@@ -280,13 +281,13 @@ function appendOrderHeader(orderID, orderDate, status){
 }
 
 function appendOrderBody(productName, quantity, price,imageUrl){
-    return `<div class="order-body">
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="d-flex align-items-center">
+    return `<div class="order-body d-flex flex-wrap mt-3">
+                                    <div class="d-flex justify-content-between align-items-center  ">
+                                        <div class="d-flex align-items-center ">
                                             <div style="width: 80px; height: 90px;">
                                                 <img src="../../assets/images/Products/${imageUrl}.png" alt="" width="100%" height="100%">
                                             </div>
-                                            <div class="ms-2" style="line-height: 5px;">
+                                            <div class="ms-2 text-break" style="line-height: 5px;">
                                                 <p>${productName} × ${quantity}</p>
                                                 <p style="font-size: 14px;">${productName}</p>
                                             </div>

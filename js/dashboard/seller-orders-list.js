@@ -180,10 +180,10 @@ function createOrderTableRow(orderItem,order){
         }
     orderTableRow.querySelector(".order-product-id").textContent = product.id
     
-    let orderDate = new Date(order.date || order.createdAt).toISOString().split("T")
-    let orderDMY = orderDate[0]
-    let orderTime = orderDate[1].split(".")[0]
-    orderTableRow.querySelector(".order-date").textContent = `${orderDMY}, ${orderTime}`
+    let orderDate = order.date || order.createdAt
+    // let orderDMY = orderDate[0]
+    // let orderTime = orderDate[1].split(".")[0]
+    orderTableRow.querySelector(".order-date").textContent = `${orderDate} `
     orderTableRow.querySelector(".order-product-amount").textContent = orderItem.quantity
         
 
