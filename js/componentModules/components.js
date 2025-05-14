@@ -5,7 +5,7 @@ import { CreateDisplyCartItem } from "./cart-item.js";
 import { GetCartByID, RemoveCartItem} from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
 import {Order} from "../../js/modules/order.js";
-
+import { setTable } from "../modules/db.js";
 import { Validation } from "../modules/validation.js";
 import { Inquiry } from "../modules/inquiryModule.js";
 import { Product } from "../../js/modules/productModule.js";
