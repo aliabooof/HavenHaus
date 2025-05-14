@@ -6,7 +6,7 @@ import { Order } from "../modules/order.js";
 import { Auth } from "../modules/authModule.js";
 import { OrderItem } from "../modules/OrderItem.js";
 import { GetProductByID } from "../modules/db.js";
-
+const CANCELED_ORDER = 5;
 Auth.enforcePageAuthorization();
 
 
@@ -51,24 +51,27 @@ sellerbutton.addEventListener('click',function(){
 })
 if (currentUser.role !=1) {
     sellerbutton.classList.add('d-none');
+    
 }
 if(currentUser.role !=2){
     document.getElementById("my-order-button").classList.add('d-none');
+    document.getElementById("profile-whishlist-btn").classList.add('d-none');
+
 }
 
 if (userOrders.length > 0){
+    console.log("userOrders",userOrders)
     fields.noorders.style.setProperty("display", "none", "important");
     for (let i = 0; i < userOrders.length; i++) {
         let user_order = userOrders[i];
         let order_items = OrderItem.getOrderItemsByOrderId(user_order.id);
-        console.log(order_items)
         let divOrder = document.createElement("div");
         divOrder.classList.add("order");
         divOrder.innerHTML = "";
         divOrder.innerHTML += appendOrderHeader(user_order.id, user_order.createdAt || user_order.date, mapOrderStatus(user_order.status));
+        console.log("user_order.status",user_order.status)
         for (let j = 0; j < order_items.length; j++) {
-
-            divOrder.innerHTML += appendOrderBody(GetProductByID(order_items[j].productID)[0].name, order_items[j].quantity, order_items[j].price);
+            divOrder.innerHTML += appendOrderBody(GetProductByID(order_items[j].productID)[0].name, order_items[j].quantity, order_items[j].price,GetProductByID(order_items[j].productID)[0].imageUrl);
         }
         // divOrder.innerHTML = appendOrder(user_order.id, "islam", order_items[i].quantity, order_items[i].price);
         divOrder.innerHTML += appendOrderFooter(user_order.total, user_order.status)
@@ -77,11 +80,17 @@ if (userOrders.length > 0){
             modal.style.display = "block";
             confirmBtn.onclick = () => {
                 modal.style.display = 'none';
-                createAlert("Order deleted successfully!", "success");
+                createAlert("Order Canceled!", "success");
                 // alert('Item deleted successfully!');
-                OrderItem.removeOrderItemByOrderId(user_order.id);
-                Order.removeOrder(user_order.id);
-                divOrder.remove();
+                OrderItem.cancelOrderItemsByOrderId(user_order.id);
+                Order.cancelOrderById(user_order.id);
+                // divOrder.remove();
+
+                let orderStatusElement = divOrder.querySelector(".order-status")
+                let orderStatus = mapOrderStatus(CANCELED_ORDER);
+                orderStatusElement.innerText = orderStatus.statusElement.innerText
+                orderStatusElement.classList.add(orderStatus.bgColor)
+                divOrder.querySelector("#cancelOrder").classList.add("d-none")
                 userOrders = Order.getOrdersByUser(currentUser.id);
                 if(userOrders.length == 0){
                     fields.noorders.style.setProperty("display", "flex", "important");
@@ -265,17 +274,17 @@ function appendOrderHeader(orderID, orderDate, status){
                                     </div>
                                     <div>
                                         <span class="px-3 py-1 rounded-5" style="font-size: 14px; display: inline-block; background-color: #dbeafe; color: #1e5aca;">Processing</span>
-                                        <span class="px-3 py-1 rounded-5 ${status.bgColor}" style="font-size: 14px; display: inline-block; color:rgb(0, 0, 0);">Shipping: ${status.statusElement.innerText}</span>
+                                        <span class="px-3 py-1 rounded-5 ${status.bgColor} order-status" style="font-size: 14px; display: inline-block; color:rgb(0, 0, 0);">${status.statusElement.innerText}</span>
                                     </div>
                                 </div>`;
 }
 
-function appendOrderBody(productName, quantity, price){
+function appendOrderBody(productName, quantity, price,imageUrl){
     return `<div class="order-body">
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="d-flex align-items-center">
                                             <div style="width: 80px; height: 90px;">
-                                                <img src="../../assets/images/Products/${productName}.png" alt="" width="100%" height="100%">
+                                                <img src="../../assets/images/Products/${imageUrl}.png" alt="" width="100%" height="100%">
                                             </div>
                                             <div class="ms-2" style="line-height: 5px;">
                                                 <p>${productName} × ${quantity}</p>

@@ -2,6 +2,7 @@ import { GetProductByID, getTable, add } from "./db.js";
 import {Product } from "./productModule.js";
 
 import { setTable } from "./db.js";
+const CANCELED_ORDER = 5
 
 export class OrderItem {
     constructor({orderID, productID, quantity, price, status = 0 }) {
@@ -85,5 +86,15 @@ export class OrderItem {
     //     })
     //     setTable("orderItem",orderItems)
     // }
+    static cancelOrderItemsByOrderId(orderId){
+        let orderItems = this.getAllOrderItems().map(orderItem=>{
+            if(orderItem.orderID == orderId)
+                orderItem.status = CANCELED_ORDER;
+
+            return orderItem
+        })
+        console.log("orderItems",orderItems)
+        setTable("orderItem",orderItems)
+    }
 
 }

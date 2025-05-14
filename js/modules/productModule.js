@@ -14,6 +14,7 @@ export class Product {
         this.reviews = productData.reviews || [];
         this.featured = productData.featured;
         this.id = this.#generateUniqueId(this.name, this.category);
+        this.isDeleted = false;
     }
 
     // Generates a random base ID using name and category
@@ -52,10 +53,17 @@ export class Product {
         // console.log(`from getProductById ${id}`,this.getAllProducts().find(product => product.id == id))
         return this.getAllProducts().find(product => product.id == id);
     }
+    static getFinalProductById(id) {
+        // console.log(`from getProductById ${id}`,this.getAllProducts().find(product => product.id == id))
+        return this.getAllProductsWithDeleted().find(product => product.id == id);
+    }
 
     // Get all products by a specific seller
     static getProductsBySeller(sellerID) {
         return this.getAllProducts().filter(product => product.sellerID == sellerID);
+    }
+    static getProductsWithDeletedBySeller(sellerID) {
+        return this.getAllProductsWithDeleted().filter(product => product.sellerID == sellerID);
     }
 
     // Add new product
@@ -65,7 +73,7 @@ export class Product {
 
     // Add a review to a specific product
     static addReview(productId, review) {
-        const products = this.getAllProducts();
+        const products = this.getAllProductsWithDeleted();
         const productIndex = products.findIndex(p => p.id === productId);
         
         if (productIndex !== -1) {
@@ -77,7 +85,7 @@ export class Product {
 
     
     static updateProduct(updatedProduct) {
-        const products = this.getAllProducts();
+        const products = this.getAllProductsWithDeleted();
         const index = products.findIndex(product => product.id == updatedProduct.id);
 
         console.log(" print edit product id"+updatedProduct.id);
@@ -102,7 +110,11 @@ export class Product {
 
 
     static removeProduct(productId) {
-        const products = this.getAllProducts().filter(p => p.id !== productId);
+        const products = this.getAllProductsWithDeleted().map(p => {
+            if(p.id==productId)
+                p.isDeleted = true
+            return p;
+    });
         setTable("product", products);
     }
 

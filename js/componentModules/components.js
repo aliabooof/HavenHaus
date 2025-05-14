@@ -2,7 +2,7 @@ import { Auth } from "../modules/authModule.js";
 import { User } from "../modules/userModule.js";
 import { fetchComponent, convertToHtmlElement, redirect, createAlert, getFormFields, getFormInputs } from "../util.js";
 import { CreateDisplyCartItem } from "./cart-item.js";
-import { GetCartByID, RemoveCartItem} from "../modules/db.js";
+import { AddSessionCartItem, GetCartByID, GetSessionCart, RemoveCartItem} from "../modules/db.js";
 import { Cart } from "../modules/cartModule.js";
 import {Order} from "../../js/modules/order.js";
 import { setTable } from "../modules/db.js";
@@ -20,29 +20,32 @@ export class Component {
     }
 
     static async renderCartOffcanvas() {
-        if (!Auth.isLoggedIn())
-            return;
+        let cartItems
         let cartOffcanvas = await fetchComponent("../../components/cart-offcanvas.html")
         cartOffcanvas = convertToHtmlElement(cartOffcanvas)
         document.body.insertAdjacentElement("beforeend", cartOffcanvas);
         cartOffcanvas.querySelector(".btn-go-to-cart").addEventListener("click", () => {
             redirect("../../pages/cart.html")
         })
-        let cartItems = GetCartByID(User.getCurrentUser().id)
-        let cartID = User.getCurrentUser().id
-        let allProductsIds = Product.getAllProducts().map(p=>p.id)
-        let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
-        deletedProdcutsCartItems.forEach(cartItem=>{
-            RemoveCartItem(cartID,cartItem.productID)
-        })
+        if (Auth.isLoggedIn()){
+            cartItems = GetCartByID(User.getCurrentUser().id)
+            let cartID = User.getCurrentUser().id
+            let allProductsIds = Product.getAllProducts().map(p=>p.id)
+            let deletedProdcutsCartItems = GetCartByID(cartID).filter(cartItem=>!allProductsIds.includes(cartItem.productID))
+            deletedProdcutsCartItems.forEach(cartItem=>{
+                RemoveCartItem(cartID,cartItem.productID)
+            })
 
-        cartItems = GetCartByID(User.getCurrentUser().id)
-        document.querySelectorAll("#cart-badge").forEach(badge => badge.innerText = cartItems.length)
-        if (cartItems.length == 0) {
-            Cart.showEmpty("main-container");
-            return;
-        }
-        cartItems.forEach((item) => {
+            cartItems = GetCartByID(User.getCurrentUser().id)
+    }else{
+        cartItems=GetSessionCart()
+    }
+    document.querySelectorAll("#cart-badge").forEach(badge => badge.innerText = cartItems.length)
+    if (cartItems.length == 0) {
+        Cart.showEmpty("main-container");
+        return;
+    }
+    cartItems.forEach((item) => {
             let dispalyItem = CreateDisplyCartItem(item);
             let prodID = dispalyItem.dataset.prodId
             let prodPrice = dispalyItem.dataset.prodPrice
@@ -70,7 +73,7 @@ export class Component {
                 document.querySelectorAll('[title="Cart"]').forEach(c => c.remove());
             }
             if (User.getCurrentUser() !== null && User.getCurrentUser().role == 0) {
-                document.getElementById('admin-dash').classList.remove('d-none');
+                document.querySelectorAll('#admin-dash').forEach(item=>item.classList.remove('d-none'));
                 document.querySelectorAll('#support-link').forEach(elem=>elem.classList.add('d-none'))
                 body.querySelectorAll(".profile-link").forEach(elem=>elem.classList.add('d-none'))
             }
@@ -135,7 +138,7 @@ export class Component {
         prodductName.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
 
         const productImg = productCard.querySelector("img");
-        productImg.src=`../../assets/images/Products/${product.name}.png`
+        productImg.src=`../../assets/images/Products/${product.imageUrl}.png`
         productImg.addEventListener('click', () => redirect(`../../pages/product.html?prod-id=${product.id}`))
         if(seller)
             productCard.querySelector("strong").innerText= `${seller.firstName} ${seller.lastName}`
@@ -144,13 +147,18 @@ export class Component {
 
         const productButton = productCard.querySelector("button");
         productButton.addEventListener("click", () => {
-            if (!Auth.isLoggedIn()) {
-                createAlert("Please Log In", "primary", "You must be logged in to add items to your cart. Please log in to continue.");
-                return;
-            }
+                createAlert("Added to Cart", "success");
+            // if (!Auth.isLoggedIn()) {
+            //     AddSessionCartItem(productCard.id)
+            //     let cart =GetSessionCart()
+            //     document.querySelectorAll("#cart-badge").forEach(badge=>badge.innerText = cart.length);
+            //     // return;
+            // }else
+                Cart.cartUi(productCard.id)
+            
 
-            Cart.cartUi(productCard.id)
-        });
+        }
+        );
 
         if (User.getCurrentUser() !== null &&( User.getCurrentUser().role == 0 ||User.getCurrentUser().role == 1)) {
 

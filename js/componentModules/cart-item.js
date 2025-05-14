@@ -1,5 +1,5 @@
 import { fetchComponent, convertToHtmlElement, IncreaseQuantity as IncQ, DecreaseQuantity as DecQ} from "../util.js";
-import { GetProductByID, ChangeCartItemQuantity,RemoveCartItem} from "../modules/db.js";
+import { GetProductByID, ChangeCartItemQuantity,RemoveCartItem, ChangeSessionCartItemQuantity, RemoveSessionCartItem} from "../modules/db.js";
 import { User } from "../modules/userModule.js"; 
 import { Auth } from "../modules/authModule.js";
 import { Cart } from "../modules/cartModule.js"; 
@@ -13,12 +13,11 @@ let cartItemString = await fetchComponent("../../components/cart-item.html")
 export function CreateDisplyCartItem(cartItem){
             let product = GetProductByID(cartItem.productID)[0];
             let cartElement = convertToHtmlElement(cartItemString);
-            
             cartElement.dataset.prodId = product.id;
             cartElement.dataset.prodPrice = product.price;
             
             // product name, description, price, quantity, stock and stock-display
-            cartElement.querySelector("img").src =`../../assets/images/Products/${product.name}.png`
+            cartElement.querySelector("img").src =`../../assets/images/Products/${product.imageUrl}.png`
             cartElement.querySelector("img").parentElement.href =`../../pages/product.html?prod-id=${product.id}`
             cartElement.querySelector(".prod-name").parentElement.href = `../../pages/product.html?prod-id=${product.id}`
             cartElement.querySelector(".prod-name").innerText = product.name;
@@ -55,7 +54,13 @@ function DecreaseQuantity(event){
     
     DecQ(event)
     let quantity = Number(event.target.nextElementSibling.innerText.trim())
-    ChangeCartItemQuantity(cartID, prodID, quantity)
+    // ChangeCartItemQuantity(cartID, prodID, quantity)
+    if(Auth.isLoggedIn() && User.getCurrentUser().id){
+
+        ChangeCartItemQuantity(cartID, prodID, quantity)
+    }
+    else
+        ChangeSessionCartItemQuantity(prodID,quantity)
     Cart.UpdateItemTotalPrice(prodID,prodPrice,quantity)
 }
 
@@ -69,7 +74,12 @@ function IncreaseQuantity(event){
     }   
     IncQ(event)
     let quantity = Number(event.target.previousElementSibling.innerText.trim())
-    ChangeCartItemQuantity(cartID, prodID, quantity)
+    if(Auth.isLoggedIn() && User.getCurrentUser().id){
+
+        ChangeCartItemQuantity(cartID, prodID, quantity)
+    }
+    else
+        ChangeSessionCartItemQuantity(prodID,quantity)
     Cart.UpdateItemTotalPrice(prodID,prodPrice,quantity)
 }
 function DeleteCard(event){
@@ -79,7 +89,12 @@ function DeleteCard(event){
     document.querySelector(`[data-prod-id="${prodID}"]`).remove()
     
     // remove item form database then update total price 
-    RemoveCartItem(cartID, prodID)
+    if(Auth.isLoggedIn() && User.getCurrentUser().id){
+        
+        RemoveCartItem(cartID, prodID)
+    }
+    else
+        RemoveSessionCartItem(prodID)
     Cart.UpdateItemTotalPrice(prodID,prodPrice,0)
     
     let cartItemsContainer = document.getElementById("cart-items-container");

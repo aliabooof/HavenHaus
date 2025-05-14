@@ -1,8 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <script async src="../js/PagePreload/product.js" type="module"></script>
-        
+        <script src="../js/PagePreload/product.js" type="module"></script>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Product</title>
@@ -25,10 +24,10 @@
                 </a><!--Back to shop end  -->
 
                 <div class="container-fluid bg-light d-flex flex-column flex-md-row  justify-content-evenly px-0 mx-0 py-3 ">
-                    <div class="d-flex col-12 mx-auto col-md-6 align-items-start pe-0 "><!--Image Main Container-->
+                    <div class="d-flex col-12 mx-auto col-sm-11 col-md-6 align-items-start pe-0 "><!--Image Main Container-->
                         <div class="col-12 p-0 p-md-2">
                             <div class="col-12 position-relative">
-                                <img c src="" class="img-fluid rounded-3 col-12" style="height: 28rem;">
+                                <img id="product-image" src="" class="img-fluid rounded-3 col-12" style="max-height: 25rem;">
                                 
                                 <!-- <button class="favorite-icon btn focus-ring position-absolute end-0  me-3 mt-3 rounded-circle p-1">
                                     <i class="fa-regular fa-heart text-black-50 fa-2x "></i>
@@ -38,19 +37,20 @@
                         </div> <!-- Inner Container for Product Image End  -->
                     </div><!-- Product Image End  -->
                     
-                    <div class="col-12 col-md-6 pt-3 pt-md-0 ps-0 ps-md-3"><!-- Details Container -->
+                    <div class="col-12 col-md-6 pt-5 pt-md-0 ps-0 ps-md-3"><!-- Details Container -->
 
                         <div class="col-12 d-flex flex-column p-0 p-md-2 gap-3">
                             <!-- inner Details Container for padding -->
                             <div class="col-12 d-flex flex-wrap gap-2">
                                 <!-- ratings -->
-                                <div class="rating text-warning">
+                                <!-- <div class="rating text-warning">
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star"></i>
                                     <i class="fa fa-star-half-stroke"></i>
-                                </div>
+                                </div> -->
+                                <span><i class="bi bi-pencil-square"></i></span>
                                 <div>(
                                     <span class="review-count">0</span> <i class="bi-person"></i> )
                                 </div>
